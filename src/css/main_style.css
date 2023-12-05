@@ -1,0 +1,328 @@
+/*
+ * style.css
+ *
+ * CSC309 Term Project
+ * University of Toronto
+ * Fall 2023
+ *
+ */
+ :root {
+   --dark-text: black;
+   --light-text: white;
+ 
+   --primary: #97c3e9;
+   --secondary: #6892e5;
+   --secondary-lighter: #73a3ff;
+   --dark-blue: #081d40;
+   --lighter-dark-blue: #243662;
+ 
+   --header-height: 72px;
+   --footer-height: 36px;
+ }
+ 
+ .logged-out {
+   display: inherit;
+ }
+ 
+ .logged-in{
+     display: inherit;
+ }
+ 
+ .seeker {
+   display: inherit;
+ }
+ 
+ .shelter {
+   display: inherit;
+ }
+ 
+ html,
+ body {
+   /* margin: 0; */
+   /* padding: 0; */
+   background-color: aliceblue;
+   font-family: "Poppins", sans-serif;
+ }
+ 
+ @font-face {
+   font-family: "cheese";
+   src: url(../assets/MouldyCheeseRegular-WyMWG.ttf);
+ }
+ 
+ .navbar{
+     background-color: var(--dark-blue);
+     height: var(--header-height);
+     width: 100%;
+ }
+ 
+ .navbar-brand {
+   font-size: 48px;
+   padding-left: calc((var(--header-height) - 48px) / 2);
+   box-sizing: border-box;
+ }
+ 
+ .navbar-burger {
+     color: aliceblue;
+ }
+ 
+ .navbar-burger:hover {
+     color: var(--primary);
+ }
+ 
+ .logo {
+     color: aliceblue;
+     font-family: "cheese";
+     /* display: flex; */
+     /* line-height: 72px; */
+     /* align-items: center; */
+ }
+ 
+ .logo div{
+     padding-top:16px;
+     line-height: normal;
+ }
+ 
+ .logo:hover {
+   animation: logo-pulse 1s infinite;
+ }
+ /* https://css-tricks.com/almanac/properties/a/animation/ */
+ @keyframes logo-pulse {
+     0% {
+       color: aliceblue;
+     }
+     50% {
+       color: var(--primary);
+     }
+     100% {
+       color: aliceblue;
+     }
+   }
+ 
+ .navbar-search-bar {
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: left;
+     align-items: center;
+     margin: 0 auto;
+ }
+ 
+ .navbar-search-bar-input {
+     max-width: 350px;
+     width: 80vw;
+ }
+ 
+ .navbar-search-bar-input input {
+     background-color: aliceblue;
+ }
+ 
+ .navbar-dropdown{
+     background-color: var(--secondary);
+     /* display:block; */
+     box-sizing: border-box;
+     left: inherit;
+     border-top: var(--dark-blue) solid 6px;
+     right:0;
+ }
+ 
+ .bell-div {
+     fill: aliceblue;
+     height: 60px;
+     width: 60px;
+     display:flex;
+     text-align: center;
+     justify-content: center;
+ }
+ 
+ .bell{
+     margin-top: 8px;
+     height: 30px;
+     fill: inherit;
+ }
+ 
+ .bell {
+   height: 30px;
+   fill: inherit;
+ }
+ 
+ .bell-div:hover {
+   animation: bell-pulse 1s infinite;
+ }
+ 
+ .bell:hover {
+   animation: inherit;
+ }
+ 
+ @keyframes bell-pulse {
+     0% {
+         fill: aliceblue;
+     }
+     50% {
+         fill: var(--primary);
+         /* fill: pink; */
+     }
+     100% {
+         fill: aliceblue;
+     }
+ 
+ }
+ 
+ .notifications .notification-container{
+     height: 60px;
+     display:none;
+ }
+ 
+ .navbar-dropdown a.navbar-item {
+   color: var(--light-text);
+ }
+ 
+ .navbar-dropdown hr.navbar-divider {
+   margin: 8px;
+ }
+ 
+ .navbar-dropdown a.navbar-item:hover {
+   background-color: #73a3ff;
+   color: var(--light-text);
+   /* font-weight: 400; */
+ }
+ 
+ .navbar-profile {
+     height: 60px;
+     width: 60px;
+     border-radius: 50%;
+     overflow: hidden;
+     margin: auto 10px;
+     box-sizing: border-box;
+     background-color: var(--dark-blue);
+ }
+ 
+ .navbar-profile-image {
+     height: 60px;
+     width: 60px;
+     border-radius: 50%;
+     overflow: hidden;
+ }
+ 
+ .navbar-profile:hover {
+   outline: solid var(--secondary) 3px;
+ }
+ 
+ .navbar-item img {
+   max-height: 100%;
+ }
+ 
+ .button.is-primary {
+   background-color: var(--primary);
+   border-color: transparent;
+   color: #fff;
+ }
+ 
+ .button.is-primary:hover {
+   transition: color 250ms linear;
+   transition: background-color 250ms linear;
+   color: var(--primary);
+   background-color: white;
+ }
+ 
+ .button.is-secondary {
+   background-color: var(--secondary);
+   border-color: transparent;
+   color: #fff;
+ }
+ 
+ .button.is-secondary:hover {
+   transition: color 250ms linear;
+   transition: background-color 250ms linear;
+   color: var(--secondary);
+   background-color: white;
+ }
+ 
+ .button.is-secondary-lighter {
+   background-color: var(--secondary-lighter);
+   border-color: transparent;
+   color: #fff;
+ }
+ 
+ .button.is-secondary-lighter:hover {
+   transition: color 250ms linear;
+   transition: background-color 250ms linear;
+   color: var(--secondary-lighter);
+   background-color: white;
+ }
+ 
+ @media screen and (max-width: 1023px) { 
+     .navbar-search-bar {
+         max-width: 400px;
+         margin: 0 16px;
+     }
+ 
+     .navbar-search-bar-input {
+         width: 100%;
+         max-width: 400px;
+         
+     }
+ 
+     .navbar-search-bar-input input {
+         text-align: center;
+         background-color: aliceblue;
+     }
+ 
+     .navbar-search-button {
+         margin: 0 auto;
+     }
+     
+     .navbar-menu.is-active, .navbar-dropdown{
+         background-color: var(--dark-blue);
+         display:flex;
+         flex-direction: column;
+         align-items: center;
+         /* margin-left: auto; */
+         /* margin-right: auto; */
+     }
+ 
+     .bell-div {
+         padding:0 auto;
+         width:100%;
+     }
+ 
+     .navbar-profile {
+         padding:0 auto;
+         width:100%;
+         border-radius: 0;
+         text-align: center;
+         margin: 0;
+     }
+ 
+     .navbar-profile:hover{
+         outline: none;
+     }
+ 
+     a.navbar-item {
+         max-width: fit-content;
+     }
+ }
+ 
+ 
+ .main{
+     position: relative;
+     margin: 16px;
+     min-height: calc(100vh - var(--header-height) - var(--footer-height) - 32px);
+ }
+ 
+ input,
+ textarea {
+   background-color: aliceblue;
+ }
+ 
+ .footer {
+     position: sticky;
+     background-color: var(--dark-blue);
+     padding: 0px;
+     bottom: 0px;
+     width: 100%;
+     height: 36px;
+     color: var(--light-text);
+     text-align: center;
+     line-height: 36px;
+ }
+ 

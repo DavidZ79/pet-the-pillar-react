@@ -1,5 +1,12 @@
-function LandingPage() {
-  return <div>landing page</div>;
-}
+import Footer from '../components/Footer';
 
-export default LandingPage;
+export default function LandingPage() {
+  return (
+    <div>
+      <div>landing page</div>
+      {/* <Header/> */}
+      {/* <Body/> */}
+      <Footer/>
+    </div>
+  );
+}
