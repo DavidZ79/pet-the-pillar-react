@@ -1,0 +1,71 @@
+/*
+* search.css
+*
+* CSC309 Term Project
+* University of Toronto
+* Fall 2023
+*/
+
+
+#search-container {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    border-radius: 10px;
+    /* width: 50%; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    background-color: var(--primary);
+    /* border: green solid 2px; */
+}
+
+#search-top {
+    display: flex;
+    flex-direction: row;
+    /* border: purple solid 2px; */
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+#sort-container {
+    /* margin: 8px 0; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 8px;
+}
+
+#sort-label {
+    align-items: center;
+    padding-right: 8px;
+}
+
+#search-bar {
+    margin: 8px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* width: 50%; */
+}
+
+#search-bar-input {
+    max-width: 300px;
+    width: 80vw;
+}
+
+#search-bar-input input {
+    background-color: aliceblue;
+}
+
+#search-bottom {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 25%;
+    /* border: purple solid 2px; */
+    justify-content: space-evenly;
+}

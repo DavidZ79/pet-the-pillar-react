@@ -1,0 +1,119 @@
+/*
+    * pet_adoption.css
+    *
+    * CSC309 Term Project
+    * University of Toronto
+    * Fall 2023
+    */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.background-box {
+  background-color: var(--primary);
+  width: 1228px;
+  
+  border-radius: 15px;
+  margin: auto;
+  padding: 0;
+  margin-top: 12px;
+
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.application-text {
+  font-weight: 550;
+  font-size: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+  margin-bottom: 20px;
+}
+
+.app-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+.app-box label {
+  text-align: right;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+}
+.app-box input {
+  /* width: 686px; */
+  width: 70%;
+  height: 41px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+
+  font-size: 20px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+}
+.app-box textarea {
+  /* width: 686px; */
+  width: 70%;
+  height: 215px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  resize: none;
+
+  font-size: 20px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.submit-btn {
+  height: 58px;
+  width: 116px;
+  background-color: white;
+  border-radius: 40px;
+  border-width: 2px;
+
+  font-size: 20px;
+  font-weight: 550;
+  margin-top: 5px;
+}
+.submit-btn:hover {
+  background-color: rgba(255, 255, 255, 0.459);
+}
+
+.info-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.info-container p {
+  margin-top: 5px;
+  display: inline;
+}
+
+@media screen and (max-width: 700px) {
+    .app-box input {
+        width: 70%;
+    }
+    .app-box textarea {
+        width: 70%;
+    }
+}

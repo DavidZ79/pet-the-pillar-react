@@ -1,0 +1,127 @@
+/*
+    * login.css
+    *
+    * CSC309 Term Project
+    * University of Toronto
+    * Fall 2023
+    */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.background-box {
+  background-color: var(--primary);
+  width: 704px;
+  height: 484px;
+  border-radius: 15px;
+  margin: auto;
+  padding: 0;
+  /* margin-top: 150px; */
+  /* margin-left: 8px; */
+  /* margin-right: 8px; */
+}
+
+.login-text {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 0;
+  width: fit-content;
+  margin-top: 32px;
+
+  font-size: 40px;
+  font-weight: 400;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.login-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 33px;
+}
+.login-box input {
+  background-color: white;
+  /* width: 406px; */
+  width: 60%;
+  height: 58px;
+  border-radius: 20px;
+  border-width: 2px;
+  padding: 10px;
+
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+}
+.login-box label {
+  font-size: 20px;
+  font-weight: 550;
+  margin-right: 20px;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.submit-btn {
+  height: 58px;
+  width: 116px;
+  /* background-color: white; */
+  border-radius: 40px;
+  border-width: 2px;
+
+  font-size: 20px;
+  font-weight: 550;
+  margin-top: 29px;
+}
+.submit-btn:hover {
+  background-color: rgba(255, 255, 255, 0.459);
+}
+
+.top-margin {
+  margin-top: 25px;
+}
+.left-margin {
+  margin-left: 10px;
+}
+.info-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 17px;
+}
+.info-container p {
+  display: inline;
+}
+
+/* Hide the error message by default */
+.error-message {
+  display: none;
+  color: red;
+}
+
+/* Show the error message when the form is in an invalid state */
+form:invalid .error-message {
+  display: block;
+}
+
+/* Hide the error message when the form is in a valid state */
+form:valid .error-message {
+  display: none;
+}
+
+
+@media screen and (max-width: 480px) {
+  .login-box input {
+    width: 60%;
+  }
+}

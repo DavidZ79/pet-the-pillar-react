@@ -1,0 +1,128 @@
+/*
+    * login.css
+    *
+    * CSC309 Term Project
+    * University of Toronto
+    * Fall 2023
+    */
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.background-box {
+  background-color: var(--primary);
+  width: 704px;
+  height: 484px;
+  border-radius: 15px;
+  margin: auto;
+  padding: 0;
+  margin-top: 150px;
+
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.login-text {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 0;
+  width: fit-content;
+  margin-top: 32px;
+
+  font-size: 40px;
+  font-weight: 400;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.login-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+}
+.login-box input {
+  background-color: white;
+  /* width: 406px; */
+  width: 60%;
+  height: 58px;
+  border-radius: 20px;
+  border-width: 2px;
+
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+}
+.login-box label {
+  font-size: 20px;
+  font-weight: 550;
+  margin-right: 20px;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.submit-btn {
+  height: 58px;
+  width: 116px;
+  background-color: white;
+  border-radius: 40px;
+  border-width: 2px;
+
+  font-size: 20px;
+  font-weight: 550;
+  margin-top: 29px;
+}
+.submit-btn:hover {
+  background-color: rgba(255, 255, 255, 0.459);
+}
+
+.top-margin {
+  margin-top: 18px;
+}
+.left-margin {
+  margin-left: 10px;
+}
+.info-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 13px;
+}
+.info-container p {
+  display: inline;
+}
+
+.error-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  margin: auto;
+  background: red;
+  width: 40%;
+  height: 40px;
+  text-align: center;
+  color: aliceblue;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 480px) {
+  .login-box input {
+    width: 60%;
+  }
+
+  .error-box {
+   font-size: 12px;
+  }
+}

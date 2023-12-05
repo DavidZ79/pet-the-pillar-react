@@ -1,0 +1,88 @@
+/*
+    * shelter_management.css
+    *
+    * CSC309 Term Project
+    * University of Toronto
+    * Fall 2023
+*/
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 15px;
+}
+
+.cards_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #97c3e9;
+  width: 100%;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  background-color: #6892e5;
+  width: 300px;
+  height: 300px;
+  margin: 0 10px 20px 10px;
+  padding: 20px;
+}
+
+#shelter_img_front {
+  border-radius: 15px;
+  max-width: 300px;
+  max-height: 300px;
+  margin: 50px;
+}
+
+h1 {
+  font-size: 48px;
+  color: white;
+  text-align: center;
+  margin: 30px 0;
+}
+
+h2 {
+  font-size: 24px;
+  color: white;
+  text-align: center;
+  margin: 30px 0;
+}
+
+p {
+  font-size: 16px;
+  color: white;
+  text-align: center;
+}
+
+#btn {
+    font-size: 24px;
+    border: 1px solid white;
+    margin: 30px 30px;
+}
+
+@media only screen and (max-width: 480px) {
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
