@@ -1,11 +1,14 @@
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter } from "react-router-dom";
+// import ReactDOM from "react-dom/client";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import FallBack from "./pages/FallBack";
 import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import Notifications from "./pages/Notifications";
+import SignupSeeker from "./pages/SignupSeeker";
+import SignupShelter from "./pages/SignupShelter";
+
 import './App.css';
 
 function App() {
@@ -30,6 +33,14 @@ function App() {
     {
       path: "/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/signup_seeker",
+      element: <SignupSeeker />,
+    },
+    {
+      path: "/signup_shelter",
+      element: <SignupShelter />,
     },
   ]);
 
