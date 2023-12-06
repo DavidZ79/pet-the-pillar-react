@@ -3,7 +3,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import FallBack from "./pages/FallBack";
 import SearchPage from "./pages/SearchPage";
-import SignupPage from "./pages/SignupPage";
+import SignupBeforePage from "./pages/SignupBeforePage";
+import SignupSeekerPage from "./pages/SignupSeekerPage";
+import SignupShelterPage from "./pages/SignupShelterPage";
 import LoginPage from "./pages/LoginPage";
 import Notifications from "./pages/Notifications";
 import SignupSeeker from "./pages/SignupSeeker";
@@ -27,8 +29,16 @@ function App() {
       element: <Notifications />,
     },
     {
-      path: "/signup",
-      element: <SignupPage />,
+      path: "/signup_before",
+      element: <SignupBeforePage />,
+    },
+    {
+      path: "/signup_seeker",
+      element: <SignupSeekerPage />,
+    },
+    {
+      path: "/signup_shelter",
+      element: <SignupShelterPage />,
     },
     {
       path: "/login",
