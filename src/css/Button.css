@@ -1,0 +1,23 @@
+.btn {
+   font-size: 20px;
+   font-style: normal;
+   font-weight: 400;
+   text-decoration: none;
+   color: black;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ 
+   /* width: 450px; */
+   width: 60%;
+   height: 58px;
+   margin: auto;
+   
+   margin-top: 35px;
+   border-radius: 20px;
+   background-color: aliceblue;
+ }
+ 
+ .btn:hover {
+   background-color: rgba(255, 255, 255, 0.459);
+ }

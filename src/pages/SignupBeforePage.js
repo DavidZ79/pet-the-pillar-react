@@ -1,14 +1,31 @@
+import Footer from "../components/Footer";
+import Card from "../components/Card";
+import Button from "../components/Button";
+
+import "../pagecss/signuppage.css";
+
 import { Link } from "react-router-dom";
 
-function SignupBeforePage() {
+export default function SignupBeforePage() {
   return (
-    <div>
-      <div>Are you a seeker or a shelter?</div>
-      <Link to="/signup_seeker"><button>seeker</button></Link>  {/* or replace button with custom Button component */}
-      <div> </div>
-      <Link to="/signup_shelter">shelter</Link>
-    </div>
+    <body>
+      {/* header */}
+
+      <div className="main">
+        <Card>
+          <p className="signup-text">Sign Up</p>
+
+          <Link to="/signup_seeker">
+            <Button className="signup-btn">As a Pet Seeker</Button>
+          </Link>
+
+          <Link to="/signup_shelter">
+            <Button className="signup-btn">As a Pet Shelter</Button>
+          </Link>
+        </Card>
+      </div>
+
+      <Footer />
+    </body>
   );
 }
-
-export default SignupBeforePage;
