@@ -1,0 +1,65 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: aliceblue;
+  font-family: "Poppins", sans-serif;
+}
+
+.signup-text {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 0;
+  width: fit-content;
+  margin-top: 26px;
+
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.background-box {
+  background-color: var(--primary);
+  width: 704px;
+  height: 310px;
+  border-radius: 15px;
+  margin: auto;
+  padding: 0;
+  /* margin-top: 250px; */
+  /* margin-left: 8px; */
+  /* margin-right: 8px; */
+}
+
+.signup-btn {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* width: 450px; */
+  width: 60%;
+  height: 58px;
+  margin: auto;
+
+  margin-top: 35px;
+  border-radius: 20px;
+  background-color: aliceblue;
+}
+
+.signup-btn:hover {
+  background-color: rgba(255, 255, 255, 0.459);
+}
+
+@media screen and (max-width: 480px) {
+  .signup-btn {
+    width: 60%;
+  }
+}
