@@ -92,7 +92,9 @@ export default function SignupShelterPage() {
               </div>
 
               <div className={styles['submit-container']}>
-                <input type="submit" className={styles['submit-btn']} value="Sign up"/>
+                <Link to="/shelter_management">
+                  <input type="submit" className={styles['submit-btn']} value="Sign up"/>
+                </Link>
               </div>
 
               <div className={styles['top-margin']}>

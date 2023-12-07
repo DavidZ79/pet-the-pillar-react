@@ -86,7 +86,9 @@ function SignupSeekerPage() {
             </div>
 
             <div className={styles['submit-container']}>
-              <input type="submit" className={styles['submit-btn']} value="Sign up"/>
+              <Link to="/pet_application">
+                <input type="submit" className={styles['submit-btn']} value="Sign up"/>
+              </Link>
             </div>
 
             <div className={styles['top-margin']}>
