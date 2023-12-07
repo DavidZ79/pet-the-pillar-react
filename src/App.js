@@ -47,6 +47,10 @@ function App() {
       path: "/shelter_dashboard",
       element: <ShelterDashboardPage />,
     },
+    {
+      path: "/pet_adoption",
+      element: <PetAdoption />,
+    },
   ]);
 
   return (
