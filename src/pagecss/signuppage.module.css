@@ -3,11 +3,10 @@
   justify-content: center;
   align-items: center;
   font-family: "Poppins", sans-serif;
-}
 
-body {
-  background-color: aliceblue;
-  font-family: "Poppins", sans-serif;
+  position: relative;
+  margin: 16px;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height) - 32px);
 }
 
 .signup-text {
@@ -23,7 +22,7 @@ body {
 }
 
 .background-box {
-  background-color: var(--primary);
+  background-color: #97c3e9;
   width: 704px;
   height: 310px;
   border-radius: 15px;

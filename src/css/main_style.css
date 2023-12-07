@@ -50,7 +50,7 @@
  }
  
  .navbar{
-     background-color: var(--dark-blue);
+     background-color: var(--dark-blue) !important;
      height: var(--header-height);
      width: 100%;
  }
@@ -314,7 +314,7 @@
    background-color: aliceblue;
  }
  
- .footer {
+ .footers {
      position: sticky;
      background-color: var(--dark-blue);
      padding: 0px;

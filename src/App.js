@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import Notifications from "./pages/Notifications";
 import SignupSeeker from "./pages/SignupSeeker";
 import SignupShelter from "./pages/SignupShelter";
+import PetAdoption from "./pages/PetAdoptionPage";
 
 import './App.css';
 
@@ -51,6 +52,10 @@ function App() {
     {
       path: "/signup_shelter",
       element: <SignupShelter />,
+    },
+    {
+      path: "/pet_adoption",
+      element: <PetAdoption />,
     },
   ]);
 
