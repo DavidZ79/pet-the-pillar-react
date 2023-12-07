@@ -8,8 +8,7 @@ import SignupSeekerPage from "./pages/SignupSeekerPage";
 import SignupShelterPage from "./pages/SignupShelterPage";
 import LoginPage from "./pages/LoginPage";
 import Notifications from "./pages/Notifications";
-import SignupSeeker from "./pages/SignupSeeker";
-import SignupShelter from "./pages/SignupShelter";
+import ShelterDashboardPage from "./shelter_dashboard_page/ShelterDashboardPage";
 
 import './App.css';
 
@@ -45,12 +44,8 @@ function App() {
       element: <LoginPage />,
     },
     {
-      path: "/signup_seeker",
-      element: <SignupSeeker />,
-    },
-    {
-      path: "/signup_shelter",
-      element: <SignupShelter />,
+      path: "/shelter_dashboard",
+      element: <ShelterDashboardPage />,
     },
   ]);
 
