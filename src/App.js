@@ -9,6 +9,9 @@ import SignupShelterPage from "./pages/SignupShelterPage";
 import LoginPage from "./pages/LoginPage";
 import Notifications from "./pages/Notifications";
 import ShelterDashboardPage from "./shelter_dashboard_page/ShelterDashboardPage";
+import PetAdoption from "./pages/PetAdoptionPage";
+import UpdateSeekerPage from "./pages/UpdateSeekerPage";
+import UpdateShelterPage from "./pages/UpdateShelterPage";
 
 import './App.css';
 
@@ -50,6 +53,14 @@ function App() {
     {
       path: "/pet_adoption",
       element: <PetAdoption />,
+    },
+    {
+      path: "/update_shelter",
+      element: <UpdateShelterPage />,
+    },
+    {
+      path: "/update_seeker",
+      element: <UpdateSeekerPage />,
     },
   ]);
 
