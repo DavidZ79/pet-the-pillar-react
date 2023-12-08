@@ -96,3 +96,42 @@ p a:hover{
   color: var(--lighter-dark-blue);
   transition: color 250ms linear;
 }
+
+.button.is-primary {
+  background-color: var(--primary);
+  border-color: transparent;
+  color: #fff;
+}
+
+.button.is-primary:hover {
+  transition: color 250ms linear;
+  transition: background-color 250ms linear;
+  color: var(--primary);
+  background-color: white;
+}
+
+.button.is-secondary {
+  background-color: var(--secondary);
+  border-color: transparent;
+  color: #fff;
+}
+
+.button.is-secondary:hover {
+  transition: color 250ms linear;
+  transition: background-color 250ms linear;
+  color: var(--secondary);
+  background-color: white;
+}
+
+.button.is-secondary-lighter {
+  background-color: var(--secondary-lighter);
+  border-color: transparent;
+  color: #fff;
+}
+
+.button.is-secondary-lighter:hover {
+  transition: color 250ms linear;
+  transition: background-color 250ms linear;
+  color: var(--secondary-lighter);
+  background-color: white;
+}
