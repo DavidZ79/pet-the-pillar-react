@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/pet-the-pillar-react/static/css/main.833044e2.css",
-    "main.js": "/pet-the-pillar-react/static/js/main.06696464.js",
+    "main.js": "/pet-the-pillar-react/static/js/main.f2bb34be.js",
     "static/js/787.400e6072.chunk.js": "/pet-the-pillar-react/static/js/787.400e6072.chunk.js",
     "static/media/shelter_management_front.jpg": "/pet-the-pillar-react/static/media/shelter_management_front.e2388ec30ad71ef7942a.jpg",
     "static/media/red-cloth-dog.jpg": "/pet-the-pillar-react/static/media/red-cloth-dog.7cd4cbaf5f75374e17b4.jpg",
@@ -12,11 +12,11 @@
     "static/media/profile.png": "/pet-the-pillar-react/static/media/profile.2fda6558cd58b877e14f.png",
     "index.html": "/pet-the-pillar-react/index.html",
     "main.833044e2.css.map": "/pet-the-pillar-react/static/css/main.833044e2.css.map",
-    "main.06696464.js.map": "/pet-the-pillar-react/static/js/main.06696464.js.map",
+    "main.f2bb34be.js.map": "/pet-the-pillar-react/static/js/main.f2bb34be.js.map",
     "787.400e6072.chunk.js.map": "/pet-the-pillar-react/static/js/787.400e6072.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.833044e2.css",
-    "static/js/main.06696464.js"
+    "static/js/main.f2bb34be.js"
   ]
 }
