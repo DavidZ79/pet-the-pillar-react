@@ -117,27 +117,27 @@ export default function SearchPage() {
         </div>
         
         {/* pet list */}
-        <div className={`${styles.tile} ${styles['is-ancestor']} ${styles['pet-list']}`}>
-          <div className={`${styles.tile} ${styles['is-vertical']} ${styles['is-12']}`}>
-          <div className={`${styles.tile} ${styles['is-12']}`}>
+        <div className='tile is-ancestor pet-list'>
+          <div className='tile is-vertical is-12'>
+          <div className='tile is-12'>
 
             {/* pet 1 */}
-            <div className={`${styles.tile} ${styles['is-3']} ${styles['is-parent']}`}>
-              <div className={`${styles.tile} ${styles['is-child']}`}>
-                <div className={`${styles.card} ${styles['is-hoverable']}`}>
-                  <div className={styles['card-image']}>
+            <div className='tile is-3 is-parent'>
+              <div className='tile is-child'>
+                <div className={`is-hoverable ${styles.card}`}>
+                  <div className='card-image'>
                     <Link to='/pet_detail'>
-                      <figure>
+                      <figure className='image is-4by4'>
                         <img src={cat} alt="Placeholder image"/>
                       </figure>
                     </Link>
                   </div>
 
-                  <div className={styles['card-content']}>
-                    <div className={styles.media}>
-                      <div className={styles['media-content']}>
-                        <p className={`${styles.title} ${styles['is-4']}`}>Sylas</p>
-                        <p className={`${styles.subtitle} ${styles['is-6']}`}>
+                  <div className='card-content'>
+                    <div className='media'>
+                      <div className='media-content'>
+                        <p className='title is-4'>Sylas</p>
+                        <p className='subtitle is-6'>
                           <Link to="/shelter">
                             Generic Animal Shelter
                           </Link>
@@ -145,7 +145,7 @@ export default function SearchPage() {
                       </div>
                     </div>
 
-                    <div className={styles['content']}>
+                    <div className='content'>
                         <div className=''>
                           <div>
                             Age: 15
