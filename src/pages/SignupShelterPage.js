@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from 'react-router-dom';
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -28,6 +29,8 @@ export default function SignupShelterPage() {
       .required("Passwords don't match"),
   });
 
+  const history = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -38,13 +41,18 @@ export default function SignupShelterPage() {
 
   const navigate = useNavigate()
   const onSubmit = (data) => {
-    navigate('/shelter_dashboard')
+
+
+    // <Link to="/shelter_dashboard"></Link>
+    history.push('/shelter_dashboard');
     console.log({data})
+    console.log("fdsa")
+
     //form logic here
   };
 
   return (
-    <body>
+    <>
       <Header/>
         <div className={styles.main}>
           <Card className={styles['background-box']}>
@@ -116,6 +124,6 @@ export default function SignupShelterPage() {
           </Card>
         </div>
       <Footer/>
-    </body>
+    </>
   );
 }
