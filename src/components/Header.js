@@ -67,11 +67,11 @@ export default function Header() {
 
         <div className="navbar-end">
           <div className="navbar-item logged-in">
-            <div class="">
-              <div class="navbar-item bell-div">
+            <div className="">
+              <div className="navbar-item bell-div">
                 <Link to="/notification_page">
                   <svg
-                    class="bell"
+                    className="bell"
                     xmlns="http://www.w3.org/2000/svg"
                     height="1em"
                     viewBox="0 0 448 512"
