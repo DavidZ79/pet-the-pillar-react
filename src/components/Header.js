@@ -117,7 +117,7 @@ export default function Header() {
                   Settings (shelter)
                 </Link>
 
-                <Link to="/landing_page" className="navbar-item">
+                <Link to="/" className="navbar-item">
                   Log Out
                 </Link>
               </div>
