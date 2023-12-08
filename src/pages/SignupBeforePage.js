@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 export default function SignupBeforePage() {
   return (
-    <body>
+    <>
       <Header/>
 
       <div className={styles.main}>
@@ -27,6 +27,6 @@ export default function SignupBeforePage() {
       </div>
 
       <Footer />
-    </body>
+    </>
   );
 }

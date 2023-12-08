@@ -29,7 +29,7 @@ export default function LoginPage() {
   };
 
   return (
-    <body>
+    <>
 
       <Header/>
 
@@ -64,6 +64,6 @@ export default function LoginPage() {
 
       <Footer/>
       
-    </body>
+    </>
   );
 }
