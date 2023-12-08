@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "../pagecss/signupseeker.module.css";
 
@@ -35,8 +35,11 @@ function SignupSeekerPage() {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate()
   const onSubmit = (data) => {
+    navigate('/shelter_dashboard')
     console.log(data);
+    //form logic here
   };
 
   return (

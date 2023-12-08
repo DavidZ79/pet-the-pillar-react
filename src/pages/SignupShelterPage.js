@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "../pagecss/signupshelter.module.css";
 
@@ -36,8 +36,9 @@ export default function SignupShelterPage() {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate()
   const onSubmit = (data) => {
-    <Link to="/shelter_dashboard"></Link>
+    navigate('/shelter_dashboard')
     console.log({data})
     //form logic here
   };
@@ -49,7 +50,7 @@ export default function SignupShelterPage() {
           <Card className={styles['background-box']}>
             <p className={styles['signup-text']}>Sign Up</p>
 
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className={styles['pfp-container']}>
                 <img src={pfp} alt="pfp pic" className={styles.pfp}/>
               </div>
