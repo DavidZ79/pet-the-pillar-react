@@ -7,9 +7,10 @@ import SignupBeforePage from "./pages/SignupBeforePage";
 import SignupSeekerPage from "./pages/SignupSeekerPage";
 import SignupShelterPage from "./pages/SignupShelterPage";
 import LoginPage from "./pages/LoginPage";
-import Notifications from "./pages/Notifications";
+import NotificationPage from "./pages/NotificationPage";
 import ShelterDashboardPage from "./shelter_dashboard_page/ShelterDashboardPage";
 import PetAdoption from "./pages/PetAdoptionPage";
+
 import UpdateSeekerPage from "./pages/UpdateSeekerPage";
 import UpdateShelterPage from "./pages/UpdateShelterPage";
 import PetCreatePage from "./pages/PetCreatePage";
@@ -18,6 +19,7 @@ import PetDetailPage from "./pages/PetDetailPage";
 import PetUpdatePage from "./pages/PetUpdatePage";
 import Shelter from "./pages/Shelter";
 import ShelterBlog from "./pages/ShelterBlog";
+
 
 import './App.css';
 
@@ -33,8 +35,8 @@ function App() {
       element: <SearchPage />,
     },
     {
-      path: "/notifications",
-      element: <Notifications />,
+      path: "/notification_page",
+      element: <NotificationPage />,
     },
     {
       path: "/signup_before",
