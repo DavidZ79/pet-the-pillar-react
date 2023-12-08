@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Card from '../components/Card';
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Card from "../components/Card";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -35,36 +35,51 @@ function SignupSeekerPage() {
     resolver: yupResolver(schema),
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const onSubmit = (data) => {
-    navigate('/shelter_dashboard')
-    console.log({data});
+    navigate("/shelter_dashboard");
+    console.log({ data });
     //form logic here
   };
 
   return (
     <body>
-      <Header/>
+      <Header />
 
       <div className={styles.main}>
-        <Card className={styles['background-box']}>
-          <p className={styles['signup-text']}>Sign Up</p>
+        <Card className={styles["background-box"]}>
+          <p className={styles["signup-text"]}>Sign Up</p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles['pfp-container']}>
-              <img src={pfp} alt="pfp pic" className={styles.pfp}/>
+            <div className={styles["pfp-container"]}>
+              <img src={pfp} alt="pfp pic" className={styles.pfp} />
             </div>
 
-            <div className={styles['login-box']}>
-              <input type='file' accept=".jpg,.jpeg,.png"/>
-              
-              <input type="text" placeholder="First Name*" {...register("firstName")} required/>
+            <div className={styles["login-box"]}>
+              <input type="file" accept=".jpg,.jpeg,.png" />
+
+              <input
+                type="text"
+                placeholder="First Name*"
+                {...register("firstName")}
+                required
+              />
               <p>{errors.firstName?.message}</p>
 
-              <input type="text" placeholder="Last Name*" {...register("lastName")} required/>
+              <input
+                type="text"
+                placeholder="Last Name*"
+                {...register("lastName")}
+                required
+              />
               <p>{errors.lastName?.message}</p>
 
-              <input type="text" placeholder="Email*" {...register("email")} required/>
+              <input
+                type="text"
+                placeholder="Email*"
+                {...register("email")}
+                required
+              />
               <p>{errors.email?.message}</p>
 
               <input
@@ -91,30 +106,31 @@ function SignupSeekerPage() {
               <p>{errors.confirmPassword?.message}</p>
             </div>
 
-            <div className={styles['submit-container']}>
-              <Link to="/pet_application">
-                <input type="submit" className={styles['submit-btn']} value="Sign up"/>
-              </Link>
+            <div className={styles["submit-container"]}>
+              <input
+                type="submit"
+                className={styles["submit-btn"]}
+                value="Sign up"
+              />
             </div>
 
-            <div className={styles['top-margin']}>
-              <div className={styles['info-container']}>
+            <div className={styles["top-margin"]}>
+              <div className={styles["info-container"]}>
                 <p>Already have an account?</p>
-                <Link to='/login' className={styles['left-margin']}>Login</Link>
+                <Link to="/login" className={styles["left-margin"]}>
+                  Login
+                </Link>
               </div>
 
-              <div className={styles['info-container']}>
+              <div className={styles["info-container"]}>
                 <p>* Required</p>
               </div>
             </div>
           </form>
-
         </Card>
       </div>
 
-      
-
-      <Footer/>
+      <Footer />
     </body>
   );
 }

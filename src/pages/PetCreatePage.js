@@ -13,7 +13,7 @@ import pfp from "../assets/profile.png";
 
 export default function PetCreatePage() {
   const schema = yup.object().shape({
-    profilePic: yup.mixed().required("Please enter a profile picture"),
+    // profilePic: yup.mixed().required("Please enter a profile picture"),
     name: yup.string().required("Please enter a name"),
     status: yup.string().required("Please enter a status"),
     description: yup.string().required("Please enter description"),
@@ -37,6 +37,7 @@ export default function PetCreatePage() {
 
   const navigate = useNavigate();
   const onSubmit = (data) => {
+    console.log("submitted");
     navigate("/pet_detail");
     console.log({ data });
     //form logic here
@@ -56,7 +57,7 @@ export default function PetCreatePage() {
             </div>
 
             <div className={styles["login-box"]}>
-              <input type="file" accept=".jpg,.jpeg,.png" />
+              <input type="file" accept=".jpg,.jpeg,.png" required/>
 
               <input
                 type="text"
