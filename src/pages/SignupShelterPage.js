@@ -28,8 +28,6 @@ export default function SignupShelterPage() {
       .required("Passwords don't match"),
   });
 
-  const history = useNavigate();
-
   const {
     register,
     handleSubmit,
