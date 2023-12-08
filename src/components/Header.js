@@ -69,7 +69,7 @@ export default function Header() {
           <div className="navbar-item logged-in">
             <div class="">
               <div class="navbar-item bell-div">
-                <Link to="notification_page">
+                <Link to="/notification_page">
                   <svg
                     class="bell"
                     xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +97,7 @@ export default function Header() {
                   Dashboard (seeker)
                 </Link>
 
-                <Link to="/shelter_management" className="navbar-item shelter">
+                <Link to="/shelter_dashboard" className="navbar-item shelter">
                   Dashboard (shelter)
                 </Link>
 
@@ -117,7 +117,7 @@ export default function Header() {
                   Settings (shelter)
                 </Link>
 
-                <Link to="/landing_page" className="navbar-item">
+                <Link to="/" className="navbar-item">
                   Log Out
                 </Link>
               </div>

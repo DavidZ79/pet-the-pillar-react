@@ -1,19 +1,13 @@
-/*
-    * shelter_management.css
-    *
-    * CSC309 Term Project
-    * University of Toronto
-    * Fall 2023
-*/
-
 .main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: "Poppins", sans-serif;
+  position: relative;
+  margin: 16px;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height) - 32px);
 }
-
 .container {
   display: flex;
   justify-content: center;
@@ -21,7 +15,6 @@
   flex-direction: column;
   border-radius: 15px;
 }
-
 .cards_container {
   display: flex;
   flex-direction: column;
@@ -29,13 +22,11 @@
   background-color: #97c3e9;
   width: 100%;
 }
-
 .cards {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-
 .card {
   display: flex;
   flex-direction: column;
@@ -49,8 +40,7 @@
 
 .shelter_img_front {
   border-radius: 15px;
-  max-width: 300px;
-  max-height: 300px;
+  width: 300px;
   margin: 50px;
 }
 

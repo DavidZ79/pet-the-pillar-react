@@ -37,7 +37,9 @@ export default function SignupShelterPage() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    <Link to="/shelter_dashboard"></Link>
+    console.log({data})
+    //form logic here
   };
 
   return (
@@ -47,7 +49,7 @@ export default function SignupShelterPage() {
           <Card className={styles['background-box']}>
             <p className={styles['signup-text']}>Sign Up</p>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={onSubmit}>
               <div className={styles['pfp-container']}>
                 <img src={pfp} alt="pfp pic" className={styles.pfp}/>
               </div>
@@ -55,19 +57,20 @@ export default function SignupShelterPage() {
               <div className={styles['login-box']}>
                 <input type='file' accept=".jpg,.jpeg,.png"/>
 
-                <input type="text" placeholder="Shelter name*" {...register("shelterName")} />
+                <input type="text" placeholder="Shelter name*" {...register("shelterName")} required/>
                 <p>{errors.shelterName?.message}</p>
 
-                <input type="text" placeholder="Location*" {...register("location")} />
+                <input type="text" placeholder="Location*" {...register("location")} required/>
                 <p>{errors.location?.message}</p>
 
-                <input type="text" placeholder="Email*" {...register("email")} />
+                <input type="text" placeholder="Email*" {...register("email")} required/>
                 <p>{errors.email?.message}</p>
 
                 <input
                   type="number"
                   placeholder="Phone Number*"
                   {...register("phone")}
+                  required
                 />
                 <p>{errors.phone?.message}</p>
 
@@ -75,26 +78,26 @@ export default function SignupShelterPage() {
                   type="password"
                   placeholder="Password*"
                   {...register("password")}
+                  required
                 />
                 <p>{errors.password?.message}</p>
                 <input
                   type="password"
                   placeholder="Confirm Password*"
                   {...register("confirmPassword")}
+                  required
                 />
                 <p>{errors.confirmPassword?.message}</p>
 
               </div>
 
               <div className={styles['mission-box']}>
-                <textarea placeholder="Mission Statement*" {...register("missionStatement")} />
+                <textarea placeholder="Mission Statement*" {...register("missionStatement")} required/>
                 <p>{errors.missionStatement?.message}</p>
               </div>
 
               <div className={styles['submit-container']}>
-                <Link to="/shelter_management">
                   <input type="submit" className={styles['submit-btn']} value="Sign up"/>
-                </Link>
               </div>
 
               <div className={styles['top-margin']}>
