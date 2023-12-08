@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "../pagecss/signupseeker.module.css";
 
@@ -35,8 +35,11 @@ function SignupSeekerPage() {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate()
   const onSubmit = (data) => {
+    navigate('/shelter_dashboard')
     console.log(data);
+    //form logic here
   };
 
   return (
@@ -55,19 +58,20 @@ function SignupSeekerPage() {
             <div className={styles['login-box']}>
               <input type='file' accept=".jpg,.jpeg,.png"/>
               
-              <input type="text" placeholder="First Name*" {...register("firstName")}/>
+              <input type="text" placeholder="First Name*" {...register("firstName")} required/>
               <p>{errors.firstName?.message}</p>
 
-              <input type="text" placeholder="Last Name*" {...register("lastName")} />
+              <input type="text" placeholder="Last Name*" {...register("lastName")} required/>
               <p>{errors.lastName?.message}</p>
 
-              <input type="text" placeholder="Email*" {...register("email")} />
+              <input type="text" placeholder="Email*" {...register("email")} required/>
               <p>{errors.email?.message}</p>
 
               <input
                 type="number"
                 placeholder="Phone Number*"
                 {...register("phone")}
+                required
               />
               <p>{errors.phone?.message}</p>
 
@@ -75,12 +79,14 @@ function SignupSeekerPage() {
                 type="password"
                 placeholder="Password*"
                 {...register("password")}
+                required
               />
               <p>{errors.password?.message}</p>
               <input
                 type="password"
                 placeholder="Confirm Password*"
                 {...register("confirmPassword")}
+                required
               />
               <p>{errors.confirmPassword?.message}</p>
             </div>

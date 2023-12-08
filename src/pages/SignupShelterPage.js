@@ -7,7 +7,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "../pagecss/signupshelter.module.css";
 
@@ -39,12 +39,15 @@ export default function SignupShelterPage() {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate()
   const onSubmit = (data) => {
+
 
     // <Link to="/shelter_dashboard"></Link>
     history.push('/shelter_dashboard');
     console.log({data})
     console.log("fdsa")
+
     //form logic here
   };
 
@@ -63,19 +66,20 @@ export default function SignupShelterPage() {
               <div className={styles['login-box']}>
                 <input type='file' accept=".jpg,.jpeg,.png"/>
 
-                <input type="text" placeholder="Shelter name*" {...register("shelterName")} />
+                <input type="text" placeholder="Shelter name*" {...register("shelterName")} required/>
                 <p>{errors.shelterName?.message}</p>
 
-                <input type="text" placeholder="Location*" {...register("location")} />
+                <input type="text" placeholder="Location*" {...register("location")} required/>
                 <p>{errors.location?.message}</p>
 
-                <input type="text" placeholder="Email*" {...register("email")} />
+                <input type="text" placeholder="Email*" {...register("email")} required/>
                 <p>{errors.email?.message}</p>
 
                 <input
                   type="number"
                   placeholder="Phone Number*"
                   {...register("phone")}
+                  required
                 />
                 <p>{errors.phone?.message}</p>
 
@@ -83,26 +87,26 @@ export default function SignupShelterPage() {
                   type="password"
                   placeholder="Password*"
                   {...register("password")}
+                  required
                 />
                 <p>{errors.password?.message}</p>
                 <input
                   type="password"
                   placeholder="Confirm Password*"
                   {...register("confirmPassword")}
+                  required
                 />
                 <p>{errors.confirmPassword?.message}</p>
 
               </div>
 
               <div className={styles['mission-box']}>
-                <textarea placeholder="Mission Statement*" {...register("missionStatement")} />
+                <textarea placeholder="Mission Statement*" {...register("missionStatement")} required/>
                 <p>{errors.missionStatement?.message}</p>
               </div>
 
               <div className={styles['submit-container']}>
-                <Link to="/shelter_management">
                   <input type="submit" className={styles['submit-btn']} value="Sign up"/>
-                </Link>
               </div>
 
               <div className={styles['top-margin']}>
