@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 
 import styles from "../pagecss/updateshelterpage.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -35,7 +35,9 @@ export default function UpdateShelterPage() {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate()
   const onSubmit = (data) => {
+    navigate("/shelter_management");
     console.log(data);
   };
 
