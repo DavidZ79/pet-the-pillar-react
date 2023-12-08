@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from 'react-router-dom';
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -41,13 +40,8 @@ export default function SignupShelterPage() {
 
   const navigate = useNavigate()
   const onSubmit = (data) => {
-
-
-    // <Link to="/shelter_dashboard"></Link>
-    history.push('/shelter_dashboard');
+    navigate('/shelter_dashboard');
     console.log({data})
-    console.log("fdsa")
-
     //form logic here
   };
 

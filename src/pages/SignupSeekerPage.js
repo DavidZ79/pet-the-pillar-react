@@ -38,7 +38,7 @@ function SignupSeekerPage() {
   const navigate = useNavigate()
   const onSubmit = (data) => {
     navigate('/shelter_dashboard')
-    console.log(data);
+    console.log({data});
     //form logic here
   };
 

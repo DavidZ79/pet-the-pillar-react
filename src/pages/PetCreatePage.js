@@ -11,7 +11,13 @@ export default function PetCreatePage() {
          <Header/>
 
          <div className={styles.main}>
+            <div className={styles['left-wrapper']}>
 
+            </div>
+
+            <div className={styles.but}>
+
+            </div>
          </div>
 
          <Footer/>
