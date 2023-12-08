@@ -1,7 +1,5 @@
 // import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import LandingPage from "./pages/LandingPage";
 import FallBack from "./pages/FallBack";
 import SearchPage from "./pages/SearchPage";
@@ -24,17 +22,6 @@ import ShelterBlog from "./pages/ShelterBlog";
 
 
 import './App.css';
-
-const history = createBrowserHistory({ window });
-history.basename = process.env.PUBLIC_URL || '';
-
-function CustomRouter({ children }) {
-  return (
-    <HistoryRouter history={history}>
-      {children}
-    </HistoryRouter>
-  );
-}
 
 
 function App() {
@@ -111,9 +98,7 @@ function App() {
   ]);
 
   return (
-    <CustomRouter>
       <RouterProvider router={router} fallbackElement={<FallBack />} />
-    </CustomRouter>
   );
 }
 
