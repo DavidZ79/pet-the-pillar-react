@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 // import Card from '../components/Card';
 // import Button from '../components/Button';
 import "../pagecss/landingpage.css";
+import Header from "../components/Header";
 
 import banner_pic from "../landing_page_images/banner_pic.png";
 import red_cloth_dog from "../landing_page_images/red-cloth-dog.jpg";
@@ -14,6 +15,7 @@ import shelter_dog from "../landing_page_images/shelter-dog.jpg";
 export default function LandingPage() {
   return (
     <>
+      <Header />
       <div class="main">
         <div class="banner">
           <div class="LHScontainer">

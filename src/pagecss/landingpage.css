@@ -65,7 +65,6 @@
 .body {
     background-color: #97C3E9;
     text-align: center;
-    color: white;
     padding: 20px 0;
     width: 100%;
 }
@@ -91,13 +90,13 @@
 
 .card h2 {
     font-size: 32px;
-    color: white;
+
     margin: 15px;
 }
 
 .card h4 {
     font-size: 18px;
-    color: white;
+
     margin: 15px;
 }
 

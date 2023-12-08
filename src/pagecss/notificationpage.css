@@ -1,0 +1,117 @@
+.main h1 {
+  font-size: 72px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.notification_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background-color: #97c3e9;
+  padding: 20px;
+  max-width: 650px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.notification {
+  border-radius: 15px;
+  background-color: #6892e5;
+  min-height: 100px;
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  color: white;
+  align-content: center;
+  align-items: center;
+}
+
+.text_container {
+  display: flex;
+  flex-direction: column;
+  fill: white;
+  flex-wrap: wrap;
+  margin-left: 15px;
+}
+
+.text_container h2 {
+  font-size: 24px;
+}
+.text_container p {
+  max-width: 450px;
+  width: 100%;
+  height: 50px;
+  text-overflow: ellipsis;
+  overflow-y: auto;
+}
+
+/* icons */
+
+.notification-bell-div {
+  fill: aliceblue;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.notification-bell {
+  height: 30px;
+  margin: auto 0;
+  fill: inherit;
+}
+
+.notification-bell-div:hover {
+  animation: bell-pulse 1s infinite;
+}
+
+.notification-bell:hover {
+  animation: inherit;
+}
+
+/* scrollbar track */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 3px;
+}
+
+/* scrollbar track on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: white;
+}
+
+@keyframes bell-pulse {
+  0% {
+    fill: var(--light-text);
+  }
+  50% {
+    fill: var(--primary);
+  }
+  100% {
+    fill: var(--light-text);
+  }
+}
+
+/* x button */
+.x {
+  fill: white;
+  position: absolute;
+  right: 25px;
+  /* margin-left: 50px; */
+  /* justify-self: right; */
+}
+
+.x svg {
+  height: 30px;
+}
