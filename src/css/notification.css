@@ -38,13 +38,14 @@
   padding: 20px;
   display: flex;
   flex-wrap: wrap;
-  color: white;
+  color: black;
   align-content: center;
   align-items: center;
 }
 
 .notif_content {
     text-align: start;
+    color: black;
 }
 
 .text_container {
@@ -53,6 +54,7 @@
   fill: white;
   flex-wrap: wrap;
   margin-left: 15px;
+  color: black !important;
 }
 
 .text_container h2 {
@@ -98,13 +100,13 @@
 
 /* scrollbar thumb */
 ::-webkit-scrollbar-thumb {
-  background: white;
+  background: black;
   border-radius: 3px;
 }
 
 /* scrollbar track on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: white;
+  background: black;
 }
 
 @keyframes bell-pulse {
