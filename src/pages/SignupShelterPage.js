@@ -11,15 +11,15 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../pagecss/signupshelter.module.css";
 
 import pfp from "../assets/profile.png";
+var URL = process.env.REACT_APP_API_URL;
 
 export default function SignupShelterPage() {
   const schema = yup.object().shape({
     shelterName: yup.string().required("Shelter name is required"),
     location: yup.string().required("location is required"),
-    email: yup.string().email().required("Email is required"),
-    phone: yup.number().typeError("Please enter your phone number"),
-    // age: yup.number().positive().integer().min(18).required(),
-    password: yup.string().required("Please enter your password"),
+    email: yup.string().matches(/^[!#$%^&*a-zA-Z0-9_+-]+(\.[!#$%^&*a-zA-Z0-9_+-]+)*@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, "Email is invalid").required("Email is required"),
+    phone: yup.string().matches(/^\d{10}$/, "Phone number must be exactly 10 digits").required("Phone number is required"),
+    password: yup.string().matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/, "Password must be at least 8 characters long and contain at least one number, one uppercase, one lowercase, and one special character").required("Please enter your password"),
     profilePic: yup.mixed().notRequired(),
     missionStatement: yup.string().required("Mission Statement is required"),
     confirmPassword: yup
@@ -37,10 +37,64 @@ export default function SignupShelterPage() {
   });
 
   const navigate = useNavigate()
-  const onSubmit = (data) => {
-    navigate('/shelter_dashboard');
-    console.log({data})
-    //form logic here
+  const onSubmit = async (data) => {
+    const { shelterName, email, phone, password, location, missionStatement} = data;
+    const requestData = {
+      username: shelterName,
+      password,
+      email,
+      phoneNumber: phone,
+      location, 
+      missionStatement,
+    };
+    try {
+      const response = await fetch(URL + 'account/register/shelter/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+
+      //login stuff, sry this is incredibly unclean
+      const requestData2 = {
+        password,
+        email,
+      }
+      const response2 = await fetch(URL + 'account/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData2),
+      });
+  
+      if (!response2.ok) {
+        throw new Error(response2.status);
+      }
+  
+      const responseData2 = await response2.json();
+      if (responseData2.isShelter) {
+        navigate('/shelter_dashboard');
+      }
+      else {
+        navigate('/search');
+      }
+      console.log(responseData2);
+      localStorage.setItem('accessToken', responseData2.access_token);
+
+
+      navigate("/shelter_dashboard"); 
+    } catch (error) {
+      console.error('second demon:', error.message);
+    }
   };
 
   return (
