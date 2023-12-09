@@ -82,7 +82,7 @@ function App() {
       element: <PetDetailPage />,
     },
     {
-      path: "/pet_update",
+      path: "/pet_update/:id",
       element: <PetUpdatePage />,
     },
     {
