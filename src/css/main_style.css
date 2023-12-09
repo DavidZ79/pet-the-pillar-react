@@ -6,6 +6,8 @@
  * Fall 2023
  *
  */
+
+
  :root {
    --dark-text: black;
    --light-text: white;
@@ -117,14 +119,18 @@
  }
  
  .navbar-dropdown{
-     background-color: var(--secondary);
+     background-color: var(--secondary) !important;
      /* display:block; */
      box-sizing: border-box;
-     left: inherit;
-     border-top: var(--dark-blue) solid 6px;
-     right:0;
+     left: inherit !important;
+     border-top: var(--dark-blue) solid 6px !important;
+     right:0 !important;
  }
  
+ .navbar-buttons > *{
+  margin: 0px 4px;
+ }
+
  .bell-div {
      fill: aliceblue;
      height: 60px;
@@ -201,6 +207,7 @@
      width: 60px;
      border-radius: 50%;
      overflow: hidden;
+     max-height: 100% !important;
  }
  
  .navbar-profile:hover {

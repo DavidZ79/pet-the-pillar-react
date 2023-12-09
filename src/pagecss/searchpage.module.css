@@ -1,3 +1,5 @@
+@import "../css/main_style.css";
+
 .main {
    /* display: flex;
    justify-content: center;
@@ -83,13 +85,15 @@
 }
 
 .card, .title, .subtitle{
-  background-color: var(--primary);
-  color: var(--light-text);
+  background-color: var(--primary) !important;
+  color: var(--light-text) !important;
+  text-align: left !important;
 }
 
-p a{
+div p a{
   color: inherit;
   text-decoration: underline;
+  text-align: left !important;
 }
 
 p a:hover{
