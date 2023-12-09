@@ -8,8 +8,30 @@ import * as yup from "yup";
 
 import styles from "../pagecss/petdetailpage.module.css";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import pfp from "../assets/farloom.png";
+
+const hardcodedPetData = {
+  "id": 1,
+  "photos": [],
+  "name": "farloom",
+  "status": "Pending",
+  "description": "greatest pet ever, need to give away cuz travelling",
+  "behavior": "energetic, friendly",
+  "medicalHistory": "ate chocolate",
+  "specialNeeds": "no special needs",
+  "age": 3,
+  "breed": "golden retriever",
+  "gender": "M",
+  "size": 2,
+  "species": "dog",
+  "color": "brown",
+  "timestamp": "2023-12-08T05:30:34.727976Z",
+  "location": "toronto",
+  "fee": 1,
+  "shelter": 1
+};
 
 export default function PetDetailPage() {
   const schema = yup.object().shape({
@@ -26,6 +48,16 @@ export default function PetDetailPage() {
     color: yup.string().required("Please enter a color"),
     fee: yup.number().required("Please enter a fee"),
   });
+  
+  const { id } = useParams();
+
+  const [petDetails, setPetDetails] = useState(null);
+
+  useEffect(() => {
+    // In a real app, you would fetch the pet details using the pet_id from an API
+    // For now, let's use the hardcoded data
+    setPetDetails(hardcodedPetData);
+  }, [id]);
 
   const {
     register,
@@ -61,56 +93,56 @@ export default function PetDetailPage() {
 
               <input
                 type="text"
-                placeholder="Farloom"
+                value={petDetails ? petDetails.name : ""}
                 {...register("name")}
                 disabled
               />
 
               <input
                 type="text"
-                placeholder="Adopted"
+                value={petDetails ? petDetails.status : ""}
                 {...register("status")}
                 disabled
               />
 
               <input
                 type="text"
-                placeholder="Doge"
+                value={petDetails ? petDetails.breed : ""}
                 {...register("breed")}
                 disabled
               />
 
               <input
                 type="text"
-                placeholder="not 15"
+                value={petDetails ? petDetails.age : ""}
                 {...register("age")}
                 disabled
               />
 
               <input
                 type="text"
-                placeholder="Male"
+                value={petDetails ? petDetails.gender : ""}
                 {...register("gender")}
                 disabled
               />
 
               <input
                 type="text"
-                placeholder="Small"
+                value={petDetails ? petDetails.size : ""}
                 {...register("size")}
                 disabled
               />
 
               <input
                 type="text"
-                placeholder="White"
+                value={petDetails ? petDetails.color : ""}
                 {...register("color")}
                 disabled
               />
 
               <input
                 type="text"
-                placeholder="469"
+                value={petDetails ? petDetails.fee : ""}
                 {...register("fee")}
                 disabled
               />
@@ -118,19 +150,19 @@ export default function PetDetailPage() {
 
             <div className={styles["mission-box"]}>
               <textarea
-                placeholder="balalalalalala list of descriptions"
+                value={petDetails ? petDetails.description : ""}
                 {...register("description")}
                 disabled
               />
 
               <textarea
-                placeholder="not vaxxed"
+                value={petDetails ? petDetails.medicalHistory : ""}
                 {...register("medicalHistory")}
                 disabled
               />
 
               <textarea
-                placeholder="balalalalalalala list of special needs"
+                value={petDetails ? petDetails.specialNeeds : ""}
                 {...register("specialNeeds")}
                 disabled
               />

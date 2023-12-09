@@ -78,7 +78,7 @@ function App() {
       element: <PetCreatePage />,
     },
     {
-      path: "/pet_detail",
+      path: "/pet_detail/:id",
       element: <PetDetailPage />,
     },
     {
