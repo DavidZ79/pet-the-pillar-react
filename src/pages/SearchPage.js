@@ -1,28 +1,31 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-import styles from '../pagecss/searchpage.module.css'
-import "bulma/css/bulma.min.css";
+import styles1 from "../css/main_style.css";
+import styles2 from "../css/pet_listing.css"
+import styles3 from '../pagecss/searchpage.module.css'
 import { Link } from "react-router-dom";
 
 import cat from "../assets/cat.png";
+
+const styles = {...styles1,...styles2,...styles3};
 
 export default function SearchPage() {
   return (
     <body>
       <Header/>
 
-      <div className={styles.main}>
-        <div className={styles['search-container']}>
-          <div className={styles['search-top']}> 
-            <div className={styles['sort-container']}>
-              <div className={`${styles.label} ${styles['sort-label']}`}>
+      <div className={`${styles.main}`}>
+        <div className={`search-container ${styles['search-container']}`}>
+          <div className={`search-top ${styles['search-top']}`}> 
+            <div className={`sort-container ${styles['sort-container']}`}>
+              <div className={`label sort-label ${styles['sort-label']}`}>
                 Sort by:
               </div>
 
               {/* control??? */}
-              <div className={styles.control}>
-                <div className={styles.select}>
+              <div className={`control`}>
+                <div className={`select `}>
                   <select>
                     <option>Size</option>
                     <option>Name</option>
@@ -33,14 +36,14 @@ export default function SearchPage() {
             </div>
 
             {/* search bar */}
-            <div className={styles['search-bar']}>
-              <p className={`${styles['search-bar-input']} ${styles.control}`}>
-                <input className={styles.input} input="text" placeholder='Search an animal'/>
+            <div className={`search-bar ${styles['search-bar']}`}>
+              <p className={`${styles['search-bar-input']} control search-bar-input`}>
+                <input className={`${styles.input} input`} input="text" placeholder='Search an animal'/>
               </p>
 
-              <p className={styles.control}>
+              <p className={`control`}>
                 <Link to='/search'>
-                  <button className={styles['is-secondary']}>
+                  <button className={`button is-secondary ${styles['is-secondary']}`}>
                     Search
                   </button>
                 </Link>
@@ -48,12 +51,12 @@ export default function SearchPage() {
             </div>
           </div>
 
-          <div className={styles['search-bottom']}>
+          <div className={`search-bottom ${styles['search-bottom']}`}>
             {/* breed filter */}
-            <div className={styles.filter}>
-              <div className={styles.label}>Breed</div>
-              <div className={styles.control}>
-                <div className={styles.select}>
+            <div className={`filter`}>
+              <div className={`label`}>Breed</div>
+              <div className={`control`}>
+                <div className={`select`}>
                   <select>
                     <option>Search an animal</option>
                     <option>Labrador</option>
@@ -63,10 +66,10 @@ export default function SearchPage() {
             </div>
 
             {/* age filter */}
-            <div className={styles.filter}>
-              <div className={styles.label}>Age</div>
-              <div className={styles.control}>
-                <div className={styles.select}>
+            <div className={`filter`}>
+              <div className={`label`}>Age</div>
+              <div className={`control`}>
+                <div className={`select`}>
                   <select>
                     <option>Search an animal</option>
                     <option>10+</option>
@@ -76,10 +79,10 @@ export default function SearchPage() {
             </div>
 
             {/* gender filter */}
-            <div className={styles.filter}>
-              <div className={styles.label}>Gender</div>
-              <div className={styles.control}>
-                <div className={styles.select}>
+            <div className={`filter`}>
+              <div className={`label`}>Gender</div>
+              <div className={`control`}>
+                <div className={`select`}>
                   <select>
                     <option>Search an animal</option>
                     <option>Male</option>
@@ -89,10 +92,10 @@ export default function SearchPage() {
             </div>
 
             {/* size filter */}
-            <div className={styles.filter}>
-              <div className={styles.label}>Size</div>
-              <div className={styles.control}>
-                <div className={styles.select}>
+            <div className={`filter`}>
+              <div className={`label`}>Size</div>
+              <div className={`control`}>
+                <div className={`select`}>
                   <select>
                     <option>Search an animal</option>
                     <option>Large</option>
@@ -102,10 +105,10 @@ export default function SearchPage() {
             </div>
 
             {/* color filter */}
-            <div className={styles.filter}>
-              <div className={styles.label}>Color</div>
-              <div className={styles.control}>
-                <div className={styles.select}>
+            <div className={`filter`}>
+              <div className={`label`}>Color</div>
+              <div className={`control`}>
+                <div className={`select`}>
                   <select>
                     <option>Search an animal</option>
                     <option>Black</option>
@@ -117,7 +120,7 @@ export default function SearchPage() {
         </div>
         
         {/* pet list */}
-        <div className='tile is-ancestor pet-list'>
+        <div className={` tile is-ancestor pet-list`}>
           <div className='tile is-vertical is-12'>
           <div className='tile is-12'>
 
