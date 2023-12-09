@@ -1,8 +1,8 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Card from "../components/Card";
-import Button from "../components/Button";
 
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -12,6 +12,8 @@ import styles from "../pagecss/loginpage.module.css";
 var URL = process.env.REACT_APP_API_URL;
 
 export default function LoginPage() {
+  const [loginError, setLoginError] = useState(null);
+
   const schema = yup.object().shape({
     email: yup.string().email().required("Email is required"),
     password: yup.string().required("Please enter your password"),
@@ -53,6 +55,7 @@ export default function LoginPage() {
       else {
         navigate('/search');
       }
+      setLoginError(null);
       console.log(responseData);
       localStorage.setItem('accessToken', responseData.access_token);
       localStorage.getItem('accessToken');
@@ -60,6 +63,7 @@ export default function LoginPage() {
 
     } catch (error) {
       console.error('second demon:', error.message);
+      setLoginError('Invalid credentials. Please try again.');
     }
   };
 
@@ -83,6 +87,12 @@ export default function LoginPage() {
                 <input type="password" placeholder="Password*" {...register("password")}/>
                 <p>{errors.password?.message}</p>
               </div>
+
+              {loginError && (
+                <div className={styles['login-error']}>
+                  {loginError}
+                </div>
+              )}
 
               <div className={styles['submit-container']}>
                 <input type="submit" className={styles['submit-btn']} value="login"/>
