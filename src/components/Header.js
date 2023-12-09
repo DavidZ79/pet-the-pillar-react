@@ -1,30 +1,32 @@
-import "bulma/css/bulma.min.css";
+// import "bulma/css/bulma.min.css";
 import "../css/main_style.css";
 import { Link } from "react-router-dom";
 import React, { useEffect } from 'react';
+
+import default_picture from "../assets/profile.png";
 
 // https://bulma.io/documentation/components/navbar/
 export default function Header() {
    useEffect(() => {
       // Get all "navbar-burger" elements
-      const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'));
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'));
   
       // Add a click event on each of them
-      navbarBurgers.forEach(el => {
+      $navbarBurgers.forEach(el => {
         el.addEventListener('click', () => {
           // Get the target from the "data-target" attribute
           const target = el.dataset.target;
-          const targetElement = document.getElementById(target);
+          const $targetElement = document.getElementById(target);
   
           // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
           el.classList.toggle('is-active');
-          targetElement.classList.toggle('is-active');
+          $targetElement.classList.toggle('is-active');
         });
       });
   
       // Cleanup event listeners when the component unmounts
       return () => {
-        navbarBurgers.forEach(el => {
+        $navbarBurgers.forEach(el => {
           el.removeEventListener('click', () => {});
         });
       };
@@ -87,7 +89,7 @@ export default function Header() {
               <div className="navbar-profile profile">
                 <img
                   className="navbar-profile-image"
-                  src="../assets/profile.png"
+                  src={default_picture}
                   alt="profile pic"
                 />
               </div>
