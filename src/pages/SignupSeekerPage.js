@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../pagecss/signupseeker.module.css";
 
 import pfp from "../assets/profile.png";
+var URL = process.env.REACT_APP_API_URL;
 
 function SignupSeekerPage() {
   const schema = yup.object().shape({
@@ -37,10 +38,35 @@ function SignupSeekerPage() {
   });
 
   const navigate = useNavigate();
-  const onSubmit = (data) => {
-    navigate("/shelter_dashboard");
-    console.log({ data });
-    //form logic here
+  const onSubmit = async (data) => {
+    const { firstName, lastName, email, phone, password, location, preference } = data;
+    const requestData = {
+      username: `${firstName} ${lastName}`,
+      password,
+      email,
+      phoneNumber: phone,
+      location, 
+      preference,
+    };
+    try {
+      const response = await fetch(URL + 'account/register/seeker/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+      navigate("/shelter_dashboard"); 
+    } catch (error) {
+      console.error('second demon:', error.message);
+    }
   };
 
   return (
