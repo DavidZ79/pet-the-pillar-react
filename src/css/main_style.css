@@ -22,10 +22,14 @@
    --footer-height: 36px;
  }
  
+ .hide {
+   display: none !important;
+ }
+
  .logged-out {
    display: inherit;
  }
- 
+
  .logged-in{
      display: inherit;
  }
@@ -42,8 +46,8 @@
  body {
    /* margin: 0; */
    /* padding: 0; */
-   background-color: aliceblue;
-   font-family: "Poppins", sans-serif;
+   background-color: aliceblue ;
+   font-family: "Poppins", sans-serif !important;
  }
  
  @font-face {
@@ -64,11 +68,11 @@
  }
  
  .navbar-burger {
-     color: aliceblue;
+     color: aliceblue !important;
  }
  
  .navbar-burger:hover {
-     color: var(--primary);
+     color: var(--primary) !important;
  }
  
  .logo {
@@ -270,7 +274,7 @@
      }
  
      .navbar-search-bar-input input {
-         text-align: center;
+         text-align: center !important;
          background-color: aliceblue;
      }
  
@@ -279,8 +283,8 @@
      }
      
      .navbar-menu.is-active, .navbar-dropdown{
-         background-color: var(--dark-blue);
-         display:flex;
+         background-color: var(--dark-blue) !important;
+         display:flex !important;
          flex-direction: column;
          align-items: center;
          /* margin-left: auto; */
