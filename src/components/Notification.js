@@ -69,7 +69,7 @@ function Notification({props}) {
 
           {/* text */}
           <div class="text_container">
-            <h2>{props.user}</h2>
+            {/* <h2>{props.user}</h2> */}
             <p class="notif_content">
               {props.content}
             </p>
