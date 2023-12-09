@@ -73,19 +73,7 @@ export default function PetCreatePage() {
       const responseData = await response.json();
       console.log(responseData);
 
-
-      // request to get pet details
-      const response2 = await fetch(URL + 'pet/' + responseData.id + '/', {
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-        },
-      });
-
-      const responseData2 = await response2.json();
-      console.log(responseData2);
-      // alex code here
-      // navigate("/pet_detail/responseData2.id");
+      navigate("/pet_detail/" + responseData.id);
     } catch (error) {
       console.error('second demon:', error.message);
     }
