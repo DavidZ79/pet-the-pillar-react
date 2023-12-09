@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../pagecss/loginpage.module.css";
 var URL = process.env.REACT_APP_API_URL;
 
@@ -25,6 +25,7 @@ export default function LoginPage() {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate()
   const onSubmit = async (data) => {
     const { email, password} = data;
     const requestData = {
@@ -46,7 +47,17 @@ export default function LoginPage() {
       }
   
       const responseData = await response.json();
+      if (responseData.isShelter) {
+        navigate('/shelter_dashboard');
+      }
+      else {
+        navigate('/search');
+      }
       console.log(responseData);
+      localStorage.setItem('accessToken', responseData.access_token);
+      localStorage.getItem('accessToken');
+      console.log(localStorage.getItem('accessToken'));
+
     } catch (error) {
       console.error('second demon:', error.message);
     }
