@@ -11,7 +11,7 @@ var URL = process.env.REACT_APP_API_URL;
 
 const styles = {...styles1,...styles2,...styles3};
 
-export default function PetCard({children, props, className}) {
+export default function PetCard({props}) {
    const { id } = useParams();
 
   const [petDetails, setPetDetails] = useState(null);
@@ -19,7 +19,7 @@ export default function PetCard({children, props, className}) {
   useEffect(() => {
     const fetchPetDetails = async () => {
       try {
-        const response = await fetch(`${URL}pet/${1}/`, {
+        const response = await fetch(`${URL}pet/${props.id}/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -67,7 +67,7 @@ export default function PetCard({children, props, className}) {
       <div className='tile is-child'>
         <div className={`is-hoverable ${styles.card}`}>
           <div className='card-image'>
-            <Link to='/pet_detail'>
+            <Link to={`/pet_detail/${props.id}`}>
               <figure className='image is-4by4'>
                 <img src={cat} alt="Placeholder image"/>
               </figure>
@@ -79,8 +79,8 @@ export default function PetCard({children, props, className}) {
               <div className='media-content'>
                 <p className='title is-4'>{petDetails ? petDetails.name : ""}</p>
                 <p className='subtitle is-6'>
-                  <Link to="/shelter">
-                    Generic Animal Shelter
+                  <Link to={`/shelter/${petDetails ? petDetails.shelter : ""}`}>
+                     {petDetails ? petDetails.shelter : ""}
                   </Link>
                 </p>
               </div>
@@ -92,7 +92,7 @@ export default function PetCard({children, props, className}) {
                     Age: {petDetails ? petDetails.age : ""}
                   </div>
                   <div>
-                     {petDetails ? petDetails.gender : ""}
+                     Gender: {petDetails ? petDetails.gender : ""}
                   </div>
                 </div>
                 <div>

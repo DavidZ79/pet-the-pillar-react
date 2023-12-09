@@ -42,8 +42,8 @@ export default function ShelterPage() {
             "phoneNumber": responseData.phoneNumber,
             "location": responseData.location,
             "missionStatement": responseData.missionStatement,
-            "totalRating": 0,
-            "numberOfRating": 0
+            "totalRating": responseData.totalRating,
+            "numberOfRating": responseData.numberOfRating
          }
           setShelterDetails(tempData); // Update the state with fetched details
         } catch (error) {
@@ -54,7 +54,6 @@ export default function ShelterPage() {
     
       fetchShelterDetails();
     }, [id]);
-    const num = shelterDetail.totalRating/shelterDetail.numberOfRating;
 
    return (
       <body>
@@ -72,7 +71,7 @@ export default function ShelterPage() {
 
                <div className={styles['rating-div']}>
                   <span className='rating-heading'>User rating:</span>
-                  <span className={styles['rating-number']}>{shelterDetail ? num : ""}</span>
+                  <span className={styles['rating-number']}>{shelterDetail ? shelterDetail.totalRating : ""}</span>
                   <span className={`fa fa-star ${styles.checked}`}></span>
                   <span className={`fa fa-star ${styles.checked}`}></span>
                   <span className={`fa fa-star ${styles.checked}`}></span>
