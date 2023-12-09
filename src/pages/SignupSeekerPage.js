@@ -112,7 +112,7 @@ function SignupSeekerPage() {
                 {...register("preference")}
                 required
               />
-              <p>{errors.confirmPassword?.message}</p>
+              <p>{errors.preference?.message}</p>
 
               <input
                 type="text"
@@ -120,7 +120,7 @@ function SignupSeekerPage() {
                 {...register("location")}
                 required
               />
-              <p>{errors.confirmPassword?.message}</p>
+              <p>{errors.location?.message}</p>
             </div>
 
             <div className={styles["submit-container"]}>
