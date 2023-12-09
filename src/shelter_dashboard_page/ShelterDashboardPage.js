@@ -26,14 +26,14 @@ export default function ShelterDashboardPage() {
             <div className={styles.card}>
               <div className={styles.h2}>Update Pet Info</div>
               <p>Edit the information of your currently listed pets</p>
-              <Link to="/signup_before">
+              <Link to="/pet_update">
                 <Button>Update</Button>
               </Link>
             </div>
             <div className={styles.card}>
               <div className={styles.h2}>Create New Listing</div>
               <p>List another pet in this shelter for adoption</p>
-              <Link to="/signup_before">
+              <Link to="/pet_create">
                 <Button>Create</Button>
               </Link>
             </div>

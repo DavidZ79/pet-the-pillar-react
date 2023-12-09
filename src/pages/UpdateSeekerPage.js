@@ -24,6 +24,8 @@ export default function UpdateSeekerPage() {
       .string()
       .oneOf([yup.ref("password"), null], "Passwords Don't Match")
       .required("Passwords don't match"),
+      preference: yup.string().required("Please select your preference"),
+      location: yup.string().required("Please enter your location"),
   });
 
   const {
@@ -80,6 +82,19 @@ export default function UpdateSeekerPage() {
                         type="password"
                         placeholder="Confirm Password*"
                         {...register("confirmPassword")}
+                     />
+                  </div>
+
+                  <div className={styles['login-box']}> 
+                     <input
+                        type="text"
+                        placeholder="Location*"
+                        {...register("location")}
+                     />
+                     <input
+                        type="text"
+                        placeholder="Preference*"
+                        {...register("preference")}
                      />
                   </div>
 
