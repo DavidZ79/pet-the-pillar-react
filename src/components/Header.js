@@ -93,7 +93,7 @@ export default function Header() {
               </div>
 
               <div className="navbar-dropdown">
-                <Link to="/pet_application" className="navbar-item seeker">
+                <Link to="/seeker_dashboard_page" className="navbar-item seeker">
                   Dashboard (seeker)
                 </Link>
 
