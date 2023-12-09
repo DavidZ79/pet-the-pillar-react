@@ -1,0 +1,12 @@
+.blog-post {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.blog-text {
+  width: 400px;
+  overflow-wrap: break-word;
+  overflow-y: hidden;
+}

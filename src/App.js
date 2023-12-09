@@ -14,11 +14,12 @@ import PetAdoption from "./pages/PetAdoptionPage";
 import UpdateSeekerPage from "./pages/UpdateSeekerPage";
 import UpdateShelterPage from "./pages/UpdateShelterPage";
 import PetCreatePage from "./pages/PetCreatePage";
-import PetApplicationPage from "./pages/PetApplicationPage";
 import PetDetailPage from "./pages/PetDetailPage";
 import PetUpdatePage from "./pages/PetUpdatePage";
 import Shelter from "./pages/Shelter";
 import ShelterBlog from "./pages/ShelterBlog";
+import SeekerDashboardPage from "./pages/SeekerDashboardPage";
+import SampleBlog from "./pages/SampleBlog";
 
 
 import './App.css';
@@ -77,10 +78,6 @@ function App() {
       element: <PetCreatePage />,
     },
     {
-      path: "/pet_application",
-      element: <PetApplicationPage />,
-    },
-    {
       path: "/pet_detail",
       element: <PetDetailPage />,
     },
@@ -95,6 +92,14 @@ function App() {
     {
       path: "/shelter_blog",
       element: <ShelterBlog />,
+    },
+    {
+      path: "/seeker_dashboard_page",
+      element: <SeekerDashboardPage />,
+    },
+    {
+      path: "/sample_blog",
+      element: <SampleBlog />,
     },
   ]);
 

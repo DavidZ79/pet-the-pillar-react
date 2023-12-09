@@ -18,13 +18,14 @@ function SignupSeekerPage() {
     lastName: yup.string().required("Last name is required"),
     email: yup.string().email().required("Email is required"),
     phone: yup.number().typeError("Please enter your phone number"),
-    // age: yup.number().positive().integer().min(18).required(),
     password: yup.string().required("Please enter your password"),
     profilePic: yup.mixed().notRequired(),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords Don't Match")
       .required("Passwords don't match"),
+    preference: yup.string().required("Please select your preference"),
+    location: yup.string().required("Please enter your location"),
   });
 
   const {
@@ -126,6 +127,22 @@ function SignupSeekerPage() {
                 type="password"
                 placeholder="Confirm Password*"
                 {...register("confirmPassword")}
+                required
+              />
+              <p>{errors.confirmPassword?.message}</p>
+
+              <input
+                type="text"
+                placeholder="Preference*"
+                {...register("preference")}
+                required
+              />
+              <p>{errors.confirmPassword?.message}</p>
+
+              <input
+                type="text"
+                placeholder="Location*"
+                {...register("location")}
                 required
               />
               <p>{errors.confirmPassword?.message}</p>
