@@ -11,8 +11,8 @@ import { useState } from "react";
 
 export default function SampleBlog() {
   const [posts, setPosts] = useState([
-    { title: "Post 1", content: "This is the first post." },
-    { title: "Post 2", content: "This is the second post." },
+    { title: "Post 1", content: "this is the first post" },
+    { title: "Post 2", content: "this is the second post" },
   ]);
 
   const addPost = (newPost) => {
