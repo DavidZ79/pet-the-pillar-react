@@ -72,7 +72,8 @@ export default function PetCreatePage() {
   
       const responseData = await response.json();
       console.log(responseData);
-      navigate("/pet_detail "); 
+
+      navigate("/pet_detail/" + responseData.id);
     } catch (error) {
       console.error('second demon:', error.message);
     }
