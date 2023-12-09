@@ -19,6 +19,7 @@ import PetUpdatePage from "./pages/PetUpdatePage";
 import Shelter from "./pages/Shelter";
 import ShelterBlog from "./pages/ShelterBlog";
 import SeekerDashboardPage from "./pages/SeekerDashboardPage";
+import SampleBlog from "./pages/SampleBlog";
 
 
 import './App.css';
@@ -93,6 +94,10 @@ function App() {
     {
       path: "/seeker_dashboard_page",
       element: <SeekerDashboardPage />,
+    },
+    {
+      path: "/sample_blog",
+      element: <SampleBlog />,
     },
   ]);
 

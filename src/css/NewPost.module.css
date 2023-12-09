@@ -1,0 +1,31 @@
+.create-post-form {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-post-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.create-post-form input {
+  width: 300px;
+  padding: 8px;
+}
+
+.create-post-form textarea {
+  width: 300px;
+  padding: 8px;
+}
+
+.create-post-form button {
+  padding: 10px 15px;
+  background-color: #081D40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
