@@ -86,7 +86,7 @@ function App() {
       element: <PetUpdatePage />,
     },
     {
-      path: "/shelter",
+      path: "/shelter/:id",
       element: <Shelter />,
     },
     {
