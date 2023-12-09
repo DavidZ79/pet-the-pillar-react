@@ -1,0 +1,33 @@
+/*
+ * pet_listing.css
+ *
+ * CSC309 Term Project
+ * University of Toronto
+ * Fall 2023
+ *
+ */
+
+.label, .select {
+    margin-bottom: 8px;
+    text-align: center;
+    color: var(--light-text) !important;
+}
+
+.select select{
+    background-color: aliceblue;
+}
+
+.card, .title, .subtitle{
+    background-color: var(--primary) !important;
+    color: var(--light-text) !important;
+}
+
+p a{
+    color: inherit;
+    text-decoration: underline;
+}
+
+p a:hover{
+    color: var(--lighter-dark-blue);
+    transition: color 250ms linear;
+}
