@@ -62,7 +62,7 @@ function App() {
       element: <ShelterDashboardPage />,
     },
     {
-      path: "/pet_adoption",
+      path: "/pet_adoption/:id",
       element: <PetAdoption />,
     },
     {
