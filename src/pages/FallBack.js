@@ -6,8 +6,7 @@ export default function FallBack() {
     <body>
       <Header/>
       
-        <div>fallback</div>
-        <div>i love almond milkkkkkkkkkkk</div>
+        <div>404 page not found</div>
 
       <Footer/>
     </body>
