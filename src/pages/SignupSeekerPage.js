@@ -63,6 +63,8 @@ function SignupSeekerPage() {
   
       const responseData = await response.json();
       console.log(responseData);
+      localStorage.setItem('isShelter', false);
+      localStorage.setItem('userId', responseData.id);
       
       //login stuff, sry this is incredibly unclean
       const requestData2 = {

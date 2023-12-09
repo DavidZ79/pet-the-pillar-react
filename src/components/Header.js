@@ -107,14 +107,14 @@ const handleLogout = () => {
                 <hr className="navbar-divider" />
 
                 <Link
-                  to="/account_update_seeker"
+                  to="/update_seeker"
                   className="navbar-item seeker"
                 >
                   Settings (seeker)
                 </Link>
 
                 <Link
-                  to="/account_update_shelter"
+                  to="/update_shelter"
                   className="navbar-item shelter"
                 >
                   Settings (shelter)

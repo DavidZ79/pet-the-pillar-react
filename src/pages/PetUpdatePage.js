@@ -8,8 +8,10 @@ import * as yup from "yup";
 
 import styles from "../pagecss/petupdatepage.module.css";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import pfp from "../assets/farloom.png";
+var URL = process.env.REACT_APP_API_URL;
 
 export default function PetUpdatePage() {
   const schema = yup.object().shape({
@@ -27,6 +29,56 @@ export default function PetUpdatePage() {
     fee: yup.number().required("Please enter a fee"),
   });
 
+  const { id } = useParams();
+
+  const [petDetails, setPetDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchPetDetails = async () => {
+      try {
+        const response = await fetch(`${URL}pet/${id}/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch pet details');
+        }
+  
+        const responseData = await response.json();
+        // console.log(responseData)
+        const tempData = {
+          "id": responseData.id,
+          "photos": [],
+          "name": responseData.name,
+          "status": responseData.status,
+          "description": responseData.description,
+          "behavior": responseData.behavior,
+          "medicalHistory": responseData.medicalHistory,
+          "specialNeeds": responseData.specialNeeds,
+          "age": responseData.age,
+          "breed": responseData.breed,
+          "gender": responseData.gender,
+          "size": responseData.size,
+          "species": responseData.species,
+          "color": responseData.color,
+          "timestamp": responseData.timestamp,
+          "location": responseData.location,
+          "fee": responseData.fee,
+          "shelter": responseData.shelter
+        }
+        setPetDetails(tempData); // Update the state with fetched details
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+  
+    fetchPetDetails();
+  }, [id]);
+
   const {
     register,
     handleSubmit,
@@ -43,13 +95,14 @@ export default function PetUpdatePage() {
     //form logic here
   };
 
+
   return (
     <>
       <Header />
 
       <div className={styles.main}>
         <Card className={styles["background-box"]}>
-          <p className={styles["signup-text"]}>Update [pet name]</p>
+          <p className={styles["signup-text"]}>{petDetails ? petDetails.name : ""} Details</p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles["pfp-container"]}>
@@ -57,108 +110,73 @@ export default function PetUpdatePage() {
             </div>
 
             <div className={styles["login-box"]}>
-              <input type="file" accept=".jpg,.jpeg,.png" required/>
+              {/* <input type="file" accept=".jpg,.jpeg,.png" required/> */}
 
               <input
                 type="text"
-                placeholder="Farloom"
+                value={petDetails ? petDetails.name : ""}
                 {...register("name")}
-                required
               />
-              <p>{errors.name?.message}</p>
 
               <input
                 type="text"
-                placeholder="Adopted"
+                value={petDetails ? petDetails.status : ""}
                 {...register("status")}
-                required
               />
-              <p>{errors.status?.message}</p>
 
               <input
                 type="text"
-                placeholder="Doge"
+                value={petDetails ? petDetails.breed : ""}
                 {...register("breed")}
-                required
               />
-              <p>{errors.breed?.message}</p>
 
               <input
                 type="text"
-                placeholder="not 15"
+                value={petDetails ? petDetails.age : ""}
                 {...register("age")}
-                required
               />
-              <p>{errors.age?.message}</p>
 
               <input
                 type="text"
-                placeholder="Male"
+                value={petDetails ? petDetails.gender : ""}
                 {...register("gender")}
-                required
               />
-              <p>{errors.gender?.message}</p>
 
               <input
                 type="text"
-                placeholder="Small"
+                value={petDetails ? petDetails.size : ""}
                 {...register("size")}
-                required
               />
-              <p>{errors.size?.message}</p>
 
               <input
                 type="text"
-                placeholder="White"
+                value={petDetails ? petDetails.color : ""}
                 {...register("color")}
-                required
               />
-              <p>{errors.color?.message}</p>
 
               <input
                 type="text"
-                placeholder="469"
+                value={petDetails ? petDetails.fee : ""}
                 {...register("fee")}
-                required
               />
-              <p>{errors.fee?.message}</p>
             </div>
 
             <div className={styles["mission-box"]}>
               <textarea
-                placeholder="balalalalalala list of descriptions"
+                value={petDetails ? petDetails.description : ""}
                 {...register("description")}
-                required
               />
-              <p>{errors.description?.message}</p>
 
               <textarea
-                placeholder="not vaxxed"
+                value={petDetails ? petDetails.medicalHistory : ""}
                 {...register("medicalHistory")}
-                required
               />
-              <p>{errors.medicalHistory?.message}</p>
 
               <textarea
-                placeholder="balalalalalalala list of special needs"
+                value={petDetails ? petDetails.specialNeeds : ""}
                 {...register("specialNeeds")}
                 required
               />
-              <p>{errors.specialNeeds?.message}</p>
-            </div>
-
-            <div className={styles["submit-container"]}>
-              <input
-                type="submit"
-                className={styles["submit-btn"]}
-                value="Update pet"
-              />
-            </div>
-
-            <div className={styles["top-margin"]}>
-              <div className={styles["info-container"]}>
-                <p>* Required</p>
-              </div>
             </div>
           </form>
         </Card>
