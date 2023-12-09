@@ -37,9 +37,34 @@ function SignupSeekerPage() {
 
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    navigate("/shelter_dashboard");
-    console.log({ data });
-    //form logic here
+    const { firstName, lastName, email, phone, password } = data;
+    const requestData = {
+      username: `${firstName} ${lastName}`,
+      password,
+      email,
+      phone,
+      location: 'Your Location', 
+      preference: 'Your Preference',
+    };
+
+    try {
+      const response = fetch('http://127.0.0.1:8000/api/account/register/seeker/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(response.statusCode);
+      }
+  
+      const responseData = response.json();
+      navigate("/shelter_dashboard"); 
+    } catch (error) {
+      console.error('second demon:', error);
+    }
   };
 
   return (
