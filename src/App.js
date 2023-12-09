@@ -23,6 +23,8 @@ import SampleBlog from "./pages/SampleBlog";
 
 
 import './App.css';
+import 'bulma/css/bulma.min.css';
+
 
 function App() {
 
@@ -102,10 +104,7 @@ function App() {
   ]);
 
   return (
-    <RouterProvider
-    router={router}
-    fallbackElement={<FallBack />}
-  />
+      <RouterProvider router={router} fallbackElement={<FallBack />} />
   );
 }
 

@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 
 import styles from "../pagecss/updateseekerpage.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -36,7 +36,9 @@ export default function UpdateSeekerPage() {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate()
   const onSubmit = (data) => {
+   navigate("/pet_application");
     console.log(data);
   };
 
@@ -99,9 +101,7 @@ export default function UpdateSeekerPage() {
                   </div>
 
                   <div className={styles['submit-container']}>
-                     <Link to="/pet_application">
                         <input type="submit" className={styles['submit-btn']} value="Update"/>
-                     </Link>
                   </div>
                </form>
             </Card>

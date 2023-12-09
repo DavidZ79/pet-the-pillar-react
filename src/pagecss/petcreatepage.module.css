@@ -1,135 +1,196 @@
-.namecard {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   margin: auto;
-   width: 400px;
-   background-color: var(--primary);
-   border-radius: 10px;
-   padding: 2rem;
-   margin: 0 0 3rem 0;
-}
-
-.pfp-div {
-   width: 300px;
-   height: 300px;
-   overflow: hidden;
-   border-radius: 50%;
-   margin-bottom: -1rem;
-}
-
-.pfp {
-   width: 100%;
-   height: 100%;
-}
-
-.pet-name {
-   align-self: self-start;
-   font-size: 42px;
-   background-color: aliceblue;
-   border-radius: 32px;
-   padding: 0 0.5rem;
-   margin-bottom: 1rem;
-   width: 128px;
-}
-
-.adopt:hover {
-   border: solid var(--secondary) 1px;
-}
-
-.main-card {
-   background-color: var(--primary);
-   padding: 1rem;
-   width: 100%;
-   border-radius: 10px;
-   min-height: 80vh;
-}
-
 .main {
    display: flex;
-   flex-direction: row;
-   margin: 1rem;
+   justify-content: center;
+   align-items: center;
+   font-family: "Poppins", sans-serif;
 
    position: relative;
    margin: 16px;
    min-height: calc(100vh - var(--header-height) - var(--footer-height) - 32px);
 }
 
-.list {
-   display: flex;
-   flex-wrap: wrap;
-}
-   
-.list li::before {
-   content: "\2022";
-   padding: 0 8px;
-}
-
-h2 {
-   font-size: 1.5rem;
-   border-bottom-style: solid;
-   border-bottom-width: 1px;
-   border-bottom-color: var(--secondary);
-   margin: 1rem 0;
-}
-
-.left-wrapper {
+.background-box {
+   background-color: var(--primary);
+   width: 746px;
+   height: fit-content;
+   border-radius: 15px;
+   margin: auto;
+   padding: 0;
+   margin-top: 10px;
+ 
+   margin-left: 8px;
+   margin-right: 8px;
+ 
    display: flex;
    flex-direction: column;
+ }
+
+ form {
+   display: flex;
+   flex-direction: column;
+   margin-left: 8px;
+   margin-right: 8px;
+ }
+ 
+ .pfp-container {
+   border-radius: 100px;
+   width: 200px;
+   height: 200px;
+ 
+   overflow: hidden;
+   display: flex;
+   justify-content: center;
    align-items: center;
-   border-radius: 10px;
-   margin-right: 1rem;
-} 
+   margin: auto;
+ }
+ .pfp {
+   width: 100%;
+   height: 100%;
+ }
 
-.adopt {
-   padding-left: 3rem;
-   padding-right: 3rem;
-   font-size: 32px;
-   border-radius: 10px;
-   margin-bottom: 2rem;
-}
+ .signup-text {
+   font-size: 40px;
+   font-weight: 400;
+   color: white;
+   text-align: center;
+   margin: 20px 0;
+ }
 
-.status {
+ .login-box {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+ }
+ .login-box p {
+   font-weight: bold;
+   color: red;
+ }
+ .login-box input {
+   background-color: white;
+   width: 300px;
+   /* width: 50%; */
+   height: 58px;
+   border-radius: 20px;
+   border-width: 2px;
+ 
+   margin-top: 20px;
+ 
+   font-size: 20px;
+   font-weight: 550;
+   font-family: "Poppins", sans-serif;
+   flex-wrap: wrap;
+ }
+ .login-box label {
+   font-size: 18px;
+   font-weight: 550;
+   margin-right: 10px;
+ }
+ .login-box input[type="file"] {
+   height: 28px;
+   width: 280px;
+   border-radius: 2px;
+ }
+
+ .submit-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ .submit-btn {
+   height: 58px;
+   width: 116px;
+   background-color: white;
+   border-radius: 20px;
+   border-width: 2px;
+ 
+   font-size: 20px;
+   font-weight: 550;
+   margin-top: 15px;
+ }
+ .submit-btn:hover {
+   background-color: rgba(255, 255, 255, 0.459);
+ }
+
+ .mission-box {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   margin-top: 15px;
+ }
+ .mission-box p {
+   font-weight: bold;
+   color: red;
+ }
+ .mission-box textarea {
    background-color: aliceblue;
-   border-radius: 32px;
-   padding: 0 0.5rem;
-}
+   /* width: 664px; */
+   width: 91%;
+   height: 170px;
+   border-radius: 20px;
+   border-width: 2px;
+ 
+   font-size: 20px;
+   font-weight: 550;
+   font-family: "Poppins", sans-serif;
+   resize: none;
+   color: gray;
+   padding: 7px;
 
-input, li > button, .textarea {
-   background-color: aliceblue;
-   border: 1px solid var(--secondary);
-}
+   margin-bottom: 20px;
+ }
+ .mission-box label {
+   font-size: 18px;
+   font-weight: 550;
+   margin-right: 10px;
+ }
 
-li > input[type="text"] {
-   width: 5rem;
-}
-
-.dropdown-trigger, .dropdown-trigger > .button {
-   background-color: aliceblue;
-   border: none;
-   border-radius: 50%;
-}
-
-.dropdown-menu {
-   background-color: aliceblue;
-   border-radius: 10px;
-}
-
-@media screen and (max-width: 1000px) {
-   .main {
-       flex-direction: column;
+ .top-margin {
+   margin-top: 10px;
+ }
+ .left-margin {
+   margin-left: 10px;
+ }
+ .info-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ .info-container p {
+   display: inline;
+ }
+ 
+ @media screen and (max-width: 629px) {
+   .mission-box {
+     margin-top: 0;
    }
-   .namecard {
-       width: 100%;
+   .mission-box textarea {
+     width: 80%;
+     margin-top: 0;
+     margin-left: 20px;
+     margin-right: 20px;
    }
-   .left-wrapper {
-       margin-right: 0;
+ 
+   .pfp-container {
+     margin-bottom: 20px;
    }
-}
-
-@media screen and (min-width: 1000px) {
-   .list li:first-child::before {
-       content: none;
+   .login-box {
+     display: flex;
+     flex-wrap: wrap;
+     margin-top: 0;
+     margin-bottom: 15px;
    }
-}
+ 
+   .submit-container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin: 0;
+   }
+   .submit-btn {
+     margin-left: 0;
+     margin-top: 15px;
+   }
+ }
+ 
