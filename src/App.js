@@ -78,7 +78,7 @@ function App() {
       element: <PetCreatePage />,
     },
     {
-      path: "/pet_detail",
+      path: "/pet_detail/:id",
       element: <PetDetailPage />,
     },
     {
@@ -86,7 +86,7 @@ function App() {
       element: <PetUpdatePage />,
     },
     {
-      path: "/shelter",
+      path: "/shelter/:id",
       element: <Shelter />,
     },
     {
