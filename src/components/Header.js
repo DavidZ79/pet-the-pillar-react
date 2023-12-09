@@ -1,36 +1,30 @@
-// import "bulma/css/bulma.min.css";
 import "../css/main_style.css";
 import { Link } from "react-router-dom";
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
 import default_picture from "../assets/profile.png";
 
 // https://bulma.io/documentation/components/navbar/
 export default function Header() {
-   useEffect(() => {
-      // Get all "navbar-burger" elements
-      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'));
-  
-      // Add a click event on each of them
-      $navbarBurgers.forEach(el => {
-        el.addEventListener('click', () => {
-          // Get the target from the "data-target" attribute
-          const target = el.dataset.target;
-          const $targetElement = document.getElementById(target);
-  
-          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-          el.classList.toggle('is-active');
-          $targetElement.classList.toggle('is-active');
-        });
-      });
-  
-      // Cleanup event listeners when the component unmounts
-      return () => {
-        $navbarBurgers.forEach(el => {
-          el.removeEventListener('click', () => {});
-        });
-      };
-    }, []);
+
+  const [isActive, setActive] = useState("false");
+  const [isLoggedIn, setLoggedIn] = useState("false")
+
+  const handleToggle = () => {
+    setActive(!isActive);
+  };
+
+  React.useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      // Empty
+      setLoggedIn(false);
+    } else {
+      setLoggedIn(true);
+    }
+    return () => {
+        console.log('MyComponent onUnmount');
+    };
+}, []);
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -44,6 +38,7 @@ export default function Header() {
           aria-label="menu"
           aria-expanded="false"
           data-target="navbar-side"
+          onClick={handleToggle}
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -51,7 +46,7 @@ export default function Header() {
         </a>
       </div>
 
-      <div id="navbar-side" className="navbar-menu">
+      <div id="navbar-side" className={`navbar-menu ${isActive ? null : "is-active"}`}>
         <div className="navbar-search-bar">
           <p className="navbar-search-bar-input">
             <input
@@ -68,7 +63,7 @@ export default function Header() {
         </div>
 
         <div className="navbar-end">
-          <div className="navbar-item logged-in">
+          <div className={`navbar-item logged-in ${isLoggedIn ? null : "hide"}`}>
             <div className="">
               <div className="navbar-item bell-div">
                 <Link to="/notification_page">
@@ -126,7 +121,7 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="navbar-item logged-out">
+          <div className={`navbar-item logged-out ${isLoggedIn ? "hide" : null}`}>
             <div className="navbar-buttons">
               <Link to="/signup_before" className="button is-secondary">
                 Sign up
