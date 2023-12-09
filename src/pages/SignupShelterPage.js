@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../pagecss/signupshelter.module.css";
 
 import pfp from "../assets/profile.png";
+var URL = process.env.REACT_APP_API_URL;
 
 export default function SignupShelterPage() {
   const schema = yup.object().shape({
@@ -37,10 +38,35 @@ export default function SignupShelterPage() {
   });
 
   const navigate = useNavigate()
-  const onSubmit = (data) => {
-    navigate('/shelter_dashboard');
-    console.log({data})
-    //form logic here
+  const onSubmit = async (data) => {
+    const { shelterName, email, phone, password, location, missionStatement} = data;
+    const requestData = {
+      username: shelterName,
+      password,
+      email,
+      phoneNumber: phone,
+      location, 
+      missionStatement,
+    };
+    try {
+      const response = await fetch(URL + 'account/register/shelter/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+      navigate("/shelter_dashboard"); 
+    } catch (error) {
+      console.error('second demon:', error.message);
+    }
   };
 
   return (

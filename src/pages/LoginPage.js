@@ -9,6 +9,7 @@ import * as yup from "yup";
 
 import { Link } from "react-router-dom";
 import styles from "../pagecss/loginpage.module.css";
+var URL = process.env.REACT_APP_API_URL;
 
 export default function LoginPage() {
   const schema = yup.object().shape({
@@ -24,9 +25,33 @@ export default function LoginPage() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const { email, password} = data;
+    const requestData = {
+      password,
+      email,
+    };
+    console.log(requestData);
+    try {
+      const response = await fetch(URL + 'account/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error('second demon:', error.message);
+    }
   };
+
 
   return (
     <>
