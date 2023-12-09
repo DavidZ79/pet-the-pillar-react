@@ -7,6 +7,7 @@ import styles3 from '../pagecss/searchpage.module.css'
 import { Link } from "react-router-dom";
 
 import cat from "../assets/cat.png";
+import PetCard from '../components/PetCard';
 
 const styles = {...styles1,...styles2,...styles3};
 
@@ -125,46 +126,7 @@ export default function SearchPage() {
           <div className='tile is-12'>
 
             {/* pet 1 */}
-            <div className='tile is-3 is-parent'>
-              <div className='tile is-child'>
-                <div className={`is-hoverable ${styles.card}`}>
-                  <div className='card-image'>
-                    <Link to='/pet_detail'>
-                      <figure className='image is-4by4'>
-                        <img src={cat} alt="Placeholder image"/>
-                      </figure>
-                    </Link>
-                  </div>
-
-                  <div className='card-content'>
-                    <div className='media'>
-                      <div className='media-content'>
-                        <p className='title is-4'>Sylas</p>
-                        <p className='subtitle is-6'>
-                          <Link to="/shelter">
-                            Generic Animal Shelter
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className='content'>
-                        <div className=''>
-                          <div>
-                            Age: 15
-                          </div>
-                          <div>
-                            Male
-                          </div>
-                        </div>
-                        <div>
-                          Breed: Magical cat
-                        </div>
-                      </div>
-                    </div>
-                </div>
-              </div>
-            </div>
+            <PetCard/>
 
             {/* next pet... */}
             
