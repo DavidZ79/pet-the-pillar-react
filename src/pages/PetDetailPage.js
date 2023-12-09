@@ -12,26 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import pfp from "../assets/farloom.png";
 
-const hardcodedPetData = {
-  "id": 1,
-  "photos": [],
-  "name": "farloom",
-  "status": "Pending",
-  "description": "greatest pet ever, need to give away cuz travelling",
-  "behavior": "energetic, friendly",
-  "medicalHistory": "ate chocolate",
-  "specialNeeds": "no special needs",
-  "age": 3,
-  "breed": "golden retriever",
-  "gender": "M",
-  "size": 2,
-  "species": "dog",
-  "color": "brown",
-  "timestamp": "2023-12-08T05:30:34.727976Z",
-  "location": "toronto",
-  "fee": 1,
-  "shelter": 1
-};
+var URL = process.env.REACT_APP_API_URL;
 
 export default function PetDetailPage() {
   const schema = yup.object().shape({
@@ -54,9 +35,49 @@ export default function PetDetailPage() {
   const [petDetails, setPetDetails] = useState(null);
 
   useEffect(() => {
-    // In a real app, you would fetch the pet details using the pet_id from an API
-    // For now, let's use the hardcoded data
-    setPetDetails(hardcodedPetData);
+    const fetchPetDetails = async () => {
+      try {
+        const response = await fetch(`${URL}pet/${id}/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch pet details');
+        }
+  
+        const responseData = await response.json();
+        // console.log(responseData)
+        const tempData = {
+          "id": responseData.id,
+          "photos": [],
+          "name": responseData.name,
+          "status": responseData.status,
+          "description": responseData.description,
+          "behavior": responseData.behavior,
+          "medicalHistory": responseData.medicalHistory,
+          "specialNeeds": responseData.specialNeeds,
+          "age": responseData.age,
+          "breed": responseData.breed,
+          "gender": responseData.gender,
+          "size": responseData.size,
+          "species": responseData.species,
+          "color": responseData.color,
+          "timestamp": responseData.timestamp,
+          "location": responseData.location,
+          "fee": responseData.fee,
+          "shelter": responseData.shelter
+        }
+        setPetDetails(tempData); // Update the state with fetched details
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+  
+    fetchPetDetails();
   }, [id]);
 
   const {
@@ -81,7 +102,7 @@ export default function PetDetailPage() {
 
       <div className={styles.main}>
         <Card className={styles["background-box"]}>
-          <p className={styles["signup-text"]}>[pet name] Details</p>
+          <p className={styles["signup-text"]}>{petDetails ? petDetails.name : ""} Details</p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles["pfp-container"]}>
@@ -167,20 +188,6 @@ export default function PetDetailPage() {
                 disabled
               />
             </div>
-
-            {/* <div className={styles["submit-container"]}>
-              <input
-                type="submit"
-                className={styles["submit-btn"]}
-                value="Update pet"
-              />
-            </div>
-
-            <div className={styles["top-margin"]}>
-              <div className={styles["info-container"]}>
-                <p>* Required</p>
-              </div>
-            </div> */}
           </form>
         </Card>
       </div>
