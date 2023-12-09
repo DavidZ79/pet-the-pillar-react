@@ -1,5 +1,5 @@
 import "../css/main_style.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 
 import default_picture from "../assets/profile.png";
@@ -25,6 +25,12 @@ export default function Header() {
         console.log('MyComponent onUnmount');
     };
 }, []);
+
+const navigate = useNavigate();
+const handleLogout = () => {
+  localStorage.setItem('accessToken', ''); 
+  navigate('/'); 
+};
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -114,7 +120,7 @@ export default function Header() {
                   Settings (shelter)
                 </Link>
 
-                <Link to="/" className="navbar-item">
+                <Link to="/" className="navbar-item" onClick={handleLogout}>
                   Log Out
                 </Link>
               </div>
