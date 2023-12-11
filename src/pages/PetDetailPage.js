@@ -22,6 +22,8 @@ export default function PetDetailPage() {
     description: yup.string().required("Please enter description"),
     medicalHistory: yup.string().required("Please enter medical history"),
     specialNeeds: yup.string().required("Please enter special needs"),
+    location: yup.string().required("Please enter location"),
+    behavior: yup.string().required("Please enter behavior"),
     age: yup.number().required("Please enter am age"),
     gender: yup.string().required("Please enter a gender"),
     breed: yup.string().required("Please enter a breed"),
@@ -177,6 +179,12 @@ export default function PetDetailPage() {
               />
 
               <textarea
+                value={petDetails ? petDetails.behavior : ""}
+                {...register("behavior")}
+                disabled
+              />
+
+              <textarea
                 value={petDetails ? petDetails.medicalHistory : ""}
                 {...register("medicalHistory")}
                 disabled
@@ -185,6 +193,12 @@ export default function PetDetailPage() {
               <textarea
                 value={petDetails ? petDetails.specialNeeds : ""}
                 {...register("specialNeeds")}
+                disabled
+              />
+
+<textarea
+                value={petDetails ? petDetails.location : ""}
+                {...register("location")}
                 disabled
               />
             </div>

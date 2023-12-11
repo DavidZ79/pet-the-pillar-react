@@ -30,6 +30,9 @@ export default function Header() {
 const navigate = useNavigate();
 const handleLogout = () => {
   localStorage.setItem('accessToken', ''); 
+  localStorage.setItem('isShelter', false);
+  localStorage.setItem('userID', 0);
+  setLoggedIn(false);
   navigate('/'); 
 };
 

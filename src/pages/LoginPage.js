@@ -49,7 +49,7 @@ export default function LoginPage() {
       }
   
       const responseData = await response.json();
-      if (responseData.isShelter) {
+      if (localStorage.getItem('isShelter')) {
         navigate('/shelter_dashboard');
       }
       else {
