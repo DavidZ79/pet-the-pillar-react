@@ -1,6 +1,7 @@
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Header from "../components/Header";
+import ShelterPetCard from "../components/ShelterPetCard";
 
 import styles from "./shelter_dashboard_page.module.css";
 import shelterpic from "./shelter_dashboard_images/shelter_management_front.jpg";
@@ -23,13 +24,6 @@ export default function ShelterDashboardPage() {
           <div className={styles.h1}>Shelter Management</div>
           <div className={styles.cards}>
             <div className={styles.card}>
-              <div className={styles.h2}>Update Pet Info</div>
-              <p>Edit the information of your currently listed pets</p>
-              <Link to="/pet_update">
-                <Button>Update</Button>
-              </Link>
-            </div>
-            <div className={styles.card}>
               <div className={styles.h2}>Create New Listing</div>
               <p>List another pet in this shelter for adoption</p>
               <Link to="/pet_create">
@@ -37,6 +31,21 @@ export default function ShelterDashboardPage() {
               </Link>
             </div>
           </div>
+        </div>
+
+        {/* pets in this shelter */}
+        <div className={styles["pet_card_array"]}>
+          <ShelterPetCard
+            petName="fdsa"
+            pfp={shelterpic}
+            pet_update_page="rewq"
+          ></ShelterPetCard>
+
+          <ShelterPetCard
+            petName="doge"
+            pfp={shelterpic}
+            pet_update_page="fdsa"
+          ></ShelterPetCard>
         </div>
       </div>
       <Footer />
