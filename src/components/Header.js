@@ -1,5 +1,6 @@
 import "../css/main_style.css";
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 
 import default_picture from "../assets/profile.png";
@@ -25,6 +26,15 @@ export default function Header() {
     //     console.log('MyComponent onUnmount');
     // };
 }, []);
+
+const navigate = useNavigate();
+const handleLogout = () => {
+  localStorage.setItem('accessToken', ''); 
+  localStorage.setItem('isShelter', false);
+  localStorage.setItem('userID', 0);
+  setLoggedIn(false);
+  navigate('/'); 
+};
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -101,20 +111,20 @@ export default function Header() {
                 <hr className="navbar-divider" />
 
                 <Link
-                  to="/account_update_seeker"
+                  to="/update_seeker"
                   className="navbar-item seeker"
                 >
                   Settings (seeker)
                 </Link>
 
                 <Link
-                  to="/account_update_shelter"
+                  to="/update_shelter"
                   className="navbar-item shelter"
                 >
                   Settings (shelter)
                 </Link>
 
-                <Link to="/" className="navbar-item">
+                <Link to="/" className="navbar-item" onClick={handleLogout}>
                   Log Out
                 </Link>
               </div>

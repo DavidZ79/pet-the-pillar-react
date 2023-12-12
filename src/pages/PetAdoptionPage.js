@@ -4,19 +4,15 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 
 import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import styles from "../pagecss/petadoptionpage.module.css";
+var URL = process.env.REACT_APP_API_URL;
 
 export default function PetAdoption() {
   const schema = yup.object().shape({
-    firstName: yup.string().required("First name is required*"),
-    LastName: yup.string().required("Last name is required*"),
-    email: yup.string().email().required("Email is required*"),
-    phone: yup.number().typeError("Phone number is required*"),
-    homeSize: yup.number().required("House size is required*"),
-    numChild: yup.number().required("Number of children is required*"),
     reasonOfAdopt: yup.string().required("Reason for adoption is required*"),
   });
 
@@ -27,9 +23,35 @@ export default function PetAdoption() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = (data) => {
-    console.log(data);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const onSubmit = async (data) => {
+    const { reasonOfAdopt } = data;
+    const requestData = {
+      reason: reasonOfAdopt,
+      pet: parseInt(id),
+    };
+    try {
+      const response = await fetch(URL + 'application/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+      navigate("/shelter_dashboard"); 
+    } catch (error) {
+      console.log(requestData)
+      console.error('second demon:', error.message);
+    }
   };
 
   return (
@@ -41,56 +63,6 @@ export default function PetAdoption() {
           <p className={styles['application-text']}>Application</p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles['app-box']}>
-              <input
-                type="text"
-                placeholder="First Name*"
-                {...register("firstName")}
-              />
-              <p>{errors.firstName?.message}</p>
-            </div>
-
-            <div className={styles['app-box']}>
-              <input
-                type="text"
-                placeholder="Last Name*"
-                {...register("lastName")}
-              />
-              <p>{errors.LastName?.message}</p>
-            </div>
-
-            <div className={styles['app-box']}>
-              <input type="email" placeholder="Email*" {...register("email")} />
-              <p>{errors.email?.message}</p>
-            </div>
-
-            <div className={styles['app-box']}>
-              <input
-                type="text"
-                placeholder="Phone number*"
-                {...register("phone")}
-              />
-              <p>{errors.phone?.message}</p>
-            </div>
-
-            <div className={styles['app-box']}>
-              <input
-                type="text"
-                placeholder="Home Size*"
-                {...register("homeSize")}
-              />
-              <p>{errors.homeSize?.message}</p>
-            </div>
-
-            <div className={styles['app-box']}>
-              <input
-                type="text"
-                placeholder="Number of Children*"
-                {...register("numChild")}
-              />
-              <p>{errors.numChild?.message}</p>
-            </div>
-
             <div className={styles['app-box']}>
               <textarea
                 type="text"

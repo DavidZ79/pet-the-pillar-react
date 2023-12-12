@@ -1,11 +1,54 @@
 import "../css/notification.css";
 import x from "./x.png";
 
-function Notification(props) {
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+var URL = process.env.REACT_APP_API_URL;
+
+function Notification({props}) {
     function del() {
         console.log("delete");
         // document.querySelector(".notification").remove();
     }
+
+  const { id } = useParams();
+
+  const [notification, setNotification] = useState(null);
+
+  useEffect(() => {
+    const fetchNotification = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/notification/{props.id}/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch pet details');
+        }
+  
+        const responseData = await response.json();
+        // console.log(responseData)
+        const tempData = {
+          "id": responseData.id,
+          "user": responseData.user,
+          "status": responseData.status,
+          "forward": responseData.forward,
+          "content": responseData.content,
+          "timestamp": responseData.timestamp
+        }
+        setNotification(tempData); // Update the state with fetched details
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+  
+    fetchNotification();
+  }, [id]);
 
     return (
         <div class="notification">
@@ -26,9 +69,9 @@ function Notification(props) {
 
           {/* text */}
           <div class="text_container">
-            <h2>{props.title}</h2>
+            {/* <h2>{props.user}</h2> */}
             <p class="notif_content">
-              {props.text}
+              {props.content}
             </p>
           </div>
 
