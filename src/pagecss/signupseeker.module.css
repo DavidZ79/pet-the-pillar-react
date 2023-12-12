@@ -131,6 +131,14 @@ form {
   display: inline;
 }
 
+.signup-error {
+  color: red;
+  align-items: center;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 664px) {
   .pfp-container {
     margin-bottom: 20px;
