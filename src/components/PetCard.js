@@ -3,7 +3,7 @@ import styles1 from "../css/main_style.css";
 import styles2 from "../css/pet_listing.css"
 import styles3 from '../pagecss/searchpage.module.css'
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import cat from "../assets/cat.png";
 

@@ -7,7 +7,7 @@ import styles3 from '../pagecss/searchpage.module.css'
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import cat from "../assets/cat.png";
+// import cat from "../assets/cat.png";
 import PetCard from '../components/PetCard';
 
 const styles = {...styles1,...styles2,...styles3};

@@ -9,7 +9,7 @@ import pfp from '../assets/profile.png';
 import cat from '../assets/cat.png';
 import rat from '../assets/TheCourier.png';
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 var URL = process.env.REACT_APP_API_URL;
