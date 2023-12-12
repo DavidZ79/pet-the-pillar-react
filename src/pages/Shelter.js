@@ -1,6 +1,7 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
+import PetCard from '../components/PetCard';
 
 import 'bulma/css/bulma.min.css';
 import styles from '../pagecss/shelter.module.css';
@@ -9,8 +10,11 @@ import pfp from '../assets/profile.png';
 import cat from '../assets/cat.png';
 import rat from '../assets/TheCourier.png';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
 var URL = process.env.REACT_APP_API_URL;
 
@@ -18,42 +22,102 @@ export default function ShelterPage() {
    const { id } = useParams();
 
    const [shelterDetail, setShelterDetails] = useState(null);
+   const [availablePets, setAvailablePets] = useState(null);
+   const [adoptedPets, setAdoptedPets] = useState(null);
+   const [availablePageNumber, setAvailablePageNumber] = useState(1);
+   const [adoptedPageNumber, setAdoptedPageNumber] = useState(1);
+
+
+   async function fetchShelterDetails () {
+      try {
+        const response = await fetch(`${URL}account/shelter/${id}/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch shelter details');
+        }
+  
+        const responseData = await response.json();
+      //   console.log(responseData)
+        const tempData = {
+          "id": responseData.id,
+          "username": responseData.username,
+          "email": responseData.email,
+          "phoneNumber": responseData.phoneNumber,
+          "location": responseData.location,
+          "missionStatement": responseData.missionStatement,
+          "totalRating": responseData.totalRating,
+          "numberOfRating": responseData.numberOfRating
+       }
+        setShelterDetails(tempData); // Update the state with fetched details
+        console.log(responseData)
+        return responseData
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+
+    async function fetchPetList (status, url = "") {
+      const data = shelterDetail ?? await fetchShelterDetails();
+      try {
+         var realURL = ""
+         if (url === "") {
+            realURL = `${URL}pet/list/?shelter=${data.username}&status=${status}&page=1`
+         } else {
+            realURL = url
+         }
+         const response = await fetch(realURL, {
+           method: 'GET',
+           headers: {
+             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+           },
+         });
+   
+         if (!response.ok) {
+           throw new Error('Failed to fetch pet details');
+         }
+   
+         const responseData = await response.json();
+         console.log(responseData)
+         console.log("GOT ", realURL)
+
+         if (status === "Available") {
+            setAvailablePets(responseData)
+         } else if (status === "Adopted") {
+            setAdoptedPets(responseData)
+
+         }
+         
+       } catch (error) {
+         console.error('Error fetching pet details:', error);
+         // Handle error, e.g., redirect to an error page
+       }
+   };
+
+   function Stars({rating}) {
+      const roundedRating = Math.floor(rating);
+      var result = [];
+
+      for (let i = 0; i < 5; i++) {
+         result.push(<FontAwesomeIcon key={i} className = {`${i < roundedRating ? styles.checked : ''}`} icon={faStar} />)
+      }
+      
+      return result
+   };
 
    useEffect(() => {
-      const fetchShelterDetails = async () => {
-        try {
-          const response = await fetch(`${URL}account/shelter/${id}/`, {
-            method: 'GET',
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-            },
-          });
-    
-          if (!response.ok) {
-            throw new Error('Failed to fetch pet details');
-          }
-    
-          const responseData = await response.json();
-          console.log(responseData)
-          const tempData = {
-            "id": responseData.id,
-            "username": responseData.username,
-            "email": responseData.email,
-            "phoneNumber": responseData.phoneNumber,
-            "location": responseData.location,
-            "missionStatement": responseData.missionStatement,
-            "totalRating": responseData.totalRating,
-            "numberOfRating": responseData.numberOfRating
-         }
-          setShelterDetails(tempData); // Update the state with fetched details
-        } catch (error) {
-          console.error('Error fetching pet details:', error);
-          // Handle error, e.g., redirect to an error page
-        }
-      };
-    
       fetchShelterDetails();
-    }, [id]);
+      fetchPetList("Available");
+      fetchPetList("Adopted");
+      
+      setAvailablePets(1)
+      setAvailablePageNumber(1)
+    }, []);
 
    return (
       <body>
@@ -71,11 +135,8 @@ export default function ShelterPage() {
 
                <div className={styles['rating-div']}>
                   <span className='rating-heading'>User rating:</span>
-                  <span className={styles['rating-number']}>{shelterDetail ? shelterDetail.totalRating : ""}</span>
-                  <span className={`fa fa-star ${styles.checked}`}></span>
-                  <span className={`fa fa-star ${styles.checked}`}></span>
-                  <span className={`fa fa-star ${styles.checked}`}></span>
-                  <span className={`fa fa-star ${styles.checked}`}></span>
+                  <span className={styles['rating-number']}>{shelterDetail && shelterDetail.numberOfRating !== 0 ? (shelterDetail.totalRating / shelterDetail.numberOfRating).toFixed(1) : "NAN"}</span>
+                  <Stars rating={shelterDetail ? (shelterDetail.numberOfRating !== 0 ? (shelterDetail.totalRating / shelterDetail.numberOfRating).toFixed(1) : 0) : 0}/>
                   <span className="fa fa-star"></span>
                </div>
 
@@ -132,208 +193,102 @@ export default function ShelterPage() {
                   </Link>
                </div>
             </Card>
-
             <div className={styles['available-section']}>
                <p className={styles.available}>Available:</p>
                <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
-
-               <div className='animal-list'>
+               
+               <div className={`${styles['animal-list']}`}>
                   <div className='tile is-ancestor pet-list'>
+                     <div className='tile is-vertical is-12' >
+
                      <div className='tile is-12'>
 
                      {/* pet 1 */}
-                     <div className='tile is-3 is-parent'>
-                        <div className='tile is-child'>
-                           <div className={`is-hoverable ${styles.card}`}>
-                              <div className='card-image'>
-                              <Link to='/pet_detail'>
-                                 <figure className='image is-4by4'>
-                                    <img src={cat} alt="Placeholder image"/>
-                                 </figure>
-                              </Link>
-                              </div>
-
-                              <div className='card-content'>
-                              <div className='media'>
-                                 <div className='media-content'>
-                                    <p className='title is-4'>Sylas</p>
-                                    <p className='subtitle is-6'>
-                                    <Link to="/shelter">
-                                       Generic Animal Shelter
-                                    </Link>
-                                    </p>
-                                 </div>
-                              </div>
-
-                              <div className='content'>
-                                    <div className=''>
-                                    <div>
-                                       Age: 15
-                                    </div>
-                                    <div>
-                                       Male
-                                    </div>
-                                    </div>
-                                    <div>
-                                    Breed: Magical cat
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-
-                     {/* pet 1 */}
-                     <div className='tile is-3 is-parent'>
-                        <div className='tile is-child'>
-                           <div className={`is-hoverable ${styles.card}`}>
-                              <div className='card-image'>
-                              <Link to='/pet_detail'>
-                                 <figure className='image is-4by4'>
-                                    <img src={cat} alt="Placeholder image"/>
-                                 </figure>
-                              </Link>
-                              </div>
-
-                              <div className='card-content'>
-                              <div className='media'>
-                                 <div className='media-content'>
-                                    <p className='title is-4'>Sylas</p>
-                                    <p className='subtitle is-6'>
-                                    <Link to="/shelter">
-                                       Generic Animal Shelter
-                                    </Link>
-                                    </p>
-                                 </div>
-                              </div>
-
-                              <div className='content'>
-                                    <div className=''>
-                                    <div>
-                                       Age: 15
-                                    </div>
-                                    <div>
-                                       Male
-                                    </div>
-                                    </div>
-                                    <div>
-                                    Breed: Magical cat
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     
+                     {availablePets && availablePets.results && availablePets.results.map((petResult, index) => (
+                        <PetCard key={petResult.id} props={petResult} />
+                        ))}
 
                      {/* next pet... */}
                      
+                     </div>
                      </div>
                   </div>
                   
                </div>
-            </div>
 
-            <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
-            <div className={styles['adopted-section']}>
-               <p className={styles.adopted}>Adopted:</p>
                <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
 
+               
+               <nav class="pagination" role="navigation" aria-label="pagination">
+               <button 
+               class={`button is-secondary ${availablePets !== null && availablePets.previous !== null ? "" : "invisible"}`}
+               onClick={() => {
+                  if (availablePets !== null && availablePets.previous !== null) {
+                     setAvailablePets(fetchPetList("Available", availablePets.previous));
+                     setAvailablePageNumber(availablePageNumber - 1);
+                  }
+               }}
+               >
+                  Previous</button>
+                  <a class="pagination-link is-current">{availablePageNumber}</a>
+               <button class={`button is-secondary ${availablePets !== null && availablePets.next !== null ? "" : "invisible"}`} 
+               onClick={ () => {
+                     if (availablePets !== null && availablePets.next !== null) {
+                        setAvailablePets(fetchPetList("Available", availablePets.next));
+                        setAvailablePageNumber(availablePageNumber + 1);
+                     }
+                  
+               }}
+               >Next page</button>
+               </nav>
+
+            </div>
+            
+            <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
+
+
+               <div className={styles['adopted-section']}>
+               <p className={styles.adopted}>Adopted:</p>
+               <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
+               
+               
+
                <div className='animal-list'>
-                  <div className='tile is-ancestor pet-list'>
-                     <div className='tile is-12'>
+                  <div className='tile is-ancestor '>
+                     <div className='tile is-12 pet-list'>
 
-                     {/* pet 1 */}
-                     <div className='tile is-3 is-parent'>
-                        <div className='tile is-child'>
-                           <div className={`is-hoverable ${styles.card}`}>
-                              <div className='card-image'>
-                              <Link to='/pet_detail'>
-                                 <figure className='image is-4by4'>
-                                    <img src={cat} alt="Placeholder image"/>
-                                 </figure>
-                              </Link>
-                              </div>
-
-                              <div className='card-content'>
-                              <div className='media'>
-                                 <div className='media-content'>
-                                    <p className='title is-4'>Sylas</p>
-                                    <p className='subtitle is-6'>
-                                    <Link to="/shelter">
-                                       Generic Animal Shelter
-                                    </Link>
-                                    </p>
-                                 </div>
-                              </div>
-
-                              <div className='content'>
-                                    <div className=''>
-                                    <div>
-                                       Age: 15
-                                    </div>
-                                    <div>
-                                       Male
-                                    </div>
-                                    </div>
-                                    <div>
-                                    Breed: Magical cat
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-
-                     {/* pet 1 */}
-                     <div className='tile is-3 is-parent'>
-                        <div className='tile is-child'>
-                           <div className={`is-hoverable ${styles.card}`}>
-                              <div className='card-image'>
-                              <Link to='/pet_detail'>
-                                 <figure className='image is-4by4'>
-                                    <img src={cat} alt="Placeholder image"/>
-                                 </figure>
-                              </Link>
-                              </div>
-
-                              <div className='card-content'>
-                              <div className='media'>
-                                 <div className='media-content'>
-                                    <p className='title is-4'>Sylas</p>
-                                    <p className='subtitle is-6'>
-                                    <Link to="/shelter">
-                                       Generic Animal Shelter
-                                    </Link>
-                                    </p>
-                                 </div>
-                              </div>
-
-                              <div className='content'>
-                                    <div className=''>
-                                    <div>
-                                       Age: 15
-                                    </div>
-                                    <div>
-                                       Male
-                                    </div>
-                                    </div>
-                                    <div>
-                                    Breed: Magical cat
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-
-                     {/* next pet... */}
+                     {adoptedPets && adoptedPets.results && adoptedPets.results.map((petResult, index) => (
+                        <PetCard key={petResult.id} props={petResult} />
+                     ))}
                      
                      </div>
                   </div>
                </div>
-            </div>
+               
+               <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
 
-            <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
+               <nav class="pagination" role="navigation" aria-label="pagination">
+               <button class={`button is-secondary ${adoptedPets !== null && adoptedPets.previous !== null ? "" : "invisible"}`}
+               onClick={ () => {
+                  if (adoptedPets !== null && adoptedPets.previous !== null) {
+                     setAdoptedPets(fetchPetList("Adopted", adoptedPets.previous));
+                     adoptedPageNumber(adoptedPageNumber - 1);
+                  }
+               }}
+               >Previous</button>
+               <a class="pagination-link is-current">{adoptedPageNumber}</a>
+               <button class={`button is-secondary ${adoptedPets !== null && adoptedPets.next !== null ? "" : "invisible"}`}
+               onClick={ () => {
+                  if (adoptedPets !== null && adoptedPets.next !== null) {
+                     setAdoptedPets(fetchPetList("Adopted", adoptedPets.next));
+                     adoptedPageNumber(adoptedPageNumber - 1);
+                  }
+               }}
+               >Next page</button>
+               </nav>
+               </div>
+               <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
             <div className={styles['review-section']}>
                <p className={styles.review}>Review:</p>
                <hr className={`${styles['navbar-divider']} ${styles.spacer}`}/>
@@ -348,7 +303,7 @@ export default function ShelterPage() {
                <article className={styles['media-box']}>
                   <figure className='media-left'>
                      <p className='image is-64x64'>
-                        <img className='is-round' src={rat}/>
+                        <img className='is-rounded' src={rat}/>
                      </p>
                   </figure>
 
@@ -366,7 +321,7 @@ export default function ShelterPage() {
                      <article className='media'>
                         <figure className='media-left'>
                            <p className='image is-48x48'>
-                              <img className='is-round' src={cat}/>
+                              <img className="is-rounded" src={cat}/>
                            </p>
                         </figure>
                         
@@ -387,7 +342,7 @@ export default function ShelterPage() {
                      <article className='media'>
                         <figure className='media-left'>
                            <p className='image is-48x48'>
-                              <img className='is-round' src={pfp}/>
+                              <img className='is-rounded' src={pfp}/>
                            </p>
                         </figure>
 

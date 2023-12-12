@@ -26,6 +26,10 @@
    display: none !important;
  }
 
+ .invisible {
+  visibility: hidden !important;
+ }
+
  .logged-out {
    display: inherit;
  }
@@ -191,8 +195,8 @@
  }
  
  .navbar-dropdown a.navbar-item:hover {
-   background-color: #73a3ff;
-   color: var(--light-text);
+   background-color: var(--secondary-lighter) !important;
+   color: var(--light-text) !important;
    /* font-weight: 400; */
  }
  
@@ -318,6 +322,10 @@
      position: relative;
      margin: 16px;
      min-height: calc(100vh - var(--header-height) - var(--footer-height) - 32px);
+ }
+ 
+ .pagination-link.is-current {
+    background-color: var(--secondary) !important;
  }
  
  input,

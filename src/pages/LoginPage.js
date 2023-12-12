@@ -59,7 +59,7 @@ export default function LoginPage() {
       console.log(responseData);
       localStorage.setItem('accessToken', responseData.access_token);
       localStorage.setItem('userId', responseData.id);
-      localStorage.setItem('isShelter', responseData.isShelter);
+      localStorage.setItem('isShelter', responseData.is_shelter);
 
     } catch (error) {
       console.error('second demon:', error.message);
