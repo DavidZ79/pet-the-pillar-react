@@ -21,9 +21,9 @@ export default function Header() {
     } else {
       setLoggedIn(true);
     }
-    return () => {
-        console.log('MyComponent onUnmount');
-    };
+    // return () => {
+    //     console.log('MyComponent onUnmount');
+    // };
 }, []);
 
   return (
