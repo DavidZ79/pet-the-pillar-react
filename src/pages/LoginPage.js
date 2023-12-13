@@ -49,6 +49,9 @@ export default function LoginPage() {
       }
   
       const responseData = await response.json();
+      localStorage.setItem('accessToken', responseData.access_token);
+      localStorage.setItem('userId', responseData.user_id);
+      localStorage.setItem('isShelter', responseData.is_shelter);
       if (localStorage.getItem('isShelter')) {
         navigate('/shelter_dashboard');
       }
@@ -56,10 +59,6 @@ export default function LoginPage() {
         navigate('/search');
       }
       setLoginError(null);
-      console.log(responseData);
-      localStorage.setItem('accessToken', responseData.access_token);
-      localStorage.setItem('userId', responseData.user_id);
-      localStorage.setItem('isShelter', responseData.is_shelter);
 
     } catch (error) {
       console.error('second demon:', error.message);
