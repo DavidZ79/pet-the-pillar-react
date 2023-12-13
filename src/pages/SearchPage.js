@@ -17,20 +17,22 @@ export default function SearchPage() {
   const [petList, setPetList] = useState([]);
   const [nextPage, setNextPage] = useState("initial");
   const [pageNum, setPageNum] = useState(1);
-  const [disableLoading, setDisableLoading] = useState(true)
+  // const [disableLoading, setDisableLoading] = useState(true)
 
-  const fetchPetList = async () => {
+  const fetchPetList = async (url = null) => {
     console.log(nextPage)
     console.log(pageNum)
-    if (nextPage === null) {
-      return []
+    if (pageNum !== 1 && nextPage === null) {
+      console.log("WHY")
+      return [];
     }
     try {
-      const response = await fetch(`${URL}pet/list/?page=${pageNum}`, {
+      const params = new URLSearchParams(window.location.search)
+      const response = await fetch(url ?? `${URL}pet/list/?page=${pageNum}&species=${params.get('species') ?? ''}`, {
         method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-        },
+        // headers: {
+        //   'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        // },
       });
 
       if (!response.ok) {
@@ -38,7 +40,7 @@ export default function SearchPage() {
       }
 
       const responseData = await response.json();
-      // console.log(responseData)
+      console.log(responseData);
       const tempData = {
         "count": responseData.count,
         "next": responseData.next,
@@ -46,9 +48,9 @@ export default function SearchPage() {
         "results": responseData.results
       }
       setNextPage(tempData.next);
-      console.log(pageNum)
-      setDisableLoading(false);
-      return tempData.results
+      // console.log(pageNum);
+      // setDisableLoading(false);
+      return tempData.results;
     } catch (error) {
       console.error('Error fetching pet details:', error);
       // Handle error, e.g., redirect to an error page
@@ -57,17 +59,35 @@ export default function SearchPage() {
 
   async function loadNext() {
     if (pageNum !== -1) {   
-      const tempData = await fetchPetList();
+      const tempData = await fetchPetList(nextPage);
       setPetList((oldPetList) => [...oldPetList, ...tempData])
       setPageNum(preNum => preNum + 1)
-      setDisableLoading(true);
+      // setDisableLoading(true);c
     }
   }
 
   async function initData() {
-    const tempData = await fetchPetList();
-    setPageNum(pageNum + 1)
-    setPetList(tempData); // Update the state with fetched details
+    if (petList.length === 0) {
+      const tempData = await fetchPetList();
+      setPageNum(pageNum + 1);
+      setPetList(tempData); // Update the state with fetched details
+    }
+  }
+
+  async function handleSearch(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    let url = `${URL}pet/list/?page=1`;
+    const tempPage = await setPageNum(1);
+    setNextPage("initial");
+    formData.forEach((param, key) => {
+      url += param !== '' ? `&${key}=${param}` : '';
+    })
+    console.log(url);
+    const tempData = await fetchPetList(url);
+    setPetList(tempData);
+    console.log(tempData)
+    console.log("FINISH SETTING SEARCH DATA")
   }
 
   useEffect(() => {
@@ -79,110 +99,173 @@ export default function SearchPage() {
       <Header/>
 
       <div className={`${styles.main}`}>
-        <form id='search_form'>
-        <div className={`form search-container ${styles['search-container']}`}>
-          <div className={`search-top ${styles['search-top']}`}> 
-            <div className={`sort-container ${styles['sort-container']}`}>
-              <label className={`label sort-label ${styles['sort-label']}`}>
-                Sort by:
-              </div>
+        <form id='search_form' onSubmit={handleSearch}>
+          <div className={`form search-container ${styles['search-container']}`}>
+            <div className={`search-top ${styles['search-top']}`}> 
+              <div className={`sort-container ${styles['sort-container']}`}>
+                <div className={`label sort-label ${styles['sort-label']}`}>
+                  Sort by:
+                </div>
 
-              {/* control??? */}
-              <div className={`control`}>
-                <div className={`select`}>
-                  <select name='sorting' form='search_form'>
-                    <option>Size</option>
-                    <option>Name</option>
-                    <option>Age</option>
-                  </select>
+                {/* control??? */}
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='ordering' form='search_form'>
+                      <option value=''>None</option>
+                      <option value='age'>Age</option>
+                      <option value='size'>Size</option>
+                      <option value='name'>Name</option>
+                      <option value='name'>Breed</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* search bar */}
-            <div className={`search-bar ${styles['search-bar']}`}>
-              <p className={`${styles['search-bar-input']} control search-bar-input`}>
-                <input className={`${styles.input} input`} input="text" placeholder='Search an animal'/>
-              </p>
+              {/* search bar */}
+              <div className={`search-bar ${styles['search-bar']}`}>
+                <p className={`${styles['search-bar-input']} control search-bar-input`}>
+                  <input name="species" className={`${styles.input} input`} input="text" placeholder='Search an animal' value={new URLSearchParams(window.location.search).get('species' ?? '')}/>
+                </p>
 
-              <p className={`control`}>
-                <Link to='/search'>
-                  <button type='submit' form='search_form' className={`button is-secondary ${styles['is-secondary']}`}>
+                <p className={`control`}>
+                  <button type='submit' className={`button is-secondary ${styles['is-secondary']}`}>
                     Search
                   </button>
-                </Link>
-              </p>
+                </p>
+              </div>
+            </div>
+
+            <div className={`search-bottom ${styles['search-bottom']}`}>
+              {/* breed filter */}
+                <div className={`filter`}>
+                <div className={`label`}>Breed</div>
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='breed'>
+                      <option value=''>All</option>
+                      <option>Labrador</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* min age filter */}
+              <div className={`filter`}>
+                <div className={`label`}>Min Age</div>
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='min_age'>
+                      <option>0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>10</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* max age filter */}
+              <div className={`filter`}>
+                <div className={`label`}> Max Age</div>
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='max_age'>
+                      <option>99</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>20</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+              {/* gender filter */}
+              <div className={`filter`}>
+                <div className={`label`}>Gender</div>
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='gender'>
+                      <option value=''>All</option>
+                      <option value='M'>Male</option>
+                      <option value='F'>Female</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* status filter */}
+              <div className={`filter`}>
+                <div className={`label`}>Status</div>
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='status'>
+                      <option>Available</option>
+                      <option>Adopted</option>
+                      <option>Pending</option>
+                      <option>Withdrawn</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* size filter */}
+              <div className={`filter`}>
+                <div className={`label`}>Size</div>
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='size'>
+                      <option value=''>All</option>
+                      <option value='0'>X-Small</option>
+                      <option value='1'>Small</option>
+                      <option value='2'>Medium</option>
+                      <option value='3'>Large</option>
+                      <option value='4'>X-Large</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* color filter */}
+              <div className={`filter`}>
+                <div className={`label`}>Color</div>
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='color'>
+                      <option value=''>All</option>
+                      <option>Black</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* shelter filter */}
+              <div className={`filter`}>
+                <div className={`label`}>Shelter</div>
+                <div className={`control`}>
+                  <div className={`select`}>
+                    <select name='shelter'>
+                      <option value=''>All</option>
+                      <option>Salt Moon</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className={`search-bottom ${styles['search-bottom']}`}>
-            {/* breed filter */}
-            <div className={`filter`}>
-              <div className={`label`}>Breed</div>
-              <div className={`control`}>
-                <div className={`select`}>
-                  <select>
-                    <option>Search an animal</option>
-                    <option>Labrador</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* age filter */}
-            <div className={`filter`}>
-              <div className={`label`}>Age</div>
-              <div className={`control`}>
-                <div className={`select`}>
-                  <select>
-                    <option>Search an animal</option>
-                    <option>10+</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* gender filter */}
-            <div className={`filter`}>
-              <div className={`label`}>Gender</div>
-              <div className={`control`}>
-                <div className={`select`}>
-                  <select>
-                    <option>Search an animal</option>
-                    <option>Male</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* size filter */}
-            <div className={`filter`}>
-              <div className={`label`}>Size</div>
-              <div className={`control`}>
-                <div className={`select`}>
-                  <select>
-                    <option>Search an animal</option>
-                    <option>Large</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* color filter */}
-            <div className={`filter`}>
-              <div className={`label`}>Color</div>
-              <div className={`control`}>
-                <div className={`select`}>
-                  <select>
-                    <option>Search an animal</option>
-                    <option>Black</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         </form>
+
         {/* pet list */}
         <div className={`tile is-ancestor pet-list`}>
           <div className='tile is-vertical is-12'>
@@ -190,14 +273,16 @@ export default function SearchPage() {
               {/* pet 1 */}
 
                   {petList && petList.map((petResult, index) => (
-                <PetCard key={index} props={petResult} />
+                <PetCard key={petResult.id} props={petResult} />
               ))}
             </div>
           </div>
         </div>
-        <div className='load-container'>
+        <div className={`search-top ${styles['search-top']}`}>
           <div>
-          <button className={`button is-secondary load-more ${nextPage === null ? 'hide': ''}`} onClick={loadNext}>Load More</button>
+            <p>
+          <button className={`button is-secondary load-more ${petList.length === 0 || nextPage === null ? 'hide': ''}`} onClick={loadNext}>Load More</button>
+            </p>
           </div>
         </div>
 

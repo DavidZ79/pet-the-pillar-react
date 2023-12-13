@@ -11,6 +11,8 @@ export default function Header() {
   const [isActive, setActive] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isShelter, setIsShelter] = useState(false);
+  
+  const [searchBarValue, setSearchBarValue] = useState('');
 
   const handleToggle = () => {
     setActive(!isActive);
@@ -63,13 +65,16 @@ const handleLogout = () => {
         <div className="navbar-search-bar">
           <p className="navbar-search-bar-input">
             <input
+              name="species"
               className="input"
               type="text"
               placeholder="Search an animal"
-            />
+              value={searchBarValue}
+              onChange={e => setSearchBarValue(e.target.value)}
+              />
           </p>
           <p className="navbar-search-button">
-            <Link to="/search">
+            <Link to={`/search?species=${searchBarValue}`}>
               <button className="button is-secondary">Search</button>
             </Link>
           </p>

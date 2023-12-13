@@ -77,7 +77,7 @@ export default function PetCard({props}) {
           <div className='card-content'>
             <div className='media'>
               <div className='media-content'>
-                <p className='title is-4'>{petDetails ? petDetails.id : ""}</p>
+                <p className='title is-4'>{petDetails ? petDetails.name : ""}</p>
                 <p className='subtitle is-6'>
                   <Link to={`/shelter/${petDetails ? petDetails.shelter : ""}`}>
                      {petDetails ? petDetails.shelter : ""}
