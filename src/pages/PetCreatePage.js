@@ -7,10 +7,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import styles from "../pagecss/petcreatepage.module.css";
-
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import pfp from "../assets/profile.png";
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
+var BASE_URL = API_URL.slice(0, -5);
 
 export default function PetCreatePage() {
   const schema = yup.object().shape({
@@ -19,9 +20,9 @@ export default function PetCreatePage() {
     description: yup.string().required("Please enter description"),
     medicalHistory: yup.string().required("Please enter medical history"),
     specialNeeds: yup.string().required("Please enter special needs"),
-    behavior: yup.string().required("Please enter special needs"),
-    location: yup.string().required("Please enter special needs"),
-    species: yup.string().required("Please enter special needs"),
+    behavior: yup.string().required("Please enter behavior"),
+    location: yup.string().required("Please enter location"),
+    species: yup.string().required("Please enter species"),
     age: yup.number().required("Please enter an age"),
     gender: yup.string().matches(/^[MF]$/, "Gender must be M or F").required("Please enter a gender"),
     breed: yup.string().required("Please enter a breed"),
@@ -55,9 +56,13 @@ export default function PetCreatePage() {
     formData.append('behavior', behavior);
     formData.append('species', species);
     formData.append('location', location);
+    if (selectedImage) {
+      formData.append('photos', document.querySelector('input[type="file"]').files[0]);
+    }
+
 
     try {
-      const response = await fetch(URL + 'pet/', {
+      const response = await fetch(API_URL + 'pet/', {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -76,7 +81,17 @@ export default function PetCreatePage() {
       navigate("/pet_detail/" + responseData.id);
     } catch (error) {
       console.error('second demon:', error.message);
+      console.log(formData.name);
     }
+  };
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (e) => {
+      if (e.target.files && e.target.files[0]) {
+          let img = e.target.files[0];
+          setSelectedImage(URL.createObjectURL(img));
+      }
   };
 
   return (
@@ -89,12 +104,14 @@ export default function PetCreatePage() {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles["pfp-container"]}>
-              <img src={pfp} alt="pfp pic" className={styles.pfp} />
+              <img src={selectedImage || pfp} alt="pfp pic" className={styles.pfp} />
             </div>
 
             <div className={styles["login-box"]}>
-              <input type="file" accept=".jpg,.jpeg,.png" required/>
+            <input type="file" accept=".jpg,.jpeg,.png" onChange={handleImageChange} required/>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Name: </p>
               <input
                 type="text"
                 placeholder="Name*"
@@ -102,7 +119,10 @@ export default function PetCreatePage() {
                 required
               />
               <p>{errors.name?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Breed: </p>
               <input
                 type="text"
                 placeholder="Breed*"
@@ -110,7 +130,10 @@ export default function PetCreatePage() {
                 required
               />
               <p>{errors.breed?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Species: </p>
               <input
                 type="text"
                 placeholder="Species*"
@@ -118,7 +141,10 @@ export default function PetCreatePage() {
                 required
               />
               <p>{errors.species?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Age: </p>
               <input
                 type="text"
                 placeholder="Age*"
@@ -126,7 +152,10 @@ export default function PetCreatePage() {
                 required
               />
               <p>{errors.age?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Gender: </p>
               <input
                 type="text"
                 placeholder="Gender*"
@@ -134,7 +163,10 @@ export default function PetCreatePage() {
                 required
               />
               <p>{errors.gender?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Size: </p>
               <input
                 type="text"
                 placeholder="Size*"
@@ -142,7 +174,10 @@ export default function PetCreatePage() {
                 required
               />
               <p>{errors.size?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Color: </p>
               <input
                 type="text"
                 placeholder="Color*"
@@ -150,7 +185,10 @@ export default function PetCreatePage() {
                 required
               />
               <p>{errors.color?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Fee: </p>
               <input
                 type="text"
                 placeholder="Fee*"
@@ -158,9 +196,11 @@ export default function PetCreatePage() {
                 required
               />
               <p>{errors.fee?.message}</p>
+              </div>
             </div>
 
             <div className={styles["mission-box"]}>
+            <p className={styles["box_header"]}>Description: </p>
               <textarea
                 placeholder="Description*"
                 {...register("description")}
@@ -168,6 +208,7 @@ export default function PetCreatePage() {
               />
               <p>{errors.description?.message}</p>
 
+              <p className={styles["box_header"]}>Behavior: </p>
               <textarea
                 placeholder="Behavior*"
                 {...register("behavior")}
@@ -175,6 +216,7 @@ export default function PetCreatePage() {
               />
               <p>{errors.behavior?.message}</p>
               
+              <p className={styles["box_header"]}>Medical History: </p>
               <textarea
                 placeholder="Medical history*"
                 {...register("medicalHistory")}
@@ -182,6 +224,7 @@ export default function PetCreatePage() {
               />
               <p>{errors.medicalHistory?.message}</p>
 
+              <p className={styles["box_header"]}>Special Needs: </p>
               <textarea
                 placeholder="Special Needs*"
                 {...register("specialNeeds")}
@@ -189,6 +232,7 @@ export default function PetCreatePage() {
               />
               <p>{errors.specialNeeds?.message}</p>
 
+              <p className={styles["box_header"]}>Location: </p>
               <textarea
                 placeholder="Location*"
                 {...register("location")}

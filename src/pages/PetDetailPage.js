@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import pfp from "../assets/farloom.png";
 
 var URL = process.env.REACT_APP_API_URL;
+var BASE_URL = URL.slice(0, -5);
 
 export default function PetDetailPage() {
   const schema = yup.object().shape({
@@ -22,18 +23,20 @@ export default function PetDetailPage() {
     description: yup.string().required("Please enter description"),
     medicalHistory: yup.string().required("Please enter medical history"),
     specialNeeds: yup.string().required("Please enter special needs"),
+    location: yup.string().required("Please enter location"),
+    behavior: yup.string().required("Please enter behavior"),
     age: yup.number().required("Please enter am age"),
     gender: yup.string().required("Please enter a gender"),
     breed: yup.string().required("Please enter a breed"),
     size: yup.number().required("Please enter a size"),
     color: yup.string().required("Please enter a color"),
     fee: yup.number().required("Please enter a fee"),
+    // photos: yup.mixed().required("Please enter a photo"),
   });
   
   const { id } = useParams();
 
   const [petDetails, setPetDetails] = useState(null);
-
   useEffect(() => {
     const fetchPetDetails = async () => {
       try {
@@ -49,10 +52,9 @@ export default function PetDetailPage() {
         }
   
         const responseData = await response.json();
-        // console.log(responseData)
         const tempData = {
           "id": responseData.id,
-          "photos": [],
+          "photo": responseData.photos[0]['image'],
           "name": responseData.name,
           "status": responseData.status,
           "description": responseData.description,
@@ -106,87 +108,138 @@ export default function PetDetailPage() {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles["pfp-container"]}>
-              <img src={pfp} alt="pfp pic" className={styles.pfp} />
+              <img src={petDetails ? BASE_URL + petDetails.photo : ''} alt="pfp pic" className={styles.pfp} />              
             </div>
 
             <div className={styles["login-box"]}>
               {/* <input type="file" accept=".jpg,.jpeg,.png" required/> */}
 
+              <div className={styles["wrapper"]}>
+              <p>Name: </p>
               <input
                 type="text"
                 value={petDetails ? petDetails.name : ""}
                 {...register("name")}
                 disabled
               />
-
+              </div>
+              
+              <div className={styles["wrapper"]}>
+              <p>Status: </p>
               <input
                 type="text"
                 value={petDetails ? petDetails.status : ""}
                 {...register("status")}
                 disabled
               />
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p>Breed: </p>
               <input
                 type="text"
                 value={petDetails ? petDetails.breed : ""}
                 {...register("breed")}
                 disabled
               />
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p>Age: </p>
               <input
                 type="text"
                 value={petDetails ? petDetails.age : ""}
                 {...register("age")}
                 disabled
               />
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p>Age:</p>
               <input
                 type="text"
                 value={petDetails ? petDetails.gender : ""}
                 {...register("gender")}
                 disabled
               />
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p>Size: </p>
               <input
                 type="text"
                 value={petDetails ? petDetails.size : ""}
                 {...register("size")}
                 disabled
               />
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p>Color: </p>
               <input
                 type="text"
                 value={petDetails ? petDetails.color : ""}
                 {...register("color")}
                 disabled
               />
+              </div>
 
+              <div className={styles["wrapper"]}>        
+              <p>Fee: </p>
               <input
                 type="text"
                 value={petDetails ? petDetails.fee : ""}
                 {...register("fee")}
                 disabled
               />
-            </div>
+              </div>
 
-            <div className={styles["mission-box"]}>
+            
+              <div className={styles["mission-box"]}>
+              <p className={styles["box_header"]}>Location: </p>
               <textarea
                 value={petDetails ? petDetails.description : ""}
                 {...register("description")}
                 disabled
               />
+            
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Behavior: </p>
+              <textarea
+                value={petDetails ? petDetails.behavior : ""}
+                {...register("behavior")}
+                disabled
+              />
+              </div>
+
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Medical History: </p>
               <textarea
                 value={petDetails ? petDetails.medicalHistory : ""}
                 {...register("medicalHistory")}
                 disabled
               />
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Special Needs: </p>
               <textarea
                 value={petDetails ? petDetails.specialNeeds : ""}
                 {...register("specialNeeds")}
                 disabled
               />
+              </div>
+
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Location: </p>
+              <textarea
+                value={petDetails ? petDetails.location : ""}
+                {...register("location")}
+                disabled
+              />
+              </div>
+            </div>
             </div>
           </form>
         </Card>

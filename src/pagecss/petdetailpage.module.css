@@ -82,8 +82,6 @@ form {
   border-radius: 20px;
   border-width: 2px;
 
-  margin-top: 20px;
-
   font-size: 20px;
   font-weight: 550;
   font-family: "Poppins", sans-serif;
@@ -132,9 +130,9 @@ form {
   color: red;
 }
 .mission-box textarea {
-  background-color: aliceblue;
-  /* width: 664px; */
-  width: 91%;
+  background-color: white;
+  width: 664px;
+  /* width: 91%; */
   height: 170px;
   border-radius: 20px;
   border-width: 2px;
@@ -143,10 +141,12 @@ form {
   font-weight: 550;
   font-family: "Poppins", sans-serif;
   resize: none;
-  color: gray;
   padding: 7px;
 
-  margin-bottom: 20px;
+  
+}
+.box_header {
+  color: white !important;
 }
 .mission-box label {
   font-size: 18px;
@@ -167,6 +167,9 @@ form {
 }
 .info-container p {
   display: inline;
+}
+.wrapper {
+    margin-top: 20px;
 }
 
 @media screen and (max-width: 629px) {

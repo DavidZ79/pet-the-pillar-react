@@ -8,8 +8,9 @@ import default_picture from "../assets/profile.png";
 // https://bulma.io/documentation/components/navbar/
 export default function Header() {
 
-  const [isActive, setActive] = useState("false");
-  const [isLoggedIn, setLoggedIn] = useState("false")
+  const [isActive, setActive] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isShelter, setIsShelter] = useState(false);
 
   const handleToggle = () => {
     setActive(!isActive);
@@ -18,18 +19,23 @@ export default function Header() {
   React.useEffect(() => {
     if (!localStorage.getItem('accessToken')) {
       // Empty
-      setLoggedIn(false);
+      setIsLoggedIn(false);
     } else {
-      setLoggedIn(true);
+      setIsLoggedIn(true);
     }
-    return () => {
-        console.log('MyComponent onUnmount');
-    };
+    setIsShelter(localStorage.getItem('isShelter') === 'true');
+    // return () => {
+    //     console.log('MyComponent onUnmount');
+    // };
 }, []);
 
 const navigate = useNavigate();
+
 const handleLogout = () => {
   localStorage.setItem('accessToken', ''); 
+  localStorage.setItem('isShelter', false);
+  localStorage.setItem('userID', 0);
+  setIsLoggedIn(false);
   navigate('/'); 
 };
 
@@ -53,7 +59,7 @@ const handleLogout = () => {
         </a>
       </div>
 
-      <div id="navbar-side" className={`navbar-menu ${isActive ? null : "is-active"}`}>
+      <div id="navbar-side" className={`navbar-menu ${isActive ? "is-active" : ""}`}>
         <div className="navbar-search-bar">
           <p className="navbar-search-bar-input">
             <input
@@ -70,7 +76,7 @@ const handleLogout = () => {
         </div>
 
         <div className="navbar-end">
-          <div className={`navbar-item logged-in ${isLoggedIn ? null : "hide"}`}>
+          <div className={`navbar-item logged-in ${isLoggedIn ? "" : "hide"}`}>
             <div className="">
               <div className="navbar-item bell-div">
                 <Link to="/notification_page">
@@ -97,26 +103,26 @@ const handleLogout = () => {
               </div>
 
               <div className="navbar-dropdown">
-                <Link to="/seeker_dashboard_page" className="navbar-item seeker">
+                <Link to="/seeker_dashboard_page" className={`navbar-item seeker ${isShelter ? "hide" : ""}`}>
                   Dashboard (seeker)
                 </Link>
 
-                <Link to="/shelter_dashboard" className="navbar-item shelter">
+                <Link to="/shelter_dashboard" className={`navbar-item shelter ${isShelter ? "" : "hide"}`}>
                   Dashboard (shelter)
                 </Link>
 
                 <hr className="navbar-divider" />
 
                 <Link
-                  to="/account_update_seeker"
-                  className="navbar-item seeker"
+                  to="/update_seeker"
+                  className={`navbar-item seeker ${isShelter ? "hide" : ""}`}
                 >
                   Settings (seeker)
                 </Link>
 
                 <Link
-                  to="/account_update_shelter"
-                  className="navbar-item shelter"
+                  to="/update_shelter"
+                  className={`navbar-item shelter ${isShelter ? "" : "hide"}`}
                 >
                   Settings (shelter)
                 </Link>
@@ -128,7 +134,7 @@ const handleLogout = () => {
             </div>
           </div>
 
-          <div className={`navbar-item logged-out ${isLoggedIn ? "hide" : null}`}>
+          <div className={`navbar-item logged-out ${isLoggedIn ? "hide" : ""}`}>
             <div className="navbar-buttons">
               <Link to="/signup_before" className="button is-secondary">
                 Sign up

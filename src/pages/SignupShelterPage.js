@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -14,6 +16,9 @@ import pfp from "../assets/profile.png";
 var URL = process.env.REACT_APP_API_URL;
 
 export default function SignupShelterPage() {
+
+  const [signupError, setSignupError] = useState(null);
+
   const schema = yup.object().shape({
     shelterName: yup.string().required("Shelter name is required"),
     location: yup.string().required("location is required"),
@@ -62,6 +67,8 @@ export default function SignupShelterPage() {
   
       const responseData = await response.json();
       console.log(responseData);
+      localStorage.setItem('isShelter', true);
+      localStorage.setItem('userId', responseData.id);
 
       //login stuff, sry this is incredibly unclean
       const requestData2 = {
@@ -88,12 +95,15 @@ export default function SignupShelterPage() {
         navigate('/search');
       }
       console.log(responseData2);
+      setSignupError(null);
+
       localStorage.setItem('accessToken', responseData2.access_token);
 
 
       navigate("/shelter_dashboard"); 
     } catch (error) {
       console.error('second demon:', error.message);
+      setSignupError('Invalid email or username. Please try again.');
     }
   };
 
@@ -150,6 +160,12 @@ export default function SignupShelterPage() {
                 <textarea placeholder="Mission Statement*" {...register("missionStatement")} required/>
                 <p>{errors.missionStatement?.message}</p>
               </div>
+
+              {signupError && (
+                <div className={styles['signup-error']}>
+                  {signupError}
+                </div>
+              )}
 
               <div className={styles['submit-container']}>
                   <input type="submit" className={styles['submit-btn']} value="Sign up"/>
