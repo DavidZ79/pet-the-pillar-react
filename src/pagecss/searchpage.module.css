@@ -90,6 +90,17 @@
   text-align: left !important;
 }
 
+.load-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.load-more {
+  width:100% !important;
+}
+
 div p a{
   color: inherit;
   text-decoration: underline;

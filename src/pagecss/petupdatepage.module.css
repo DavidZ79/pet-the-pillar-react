@@ -74,8 +74,6 @@
    border-radius: 20px;
    border-width: 2px;
  
-   margin-top: 20px;
- 
    font-size: 20px;
    font-weight: 550;
    font-family: "Poppins", sans-serif;
@@ -124,7 +122,7 @@
    color: red;
  }
  .mission-box textarea {
-   background-color: aliceblue;
+   background-color: white;
    /* width: 664px; */
    width: 91%;
    height: 170px;
@@ -135,7 +133,6 @@
    font-weight: 550;
    font-family: "Poppins", sans-serif;
    resize: none;
-   color: gray;
    padding: 7px;
 
    margin-bottom: 20px;
@@ -160,6 +157,12 @@
  .info-container p {
    display: inline;
  }
+ .wrapper {
+  margin-top: 20px;
+}
+.box_header {
+  color: white !important;
+}
  
  @media screen and (max-width: 629px) {
    .mission-box {

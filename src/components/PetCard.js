@@ -12,7 +12,7 @@ var URL = process.env.REACT_APP_API_URL;
 const styles = {...styles1,...styles2,...styles3};
 
 export default function PetCard({props}) {
-   const { id } = useParams();
+  const { id } = useParams();
 
   const [petDetails, setPetDetails] = useState(null);
 
@@ -77,7 +77,7 @@ export default function PetCard({props}) {
           <div className='card-content'>
             <div className='media'>
               <div className='media-content'>
-                <p className='title is-4'>{petDetails ? petDetails.name : ""}</p>
+                <p className='title is-4'>{petDetails ? petDetails.id : ""}</p>
                 <p className='subtitle is-6'>
                   <Link to={`/shelter/${petDetails ? petDetails.shelter : ""}`}>
                      {petDetails ? petDetails.shelter : ""}
@@ -99,6 +99,7 @@ export default function PetCard({props}) {
                   Breed: {petDetails ? petDetails.breed : ""}
                 </div>
               </div>
+              <time>{new Date(petDetails?.timestamp).toLocaleString()}</time>
             </div>
         </div>
       </div>
