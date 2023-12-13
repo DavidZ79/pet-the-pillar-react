@@ -129,7 +129,7 @@ const handleLogout = () => {
               <div className="navbar-profile profile">
                 <img
                   className="navbar-profile-image"
-                  src={accountDetails ? accountDetails.picture : default_picture}
+                  src={accountDetails ? (accountDetails.picture ? accountDetails.picture : default_picture) : default_picture}
                   alt="profile pic"
                 />
               </div>
