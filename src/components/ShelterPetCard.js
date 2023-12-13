@@ -1,17 +1,11 @@
-import "../css/main_style.css";
-import styles1 from "../css/main_style.css";
-import styles2 from "../css/pet_listing.css"
-import styles3 from '../pagecss/searchpage.module.css'
-
+import Button from "./Button";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import cat from "../assets/cat.png";
 
-var URL = process.env.REACT_APP_API_URL;
+import styles from "../css/ShelterPetCard.module.css";
 
-const styles = {...styles1,...styles2,...styles3};
+export default function ShelterPetCard(props) {
 
-export default function PetCard({props}) {
   const { id } = useParams();
 
   const [petDetails, setPetDetails] = useState(null);
@@ -62,47 +56,26 @@ export default function PetCard({props}) {
     fetchPetDetails();
   }, [id]);
 
-   return (
-      <div className='tile is-3 is-parent'>
-      <div className='tile is-child'>
-        <div className={`is-hoverable ${styles.card}`}>
-          <div className='card-image'>
-            <Link to={`/pet_detail/${props.id}`}>
-              <figure className='image is-4by4'>
-                <img src={cat} alt="Placeholder image"/>
-              </figure>
-            </Link>
-          </div>
-
-          <div className='card-content'>
-            <div className='media'>
-              <div className='media-content'>
-                <p className='title is-4'>{petDetails ? petDetails.id : ""}</p>
-                <p className='subtitle is-6'>
-                  <Link to={`/shelter/${petDetails ? petDetails.shelter : ""}`}>
-                     {petDetails ? petDetails.shelter : ""}
+  return (
+    <div>
+      <div class="tile is-child">
+        <div class="card is-hoverable">
+          <div class="card-content">
+            <div class="media">
+              <div className={styles["pet_card"]}>
+                <p class="title is-4">{props.petName}</p>
+                <img src={props.pfp} className={styles.pet_img} />
+                <p class="subtitle is-6">
+                  {/* // TODO: needs / at the beginning of the link, see ShelterDashboardPage for example */}
+                  <Link to={props.pet_update_page}>
+                    <Button>Update</Button>
                   </Link>
                 </p>
               </div>
             </div>
-
-            <div className='content'>
-                <div className=''>
-                  <div>
-                    Age: {petDetails ? petDetails.age : ""}
-                  </div>
-                  <div>
-                     Gender: {petDetails ? petDetails.gender : ""}
-                  </div>
-                </div>
-                <div>
-                  Breed: {petDetails ? petDetails.breed : ""}
-                </div>
-              </div>
-              <time>{new Date(petDetails?.timestamp).toLocaleString()}</time>
-            </div>
+          </div>
         </div>
       </div>
     </div>
-   );
+  );
 }

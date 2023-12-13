@@ -7,6 +7,9 @@ import styles3 from '../pagecss/searchpage.module.css'
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+
+// import cat from "../assets/cat.png";
+
 import PetCard from '../components/PetCard';
 
 var URL = process.env.REACT_APP_API_URL;
