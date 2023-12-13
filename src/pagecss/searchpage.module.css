@@ -81,13 +81,13 @@
 }
 
 .select select{
-  background-color: aliceblue;
+  background-color: aliceblue !important;
 }
 
 .card, .title, .subtitle{
-  background-color: var(--primary) !important;
-  color: var(--light-text) !important;
-  text-align: left !important;
+  background-color: var(--primary) ;
+  color: var(--light-text) ;
+  text-align: left ;
 }
 
 .load-container {
