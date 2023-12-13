@@ -24,7 +24,7 @@ export default function PetCard({props}) {
         const response = await fetch(`${API_URL}pet/${props.id}/`, {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+            // 'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
           },
         });
   
@@ -67,7 +67,7 @@ export default function PetCard({props}) {
         const response = await fetch(API_URL + `account/shelter/${shelterID}/`, {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+            // 'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
           },
         });
   
