@@ -15,6 +15,7 @@ export default function PetCard({props}) {
   const { id } = useParams();
 
   const [petDetails, setPetDetails] = useState(null);
+  const [shelterName, setShelterName] = useState(null);
 
   useEffect(() => {
     const fetchPetDetails = async () => {
@@ -53,6 +54,32 @@ export default function PetCard({props}) {
           "shelter": responseData.shelter
         }
         setPetDetails(tempData); // Update the state with fetched details
+        fetchShelterName(tempData.shelter);
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+
+    const fetchShelterName = async (shelterID) => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${shelterID}/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch pet details');
+        }
+  
+        const responseData = await response.json();
+        // console.log(responseData)
+        const tempData = {
+          "username": responseData.username
+        }
+        setShelterName(tempData); // Update the state with fetched details
       } catch (error) {
         console.error('Error fetching pet details:', error);
         // Handle error, e.g., redirect to an error page
@@ -77,10 +104,10 @@ export default function PetCard({props}) {
           <div className='card-content'>
             <div className='media'>
               <div className='media-content'>
-                <p className='title is-4'>{petDetails ? petDetails.id : ""}</p>
+                <p className='title is-4'>{petDetails ? petDetails.name : ""}</p>
                 <p className='subtitle is-6'>
                   <Link to={`/shelter/${petDetails ? petDetails.shelter : ""}`}>
-                     {petDetails ? petDetails.shelter : ""}
+                     {shelterName ? shelterName.username : ""}
                   </Link>
                 </p>
               </div>
