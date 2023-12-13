@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 
 import default_picture from "../assets/profile.png";
+var API_URL = process.env.REACT_APP_API_URL;
 
 // https://bulma.io/documentation/components/navbar/
 export default function Header() {
@@ -15,12 +16,43 @@ export default function Header() {
   const handleToggle = () => {
     setActive(!isActive);
   };
+  const [accountDetails, setAccountDetails] = useState(null);
 
   React.useEffect(() => {
     if (!localStorage.getItem('accessToken')) {
-      // Empty
       setIsLoggedIn(false);
     } else {
+      const fetchAccountDetails = async () => {
+        try {
+          var type = 'seeker';
+          if (localStorage.getItem("isShelter") === 'true') {
+            type = 'shelter';
+          }
+          console.log(localStorage.getItem("userId"));
+
+          const response = await fetch(`${API_URL}account/${type}/${localStorage.getItem("userId")}/`, {
+            method: 'GET',
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+            },
+          });
+    
+          if (!response.ok) {
+            throw new Error('Failed to fetch account details');
+          }
+    
+          const responseData = await response.json();
+          const tempData = {
+            "picture": responseData.picture,
+          }
+          setAccountDetails(tempData); // Update the state with fetched details
+        } catch (error) {
+          console.error('Error fetching account details:', error);
+          console.log(`${API_URL}account/${type}/${localStorage.getItem('userId')}/`)
+        }
+      };
+    
+      fetchAccountDetails();
       setIsLoggedIn(true);
     }
     setIsShelter(localStorage.getItem('isShelter') === 'true');
@@ -34,7 +66,7 @@ const navigate = useNavigate();
 const handleLogout = () => {
   localStorage.setItem('accessToken', ''); 
   localStorage.setItem('isShelter', false);
-  localStorage.setItem('userID', 0);
+  localStorage.setItem('userId', 0);
   setIsLoggedIn(false);
   navigate('/'); 
 };
@@ -97,7 +129,7 @@ const handleLogout = () => {
               <div className="navbar-profile profile">
                 <img
                   className="navbar-profile-image"
-                  src={default_picture}
+                  src={accountDetails ? accountDetails.picture : default_picture}
                   alt="profile pic"
                 />
               </div>

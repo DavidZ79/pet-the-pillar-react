@@ -83,7 +83,7 @@ export default function SearchPage() {
         <div className={`form search-container ${styles['search-container']}`}>
           <div className={`search-top ${styles['search-top']}`}> 
             <div className={`sort-container ${styles['sort-container']}`}>
-              <label className={`label sort-label ${styles['sort-label']}`}>
+              <div className={`label sort-label ${styles['sort-label']}`}>
                 Sort by:
               </div>
 

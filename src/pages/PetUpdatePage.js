@@ -9,8 +9,7 @@ import * as yup from "yup";
 import styles from "../pagecss/petupdatepage.module.css";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import pfp from "../assets/farloom.png";
+import { useState, useEffect } from "react";
 var API_URL = process.env.REACT_APP_API_URL;
 var BASE_URL = API_URL.slice(0, -5);
 

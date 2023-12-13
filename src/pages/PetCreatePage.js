@@ -71,7 +71,6 @@ export default function PetCreatePage() {
       });
   
       if (!response.ok) {
-        console.log(formData);
         throw new Error(response);
       }
   

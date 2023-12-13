@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../pagecss/signupseeker.module.css";
 
 import pfp from "../assets/profile.png";
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
 
 function SignupSeekerPage() {
 
@@ -45,21 +45,22 @@ function SignupSeekerPage() {
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     const { firstName, lastName, email, phone, password, location, preference } = data;
-    const requestData = {
-      username: `${firstName} ${lastName}`,
-      password,
-      email,
-      phoneNumber: phone,
-      location, 
-      preference,
-    };
+    const formData = new FormData();
+    formData.append('username', `${firstName} ${lastName}`);
+    formData.append('password', password);
+    formData.append('email', email);
+    formData.append('phoneNumber', phone);
+    formData.append('location', location);
+    formData.append('preference', preference);
+    if (selectedImage) {
+      formData.append('picture', document.querySelector('input[type="file"]').files[0]);
+    }
     try {
-      const response = await fetch(URL + 'account/register/seeker/', {
+      const response = await fetch(API_URL + 'account/register/seeker/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestData),
+        body: formData,
       });
   
       if (!response.ok) {
@@ -76,7 +77,7 @@ function SignupSeekerPage() {
         password,
         email,
       }
-      const response2 = await fetch(URL + 'account/login/', {
+      const response2 = await fetch(API_URL + 'account/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,6 +107,15 @@ function SignupSeekerPage() {
     }
   };
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (e) => {
+      if (e.target.files && e.target.files[0]) {
+          let img = e.target.files[0];
+          setSelectedImage(URL.createObjectURL(img));
+      }
+  };
+
   return (
     <body>
       <Header />
@@ -116,11 +126,11 @@ function SignupSeekerPage() {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles["pfp-container"]}>
-              <img src={pfp} alt="pfp pic" className={styles.pfp} />
+            <img src={selectedImage || pfp} alt="pfp pic" className={styles.pfp} />
             </div>
 
             <div className={styles["login-box"]}>
-              <input type="file" accept=".jpg,.jpeg,.png" />
+            <input type="file" accept=".jpg,.jpeg,.png" onChange={handleImageChange}/>
 
               <input
                 type="text"
