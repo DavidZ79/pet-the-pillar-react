@@ -28,7 +28,6 @@ export default function Header() {
           if (localStorage.getItem("isShelter") === 'true') {
             type = 'shelter';
           }
-          console.log(localStorage.getItem("userId"));
 
           const response = await fetch(`${API_URL}account/${type}/${localStorage.getItem("userId")}/`, {
             method: 'GET',

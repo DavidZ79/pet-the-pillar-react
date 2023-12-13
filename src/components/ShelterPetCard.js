@@ -8,7 +8,8 @@ import { useState, useEffect } from "react";
 import cat from "../assets/cat.png";
 import Button from "./Button";
 
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
+var BASE_URL = API_URL.slice(0, -5);
 
 const styles = {...styles1,...styles2,...styles3};
 
@@ -21,7 +22,7 @@ export default function ShelterPetCard({props}) {
   useEffect(() => {
     const fetchPetDetails = async () => {
       try {
-        const response = await fetch(`${URL}pet/${props.id}/`, {
+        const response = await fetch(`${API_URL}pet/${props.id}/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -36,7 +37,7 @@ export default function ShelterPetCard({props}) {
         // console.log(responseData)
         const tempData = {
           "id": responseData.id,
-          "photos": responseData.photos,
+          "photo": responseData.photos[0]['image'],
           "name": responseData.name,
           "status": responseData.status,
           "description": responseData.description,
@@ -64,7 +65,7 @@ export default function ShelterPetCard({props}) {
 
     const fetchShelterName = async (shelterID) => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${shelterID}/`, {
+        const response = await fetch(API_URL + `account/shelter/${shelterID}/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -97,7 +98,7 @@ export default function ShelterPetCard({props}) {
           <div className='card-image'>
             <Link to={`/pet_detail/${props.id}`}>
               <figure className='image is-4by4'>
-                <img src={cat} alt="Placeholder image"/>
+                <img src={petDetails ? BASE_URL + petDetails.photo : cat} alt="Placeholder image"/>
               </figure>
             </Link>
           </div>
@@ -131,7 +132,7 @@ export default function ShelterPetCard({props}) {
 
               <div>
                 <Link to={`/pet_update/${props.id}`}>
-                  <button> update</button>
+                  <button className="button is-secondary"> Update</button>
                 </Link>
               </div>
             </div>

@@ -13,7 +13,6 @@ import shelterpic from "./shelter_dashboard_images/shelter_management_front.jpg"
 export default function ShelterDashboardPage() {
   const { id } = useParams();
   const shelterID = localStorage.getItem("userId"); 
-  console.log(shelterID)
 
   const [petList, setPetList] = useState(null);
 
@@ -39,7 +38,6 @@ export default function ShelterDashboardPage() {
           "previous": responseData.previous,
           "results": responseData.results
         }
-        console.log(tempData);
         setPetList(tempData); // Update the state with fetched details
       } catch (error) {
         console.error("Error fetching pet details:", error);
