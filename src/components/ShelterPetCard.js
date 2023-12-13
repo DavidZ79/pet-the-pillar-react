@@ -6,12 +6,13 @@ import styles3 from '../pagecss/searchpage.module.css'
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import cat from "../assets/cat.png";
+import Button from "./Button";
 
 var URL = process.env.REACT_APP_API_URL;
 
 const styles = {...styles1,...styles2,...styles3};
 
-export default function PetCard({props}) {
+export default function ShelterPetCard({props}) {
   const { id } = useParams();
 
   const [petDetails, setPetDetails] = useState(null);
@@ -35,7 +36,7 @@ export default function PetCard({props}) {
         // console.log(responseData)
         const tempData = {
           "id": responseData.id,
-          "photos": [],
+          "photos": responseData.photos,
           "name": responseData.name,
           "status": responseData.status,
           "description": responseData.description,
@@ -85,9 +86,9 @@ export default function PetCard({props}) {
         // Handle error, e.g., redirect to an error page
       }
     };
-  
+
     fetchPetDetails();
-  }, [id]);
+  }, []);
 
    return (
       <div className='tile is-3 is-parent'>
@@ -127,6 +128,12 @@ export default function PetCard({props}) {
                 </div>
               </div>
               <time>{new Date(petDetails?.timestamp).toLocaleString()}</time>
+
+              <div>
+                <Link to={`/pet_update/${props.id}`}>
+                  <button> update</button>
+                </Link>
+              </div>
             </div>
         </div>
       </div>

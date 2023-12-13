@@ -1,10 +1,10 @@
 import "../css/notification.css";
 import x from "./x.png";
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-var URL = process.env.REACT_APP_API_URL;
+// var URL = process.env.REACT_APP_API_URL;
 
 function Notification({props}) {
     function del() {

@@ -303,7 +303,7 @@ export default function PetUpdatePage() {
               <input
                 type="submit"
                 className={styles["submit-btn"]}
-                value="Create pet"
+                value="Update pet"
               />
             </div>
 

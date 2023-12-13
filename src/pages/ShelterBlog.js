@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 
 import styles from '../pagecss/shelterblog.module.css'
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 export default function ShelterBlog() {
    return (
