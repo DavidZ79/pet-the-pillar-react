@@ -22,6 +22,14 @@
     color: var(--light-text) !important;
 }
 
+.content { 
+    margin-bottom: 24px;
+}
+
+.card-content .media {
+    margin-bottom: 24px;
+}
+
 p a{
     color: inherit;
     text-decoration: underline;
