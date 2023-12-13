@@ -3,12 +3,50 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import ShelterPetCard from "../components/ShelterPetCard";
 
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import styles from "./shelter_dashboard_page.module.css";
 import shelterpic from "./shelter_dashboard_images/shelter_management_front.jpg";
 
-import { Link } from "react-router-dom";
-
 export default function ShelterDashboardPage() {
+  const { id } = useParams();
+
+  const [petList, setPetList] = useState(null);
+
+  useEffect(() => {
+    const fetchPetList = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/pet/list/`, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch pet details");
+        }
+
+        const responseData = await response.json();
+        // console.log(responseData)
+        const tempData = {
+          count: responseData.count,
+          next: responseData.next,
+          previous: responseData.previous,
+          results: responseData.results,
+        };
+        console.log(tempData);
+        setPetList(tempData); // Update the state with fetched details
+      } catch (error) {
+        console.error("Error fetching pet details:", error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+
+    fetchPetList();
+  }, [id]);
+
   return (
     <>
       <Header />
@@ -44,8 +82,14 @@ export default function ShelterDashboardPage() {
           <ShelterPetCard
             petName="doge"
             pfp={shelterpic}
-            pet_update_page="fdsa"
+            pet_update_page="kjhg"
           ></ShelterPetCard>
+
+          {petList &&
+            petList.results &&
+            petList.results.map((petResult, index) => (
+              <ShelterPetCard key={petResult.id} props={petResult} />
+            ))}
         </div>
       </div>
       <Footer />
