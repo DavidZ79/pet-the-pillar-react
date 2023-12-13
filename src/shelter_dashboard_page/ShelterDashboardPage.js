@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 
 import styles from "./shelter_dashboard_page.module.css";
 import shelterpic from "./shelter_dashboard_images/shelter_management_front.jpg";
+var API_URL = process.env.REACT_APP_API_URL;
 
 export default function ShelterDashboardPage() {
   const { id } = useParams();
@@ -19,7 +20,7 @@ export default function ShelterDashboardPage() {
   useEffect(() => {
     const fetchPetList = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/pet/list/`, {
+        const response = await fetch(API_URL + `pet/list/`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
