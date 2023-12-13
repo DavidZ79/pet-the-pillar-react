@@ -10,12 +10,12 @@ import styles from "../pagecss/petupdatepage.module.css";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import pfp from "../assets/farloom.png";
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
+var BASE_URL = API_URL.slice(0, -5);
 
 export default function PetUpdatePage() {
   const schema = yup.object().shape({
-    // profilePic: yup.mixed().required("Please enter a profile picture"),
+    photo: yup.mixed().required("Please enter a profile picture"),
     name: yup.string().required("Please enter a name"),
     description: yup.string().required("Please enter description"),
     medicalHistory: yup.string().required("Please enter medical history"),
@@ -38,7 +38,7 @@ export default function PetUpdatePage() {
   useEffect(() => {
     const fetchPetDetails = async () => {
       try {
-        const response = await fetch(`${URL}pet/${id}/`, {
+        const response = await fetch(`${API_URL}pet/${id}/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -53,7 +53,8 @@ export default function PetUpdatePage() {
         // console.log(responseData)
         const tempData = {
           "id": responseData.id,
-          "photos": [],
+          "photo": responseData.photos[0]['image'],
+          // "photo": "http://127.0.0.1:8000/photo_folder/5m1yelc0ds961_f1hptzM.png",
           "name": responseData.name,
           "status": responseData.status,
           "description": responseData.description,
@@ -82,33 +83,74 @@ export default function PetUpdatePage() {
   }, [id]);
 
   const {
+    register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const navigate = useNavigate();
-  const onSubmit = (data) => {
-    console.log("submitted");
-    navigate("/pet_detail");
-    console.log({ data });
-    //form logic here
-  };
-
-  const { register } = useForm();
-  const [specialNeeds, setSpecialNeeds] = useState("");
-
   useEffect(() => {
     if (petDetails) {
-      setSpecialNeeds(petDetails.specialNeeds);
+      reset(petDetails);
     }
-  }, [petDetails]);
+  }, [petDetails, reset]);
 
-  const handleSpecialNeedsChange = (event) => {
-    setSpecialNeeds(event.target.value);
+  const navigate = useNavigate();
+  const onSubmit = async (data) => {
+    console.log("hi");
+    const { name, breed, age, gender, size, color, fee, description, medicalHistory, specialNeeds, behavior, species, location } = data;
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('breed', breed);
+    formData.append('age', parseInt(age));
+    formData.append('gender', gender);
+    formData.append('size', parseInt(size));
+    formData.append('color', color);
+    formData.append('fee', parseInt(fee));
+    formData.append('description', description);
+    formData.append('medicalHistory', medicalHistory);
+    formData.append('specialNeeds', specialNeeds);
+    formData.append('behavior', behavior);
+    formData.append('species', species);
+    formData.append('location', location);
+    if (selectedImage) {
+      formData.append('photos', document.querySelector('input[type="file"]').files[0]);
+  }
+  
+
+    try {
+      const response = await fetch(API_URL + 'pet/' + id + '/', {
+        method: 'PATCH',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        },
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        console.log(formData);
+        throw new Error(response);
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+
+      navigate("/pet_detail/" + responseData.id);
+    } catch (error) {
+      console.error('second demon:', error.message);
+    }
   };
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (e) => {
+      if (e.target.files && e.target.files[0]) {
+          let img = e.target.files[0];
+          setSelectedImage(URL.createObjectURL(img));
+      }
+  };
 
   return (
     <>
@@ -120,91 +162,157 @@ export default function PetUpdatePage() {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles["pfp-container"]}>
-              <img src={pfp} alt="pfp pic" className={styles.pfp} />
+            <img src={selectedImage || (petDetails ? BASE_URL + petDetails.photo : '')} alt="Pet" className={styles.pfp} />
             </div>
 
             <div className={styles["login-box"]}>
-              {/* <input type="file" accept=".jpg,.jpeg,.png" required/> */}
+            <input type="file" accept=".jpg,.jpeg,.png" onChange={handleImageChange}/>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Name: </p>
               <input
                 type="text"
-                value={petDetails ? petDetails.name : ""}
+                placeholder="Name*"
                 {...register("name")}
+                required
               />
+              <p>{errors.name?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Breed: </p>
               <input
                 type="text"
-                value={petDetails ? petDetails.status : ""}
-                {...register("status")}
-              />
-
-              <input
-                type="text"
-                value={petDetails ? petDetails.breed : ""}
+                placeholder="Breed*"
                 {...register("breed")}
+                required
               />
+              <p>{errors.breed?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Species: </p>
               <input
                 type="text"
-                value={petDetails ? petDetails.age : ""}
+                placeholder="Species*"
+                {...register("species")}
+                required
+              />
+              <p>{errors.species?.message}</p>
+              </div>
+
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Age: </p>
+              <input
+                type="text"
+                placeholder="Age*"
                 {...register("age")}
+                required
               />
+              <p>{errors.age?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Gender: </p>
               <input
                 type="text"
-                value={petDetails ? petDetails.gender : ""}
+                placeholder="Gender*"
                 {...register("gender")}
+                required
               />
+              <p>{errors.gender?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Size: </p>
               <input
                 type="text"
-                value={petDetails ? petDetails.size : ""}
+                placeholder="Size*"
                 {...register("size")}
+                required
               />
+              <p>{errors.size?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Color: </p>
               <input
                 type="text"
-                value={petDetails ? petDetails.color : ""}
+                placeholder="Color*"
                 {...register("color")}
+                required
               />
+              <p>{errors.color?.message}</p>
+              </div>
 
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Fee: </p>
               <input
                 type="text"
-                value={petDetails ? petDetails.fee : ""}
+                placeholder="Fee*"
                 {...register("fee")}
+                required
               />
+              <p>{errors.fee?.message}</p>
+              </div>
             </div>
 
             <div className={styles["mission-box"]}>
+            <p className={styles["box_header"]}>Description: </p>
               <textarea
-                value={petDetails ? petDetails.description : ""}
+                placeholder="Description*"
                 {...register("description")}
+                required
               />
+              <p>{errors.description?.message}</p>
 
+              <p className={styles["box_header"]}>Behavior: </p>
               <textarea
-                value={petDetails ? petDetails.behavior : ""}
+                placeholder="Behavior*"
                 {...register("behavior")}
+                required
               />
-
+              <p>{errors.behavior?.message}</p>
+              
+              <p className={styles["box_header"]}>Medical History: </p>
               <textarea
-                value={petDetails ? petDetails.medicalHistory : ""}
+                placeholder="Medical history*"
                 {...register("medicalHistory")}
+                required
               />
+              <p>{errors.medicalHistory?.message}</p>
 
+              <p className={styles["box_header"]}>Special Needs: </p>
               <textarea
-                value={specialNeeds}
-                onChange={handleSpecialNeedsChange}
+                placeholder="Special Needs*"
                 {...register("specialNeeds")}
                 required
               />
+              <p>{errors.specialNeeds?.message}</p>
 
+              <p className={styles["box_header"]}>Location: </p>
               <textarea
-                value={petDetails ? petDetails.location : ""}
-                onChange={handleSpecialNeedsChange}
+                placeholder="Location*"
                 {...register("location")}
                 required
               />
+              <p>{errors.location?.message}</p>
             </div>
+
+            <div className={styles["submit-container"]}>
+              <input
+                type="submit"
+                className={styles["submit-btn"]}
+                value="Update pet"
+              />
+            </div>
+
+            <div className={styles["top-margin"]}>
+              <div className={styles["info-container"]}>
+                <p>* Required</p>
+              </div>
+            </div>
+
           </form>
         </Card>
       </div>

@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 
 import styles from "../pagecss/updateseekerpage.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
