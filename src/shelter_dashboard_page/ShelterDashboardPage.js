@@ -1,6 +1,7 @@
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Header from "../components/Header";
+import PetCard from "../components/PetCard";
 import ShelterPetCard from "../components/ShelterPetCard";
 
 import { Link, useParams } from "react-router-dom";
@@ -11,6 +12,8 @@ import shelterpic from "./shelter_dashboard_images/shelter_management_front.jpg"
 
 export default function ShelterDashboardPage() {
   const { id } = useParams();
+  const shelterID = localStorage.getItem("userId"); 
+  console.log(shelterID)
 
   const [petList, setPetList] = useState(null);
 
@@ -31,11 +34,11 @@ export default function ShelterDashboardPage() {
         const responseData = await response.json();
         // console.log(responseData)
         const tempData = {
-          count: responseData.count,
-          next: responseData.next,
-          previous: responseData.previous,
-          results: responseData.results,
-        };
+          "count": responseData.count,
+          "next": responseData.next,
+          "previous": responseData.previous,
+          "results": responseData.results
+        }
         console.log(tempData);
         setPetList(tempData); // Update the state with fetched details
       } catch (error) {
@@ -73,21 +76,10 @@ export default function ShelterDashboardPage() {
 
         {/* pets in this shelter */}
         <div className={styles["pet_card_array"]}>
-          <ShelterPetCard
-            petName="fdsa"
-            pfp={shelterpic}
-            pet_update_page="rewq"
-          ></ShelterPetCard>
-
-          <ShelterPetCard
-            petName="doge"
-            pfp={shelterpic}
-            pet_update_page="kjhg"
-          ></ShelterPetCard>
-
           {petList &&
             petList.results &&
             petList.results.map((petResult, index) => (
+              petResult.shelter === parseInt(shelterID) &&
               <ShelterPetCard key={petResult.id} props={petResult} />
             ))}
         </div>

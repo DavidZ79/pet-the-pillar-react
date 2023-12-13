@@ -58,7 +58,7 @@ export default function LoginPage() {
       setLoginError(null);
       console.log(responseData);
       localStorage.setItem('accessToken', responseData.access_token);
-      localStorage.setItem('userId', responseData.id);
+      localStorage.setItem('userId', responseData.user_id);
       localStorage.setItem('isShelter', responseData.is_shelter);
 
     } catch (error) {
