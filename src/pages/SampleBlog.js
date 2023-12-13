@@ -3,7 +3,6 @@ import Footer from "../components/Footer";
 import BlogPost from "../components/BlogPost";
 import Card from "../components/Card";
 import NewPost from "../components/NewPost";
-import Button from "../components/Button";
 
 import styles from "../pagecss/blogpage.module.css";
 

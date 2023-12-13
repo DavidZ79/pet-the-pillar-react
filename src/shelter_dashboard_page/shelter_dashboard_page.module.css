@@ -64,6 +64,13 @@ p {
   text-align: center;
 }
 
+.pet_card_array {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 @media only screen and (max-width: 480px) {
   .cards {
     display: flex;

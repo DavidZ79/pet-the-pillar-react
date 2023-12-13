@@ -10,11 +10,13 @@ import pfp from '../assets/profile.png';
 import cat from '../assets/cat.png';
 import rat from '../assets/TheCourier.png';
 
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, Suspense } from "react";
+
 
 var URL = process.env.REACT_APP_API_URL;
 
