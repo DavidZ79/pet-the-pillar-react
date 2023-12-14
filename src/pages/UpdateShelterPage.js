@@ -3,13 +3,15 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 
 import styles from "../pagecss/updateshelterpage.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import pfp from "../assets/profile.png";
+
+var API_URL = process.env.REACT_APP_API_URL;
 
 export default function UpdateShelterPage() {
   const schema = yup.object().shape({
@@ -34,6 +36,44 @@ export default function UpdateShelterPage() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const [userDetails, setUserDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchPetDetails = async () => {
+      try {
+        const response = await fetch(`${API_URL}account/${localStorage.getItem("userId")}/`, {
+          method: 'GET',
+          headers: {
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch account details');
+        }
+  
+        const responseData = await response.json();
+        // console.log(responseData)
+        const tempData = {
+         "id": responseData.id,
+         "username": responseData.username,
+         "email": responseData.email,
+         "phoneNumber": responseData.phoneNumber,
+         "location": responseData.location,
+         "missionStatement": responseData.missionStatement,
+         "totalRating": 0,
+         "numberOfRatings": 0,
+        }
+        setUserDetails(tempData); // Update the state with fetched details
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+  
+    fetchPetDetails();
+  });
+
 
   const navigate = useNavigate()
   const onSubmit = (data) => {

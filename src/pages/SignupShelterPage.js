@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../pagecss/signupshelter.module.css";
 
 import pfp from "../assets/profile.png";
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
 
 export default function SignupShelterPage() {
 
@@ -44,21 +44,22 @@ export default function SignupShelterPage() {
   const navigate = useNavigate()
   const onSubmit = async (data) => {
     const { shelterName, email, phone, password, location, missionStatement} = data;
-    const requestData = {
-      username: shelterName,
-      password,
-      email,
-      phoneNumber: phone,
-      location, 
-      missionStatement,
-    };
+    const formData = new FormData();
+    formData.append('username', shelterName);
+    formData.append('password', password);
+    formData.append('email', email);
+    formData.append('phoneNumber', phone);
+    formData.append('location', location);
+    formData.append('missionStatement', missionStatement);
+    if (selectedImage) {
+      formData.append('picture', document.querySelector('input[type="file"]').files[0]);
+    }
     try {
-      const response = await fetch(URL + 'account/register/shelter/', {
+      const response = await fetch(API_URL + 'account/register/shelter/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestData),
+        body: formData,
       });
   
       if (!response.ok) {
@@ -75,7 +76,7 @@ export default function SignupShelterPage() {
         password,
         email,
       }
-      const response2 = await fetch(URL + 'account/login/', {
+      const response2 = await fetch(API_URL + 'account/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,6 +108,15 @@ export default function SignupShelterPage() {
     }
   };
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (e) => {
+      if (e.target.files && e.target.files[0]) {
+          let img = e.target.files[0];
+          setSelectedImage(URL.createObjectURL(img));
+      }
+  };
+
   return (
     <>
       <Header/>
@@ -116,11 +126,11 @@ export default function SignupShelterPage() {
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className={styles['pfp-container']}>
-                <img src={pfp} alt="pfp pic" className={styles.pfp}/>
+              <img src={selectedImage || pfp} alt="pfp pic" className={styles.pfp} />
               </div>
 
               <div className={styles['login-box']}>
-                <input type='file' accept=".jpg,.jpeg,.png"/>
+              <input type="file" accept=".jpg,.jpeg,.png" onChange={handleImageChange}/>
 
                 <input type="text" placeholder="Shelter name*" {...register("shelterName")} required/>
                 <p>{errors.shelterName?.message}</p>

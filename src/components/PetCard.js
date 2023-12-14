@@ -7,7 +7,8 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import cat from "../assets/cat.png";
 
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
+var BASE_URL = API_URL.slice(0, -5);
 
 const styles = {...styles1,...styles2,...styles3};
 
@@ -15,14 +16,15 @@ export default function PetCard({props}) {
   const { id } = useParams();
 
   const [petDetails, setPetDetails] = useState(null);
+  const [shelterName, setShelterName] = useState(null);
 
   useEffect(() => {
     const fetchPetDetails = async () => {
       try {
-        const response = await fetch(`${URL}pet/${props.id}/`, {
+        const response = await fetch(`${API_URL}pet/${props.id}/`, {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+            // 'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
           },
         });
   
@@ -34,7 +36,7 @@ export default function PetCard({props}) {
         // console.log(responseData)
         const tempData = {
           "id": responseData.id,
-          "photos": [],
+          "photo": responseData.photos[0]['image'],
           "name": responseData.name,
           "status": responseData.status,
           "description": responseData.description,
@@ -53,6 +55,32 @@ export default function PetCard({props}) {
           "shelter": responseData.shelter
         }
         setPetDetails(tempData); // Update the state with fetched details
+        fetchShelterName(tempData.shelter);
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+
+    const fetchShelterName = async (shelterID) => {
+      try {
+        const response = await fetch(API_URL + `account/shelter/${shelterID}/`, {
+          method: 'GET',
+          headers: {
+            // 'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch pet details');
+        }
+  
+        const responseData = await response.json();
+        // console.log(responseData)
+        const tempData = {
+          "username": responseData.username
+        }
+        setShelterName(tempData); // Update the state with fetched details
       } catch (error) {
         console.error('Error fetching pet details:', error);
         // Handle error, e.g., redirect to an error page
@@ -69,7 +97,7 @@ export default function PetCard({props}) {
           <div className='card-image'>
             <Link to={`/pet_detail/${props.id}`}>
               <figure className='image is-4by4'>
-                <img src={cat} alt="Placeholder image"/>
+                <img src={petDetails ? BASE_URL + petDetails.photo : cat} alt="Placeholder image"/>
               </figure>
             </Link>
           </div>
@@ -77,10 +105,10 @@ export default function PetCard({props}) {
           <div className='card-content'>
             <div className='media'>
               <div className='media-content'>
-                <p className='title is-4'>{petDetails ? petDetails.id : ""}</p>
+                <p className='title is-4'>{petDetails ? petDetails.name : ""}</p>
                 <p className='subtitle is-6'>
                   <Link to={`/shelter/${petDetails ? petDetails.shelter : ""}`}>
-                     {petDetails ? petDetails.shelter : ""}
+                     {shelterName ? shelterName.username : ""}
                   </Link>
                 </p>
               </div>

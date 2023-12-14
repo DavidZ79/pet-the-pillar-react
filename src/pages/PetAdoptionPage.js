@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import styles from "../pagecss/petadoptionpage.module.css";
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
 
 export default function PetAdoption() {
   const schema = yup.object().shape({
@@ -31,7 +31,7 @@ export default function PetAdoption() {
       pet: parseInt(id),
     };
     try {
-      const response = await fetch(URL + 'application/', {
+      const response = await fetch(API_URL + 'application/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export default function PetAdoption() {
   
       const responseData = await response.json();
       console.log(responseData);
-      navigate("/shelter_dashboard"); 
+      // navigate("/shelter_dashboard"); 
     } catch (error) {
       console.log(requestData)
       console.error('second demon:', error.message);

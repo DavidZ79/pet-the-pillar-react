@@ -9,8 +9,7 @@ import * as yup from "yup";
 import styles from "../pagecss/petupdatepage.module.css";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import pfp from "../assets/farloom.png";
+import { useState, useEffect } from "react";
 var API_URL = process.env.REACT_APP_API_URL;
 var BASE_URL = API_URL.slice(0, -5);
 
@@ -51,11 +50,9 @@ export default function PetUpdatePage() {
         }
   
         const responseData = await response.json();
-        // console.log(responseData)
         const tempData = {
           "id": responseData.id,
-          "photo": responseData.photos[0]['image'],
-          // "photo": "http://127.0.0.1:8000/photo_folder/5m1yelc0ds961_f1hptzM.png",
+          "photo": responseData.photos[0],
           "name": responseData.name,
           "status": responseData.status,
           "description": responseData.description,
@@ -100,7 +97,6 @@ export default function PetUpdatePage() {
 
   const navigate = useNavigate();
   const onSubmit = async (data) => {
-    console.log("hi");
     const { name, breed, age, gender, size, color, fee, description, medicalHistory, specialNeeds, behavior, species, location } = data;
     const formData = new FormData();
     formData.append('name', name);
@@ -118,8 +114,7 @@ export default function PetUpdatePage() {
     formData.append('location', location);
     if (selectedImage) {
       formData.append('photos', document.querySelector('input[type="file"]').files[0]);
-  }
-  
+    }
 
     try {
       const response = await fetch(API_URL + 'pet/' + id + '/', {
@@ -153,6 +148,16 @@ export default function PetUpdatePage() {
       }
   };
 
+  const handleDelete = async () => {
+    await fetch(API_URL + 'pet/' + id + '/', {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      },
+    });
+    navigate("/shelter_dashboard");
+  }
+
   return (
     <>
       <Header />
@@ -163,7 +168,7 @@ export default function PetUpdatePage() {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles["pfp-container"]}>
-            <img src={selectedImage || (petDetails ? BASE_URL + petDetails.photo : '')} alt="Pet" className={styles.pfp} />
+            <img src={selectedImage || (petDetails ? BASE_URL + petDetails.photo['image'] : '')} alt="Pet" className={styles.pfp} />
             </div>
 
             <div className={styles["login-box"]}>
@@ -300,14 +305,24 @@ export default function PetUpdatePage() {
               <p>{errors.location?.message}</p>
             </div>
 
+            <div className={styles["wrapper2"]}>
             <div className={styles["submit-container"]}>
               <input
                 type="submit"
                 className={styles["submit-btn"]}
-                value="Create pet"
+                value="Update pet"
               />
             </div>
 
+            <div className={styles["submit-container"]}>
+              <input
+                className={styles["submit-btn"]}
+                value="Delete"
+                onClick={handleDelete}
+              />
+            </div>
+            </div>
+            
             <div className={styles["top-margin"]}>
               <div className={styles["info-container"]}>
                 <p>* Required</p>

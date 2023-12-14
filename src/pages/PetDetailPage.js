@@ -98,12 +98,23 @@ export default function PetDetailPage() {
     //form logic here
   };
 
+  const handleAdopt = async () => {
+    navigate(`/pet_adoption/${id}`);    
+  }
+
   return (
     <>
       <Header />
 
       <div className={styles.main}>
         <Card className={styles["background-box"]}>
+        <div className={styles["submit-container"]}>
+              <input
+                className={styles["submit-btn"]}
+                value="Adopt"
+                onClick={handleAdopt}
+              />
+            </div>
           <p className={styles["signup-text"]}>{petDetails ? petDetails.name : ""} Details</p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
