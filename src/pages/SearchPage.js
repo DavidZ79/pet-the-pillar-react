@@ -129,7 +129,10 @@ export default function SearchPage() {
               {/* search bar */}
               <div className={`search-bar ${styles['search-bar']}`}>
                 <p className={`${styles['search-bar-input']} control search-bar-input`}>
-                  <input name="species" className={`${styles.input} input`} input="text" placeholder='Search an animal' defaultValue={new URLSearchParams(window.location.search).get('species' ?? '')}/>
+                  <input name="species" className={`${styles.input} input`} input="text" placeholder='Search by species' defaultValue={new URLSearchParams(window.location.search).get('species' ?? '')}/>
+                </p>
+                <p className={`${styles['search-bar-input']} control search-bar-input`}>
+                  <input name="shelter_username" className={`${styles.input} input`} input="text" placeholder='Search by shelter name'/>
                 </p>
 
                 <p className={`control`}>
@@ -183,19 +186,6 @@ export default function SearchPage() {
                       <option value='2'>Medium</option>
                       <option value='3'>Large</option>
                       <option value='4'>X-Large</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* shelter filter */}
-              <div className={`filter`}>
-                <div className={`label`}>Shelter</div>
-                <div className={`control`}>
-                  <div className={`select`}>
-                    <select name='shelter'>
-                      <option value=''>All</option>
-                      <option>Salt Moon</option>
                     </select>
                   </div>
                 </div>
