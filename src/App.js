@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import NotificationPage from "./pages/NotificationPage";
 import ShelterDashboardPage from "./shelter_dashboard_page/ShelterDashboardPage";
 import PetAdoption from "./pages/PetAdoptionPage";
+import ShelterListPage from "./pages/ShelterListPage";
 
 import UpdateSeekerPage from "./pages/UpdateSeekerPage";
 import UpdateShelterPage from "./pages/UpdateShelterPage";
@@ -100,6 +101,10 @@ function App() {
     {
       path: "/sample_blog",
       element: <SampleBlog />,
+    },
+    {
+      path: "/shelter_list",
+      element: <ShelterListPage />,
     },
   ]);
 
