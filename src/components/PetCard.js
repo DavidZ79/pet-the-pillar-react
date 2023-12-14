@@ -95,7 +95,7 @@ export default function PetCard({props}) {
       <div className='tile is-child'>
         <div className={`is-hoverable ${styles.card}`}>
           <div className={`card-image card ${styles.cardImage}`}>
-            <Link to={`/pet_detail/${props.id}`}>
+            <Link className={styles.centerimg} to={`/pet_detail/${props.id}`}>
               <figure className={`image is-4by4 ${styles.cardImage}`}>
                 <img className={`${styles.cardImage}`} src={petDetails ? BASE_URL + petDetails.photo : cat} alt="Placeholder pic"/>
               </figure>
