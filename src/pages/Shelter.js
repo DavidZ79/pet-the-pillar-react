@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 
 
 var API_URL = process.env.REACT_APP_API_URL;
@@ -31,7 +31,7 @@ export default function ShelterPage() {
    const [adoptedPageNumber, setAdoptedPageNumber] = useState(1);
    const [starRating, setStarRating] = useState(0);
    const [rootReviewList, setRootReviewList] = useState([]);
-
+   const [textareaValue, setTextareaValue] = useState('');
 
    async function fetchShelterDetails () {
       try {
@@ -230,7 +230,6 @@ export default function ShelterPage() {
          }
       }
    }
-   const [textareaValue, setTextareaValue] = useState('');
 
    const handleTextareaChange = (event) => {
       setTextareaValue(event.target.value);
@@ -463,18 +462,18 @@ export default function ShelterPage() {
                   </div>
 
                   <form className={`${styles['form']}`} onSubmit={handleSubmit}>
-      <textarea
-        value={textareaValue}
-        onChange={handleTextareaChange}
-      ></textarea>
+                     <textarea
+                     value={textareaValue}
+                     onChange={handleTextareaChange}
+                     ></textarea>
 
-      <button type="submit" className={`${styles['is-secondary']} ${styles.button} ${styles.secret3}`}>
-        Submit Review
-      </button>
-    </form>
+                     <button type="submit" className={`${styles['is-secondary']} ${styles.button} ${styles.secret3}`}>
+                     Submit Review
+                     </button>
+                  </form>
 
                {/* https://bulma.io/documentation/layout/media-object/ */}
-</div>
+               </div>
 
                {rootReviewList && rootReviewList.map((appResult, index) => (
                 <ReviewCard key={appResult.id} props={appResult} />

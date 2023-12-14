@@ -9,16 +9,16 @@ import pfp from '../assets/profile.png';
 var API_URL = process.env.REACT_APP_API_URL;
 var BASE_URL = API_URL.slice(0, -5);
 
-export default function ReviewCard({ props }) {
-  const [reviewDetails, setReviewDetails] = useState(null);
+export default function DiscussionCard({ props }) {
+  const [discussionDetails, setDiscussionDetails] = useState(null);
   const [user, setUser] = useState(null);
-  const [rootReviewList, setRootReviewList] = useState([]);
+  const [rootDiscussionList, setRootDiscussionList] = useState([]);
   const [textareaValue, setTextareaValue] = useState('');
 
   useEffect(() => {
-    const fetchReviewDetails = async () => {
+    const fetchDiscussionDetails = async () => {
       try {
-        const response = await fetch(`${API_URL}comment/review/detail/${props.id}/`, {
+        const response = await fetch(`${API_URL}comment/discussion/detail/${props.id}/`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -37,10 +37,10 @@ export default function ReviewCard({ props }) {
           user: responseData.user,
           timestamp: responseData.timestamp,
           parent: responseData.parent,
-          review_children: responseData.review_children,
+          discussion_children: responseData.discussion_children,
           shelter: responseData.shelter,
         };
-        setReviewDetails(tempData); // Update the state with fetched details
+        setDiscussionDetails(tempData); // Update the state with fetched details
         const regex = /\d+/;
         const match = tempData.user.match(regex);
         fetchUser(match ? match[0] : null);
@@ -109,13 +109,13 @@ export default function ReviewCard({ props }) {
       }
     };
 
-    fetchReviewDetails();
+    fetchDiscussionDetails();
   }, []);
 
-  const fetchRootReviews = async () => {
+  const fetchRootDiscussions = async () => {
     try {
-      // console.log(`${API_URL}comment/review/${reviewDetails.shelter}/list/${props.id}/`)
-      const response = await fetch(`${API_URL}comment/review/${reviewDetails.shelter}/list/${props.id}/`, {
+      // console.log(`${API_URL}comment/discussion/${discussionDetails.shelter}/list/${props.id}/`)
+      const response = await fetch(`${API_URL}comment/discussion/${discussionDetails.shelter}/list/${props.id}/`, {
         method: 'GET',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -123,7 +123,7 @@ export default function ReviewCard({ props }) {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch review details');
+        throw new Error('Failed to fetch discussion details');
       }
 
       const responseData = await response.json();
@@ -142,9 +142,9 @@ export default function ReviewCard({ props }) {
     }
   };
 
-  async function initReviewData() {
-    const tempData = await fetchRootReviews();
-    setRootReviewList(tempData); // Update the state with fetched details
+  async function initDiscussionData() {
+    const tempData = await fetchRootDiscussions();
+    setRootDiscussionList(tempData); // Update the state with fetched details
   }
 
   const handleTextareaChange = (event) => {
@@ -158,7 +158,7 @@ export default function ReviewCard({ props }) {
     console.log('Submitting:', textareaValue);
 
     // Example POST request
-    const response = await fetch(`http://127.0.0.1:8000/api/comment/review/${reviewDetails.shelter}/`, {
+    const response = await fetch(`http://127.0.0.1:8000/api/comment/discussion/${discussionDetails.shelter}/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -170,14 +170,14 @@ export default function ReviewCard({ props }) {
     console.log(props.id);
     const data = await response.json();
     console.log(data);
-    const tempData = await fetchRootReviews();
-    setRootReviewList(tempData);
+    const tempData = await fetchRootDiscussions();
+    setRootDiscussionList(tempData);
   };
 
 
   useEffect(() => {
-    initReviewData();
-  }, [reviewDetails]);
+    initDiscussionData();
+  }, [discussionDetails]);
 
   return (
     <article className={styles['media-box']}>
@@ -190,14 +190,14 @@ export default function ReviewCard({ props }) {
                   <div className='media-content'>
                      <div className='content'>
                         <p className={styles['br-text']}>
-                           <span className={`${styles['review-name']} ${reviewDetails && user ? (reviewDetails.shelter === user.id ? styles['shelter-post'] : 'anon') : 'anon'}`}>{user ? user.username : ''}</span>
-                           <br/>{reviewDetails ? reviewDetails.content : ''}<br/>
-                           <small><time>{user ? new Date(reviewDetails?.timestamp).toLocaleString() : ''}</time></small>
+                           <span className={`${styles['discussion-name']} ${discussionDetails && user ? (discussionDetails.shelter === user.id ? styles['shelter-post'] : 'anon') : 'anon'}`}>{user ? user.username : ''}</span>
+                           <br/>{discussionDetails ? discussionDetails.content : ''}<br/>
+                           <small><time>{user ? new Date(discussionDetails?.timestamp).toLocaleString() : ''}</time></small>
                         </p>
                      </div>
 
-                     {rootReviewList && rootReviewList.map((appResult, index) => (
-                <ReviewCard key={appResult.id} props={appResult} />
+                     {rootDiscussionList && rootDiscussionList.map((appResult, index) => (
+                <DiscussionCard key={appResult.id} props={appResult} />
               ))}
 
 <form className={`${styles['form']}`} onSubmit={handleSubmit}>
@@ -207,7 +207,7 @@ export default function ReviewCard({ props }) {
       ></textarea>
 
       <button type="submit" className={`button ${styles['is-secondary']} ${styles.button} ${styles.submit_button} ${styles.secret3}`}>
-        Submit Review
+        Submit Discussion
       </button>
     </form>
 
