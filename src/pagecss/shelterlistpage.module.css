@@ -1,12 +1,21 @@
-.body {
-    display: flex;
-    flex-direction: column;
+.main {
+
+    justify-content: center;
     align-items: center;
-}
+    font-family: "Poppins", sans-serif;
+ 
+    position: relative;
+    margin: 16px;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height) - 32px);
+ }
 
 .title {
+    display: flex;
     font-size: 2rem;
     margin: 1rem;
+    color: black;
+    align-items: center;
+    justify-content: center;
 }
 
 .card_container {
