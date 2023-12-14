@@ -95,7 +95,7 @@ export default function ShelterDashboardPage() {
 
         {/* pet list */}
         <div className={`tile is-ancestor pet-list`}>
-          <div className='tile is-vertical is-12'>
+          <div className={`tile is-vertical is-12 ${styles['secret2']}`}>
             <div className='tile is-12' style={{ flexWrap: 'wrap' }}> {/* Added inline style for flex wrap */}
               {/* pet 1 */}
 

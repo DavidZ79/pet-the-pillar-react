@@ -91,6 +91,10 @@
      padding-top:16px;
      line-height: normal;
  }
+
+ .secret2 {
+  justify-content: space-around;
+}
  
  .logo:hover {
    animation: logo-pulse 1s infinite;

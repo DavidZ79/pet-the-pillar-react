@@ -53,7 +53,6 @@ export default function SearchPage() {
       setNextPage(tempData.next);
       // console.log(pageNum);
       // setDisableLoading(false);
-
       return tempData.results;
     } catch (error) {
       console.error('Error fetching pet details:', error);
@@ -89,7 +88,7 @@ export default function SearchPage() {
     formData.forEach((param, key) => {
       url += param !== '' ? `&${key}=${param}` : '';
     })
-    console.log(url);
+    
     const tempData = await fetchPetList(url);
     setPetList(tempData);
     // console.log(tempData)
@@ -275,7 +274,7 @@ export default function SearchPage() {
         {/* pet list */}
         <div className={`tile is-ancestor pet-list`}>
           <div className='tile is-vertical is-12'>
-            <div className='tile is-12' style={{ flexWrap: 'wrap' }}> {/* Added inline style for flex wrap */}
+            <div className='tile is-12 secret2' style={{ flexWrap: 'wrap' }}> {/* Added inline style for flex wrap */}
               {/* pet 1 */}
 
                   {petList && petList.map((petResult, index) => (

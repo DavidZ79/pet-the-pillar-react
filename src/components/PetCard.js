@@ -2,6 +2,7 @@ import "../css/main_style.css";
 import styles1 from "../css/main_style.css";
 import styles2 from "../css/pet_listing.css"
 import styles3 from '../pagecss/searchpage.module.css'
+import styles4 from "../css/PetCard.module.css";
 
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
@@ -10,7 +11,7 @@ import cat from "../assets/cat.png";
 var API_URL = process.env.REACT_APP_API_URL;
 var BASE_URL = API_URL.slice(0, -5);
 
-const styles = {...styles1,...styles2,...styles3};
+const styles = {...styles1,...styles2,...styles3,...styles4};
 
 export default function PetCard({props}) {
 
@@ -90,7 +91,7 @@ export default function PetCard({props}) {
   }, []);
 
    return (
-      <div>
+      <div className={styles.shelter_pet_card_main}>
       <div className='tile is-child'>
         <div className={`is-hoverable ${styles.card}`}>
           <div className={`card-image card ${styles.cardImage}`}>

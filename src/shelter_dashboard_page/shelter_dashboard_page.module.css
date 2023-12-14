@@ -39,6 +39,10 @@
   padding: 20px;
 }
 
+.secret2 {
+  justify-content: space-around;
+}
+
 .shelter_img_front {
   border-radius: 15px;
   width: 300px;

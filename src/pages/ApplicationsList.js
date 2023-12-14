@@ -23,15 +23,10 @@ export default function SearchPage() {
   // const [disableLoading, setDisableLoading] = useState(true)
 
   const fetchAppList = async (url = null) => {
-    if (pageNum !== 1 && nextPage === null) {
-      console.log("WHY")
-      console.log(pageNum)
-      console.log(url)
-      return [];
-    }
+    console.log(url ?? `${API_URL}application/list/?page=${pageNum}`)
     try {
       const params = new URLSearchParams(window.location.search)
-      console.log(`${API_URL}application/list/?page=${pageNum} ?? ''}`)
+      console.log(url ?? `${API_URL}application/list/?page=${pageNum}`)
       const response = await fetch(url ?? `${API_URL}application/list/?page=${pageNum}` , {
         method: 'GET',
         headers: {
@@ -52,7 +47,8 @@ export default function SearchPage() {
         "results": responseData.results
       }
       setNextPage(tempData.next);
-      // console.log(pageNum);
+      console.log(tempData.next);
+      console.log("up");
       // setDisableLoading(false);
       return tempData.results;
     } catch (error) {
@@ -85,13 +81,13 @@ export default function SearchPage() {
   
     // Set pageNum and nextPage. These updates will be reflected in the next render.
     setPageNum(1);
+    console.log("SET PAGE NUM");
     setNextPage("initial");
   
     // Construct the URL with parameters from formData
     formData.forEach((param, key) => {
       url += param !== '' ? `&${key}=${param}` : '';
     })
-    console.log(url);
   
     // Fetch the application list
     const tempData = await fetchAppList(url);
@@ -105,13 +101,18 @@ export default function SearchPage() {
   useEffect(() => {
 
     // check if user is not logged in
-    if (localStorage.getItem("isShelter") !== "true" && localStorage.getItem("userId") == 0) {
+    if (localStorage.getItem("isShelter") !== "true" && localStorage.getItem("userId") === 0) {
       navigate("/fallback");
     }
 
     console.log("INIT DATA")
     initData();
   }, []);
+
+  useEffect(() => {
+    console.log(pageNum)
+    console.log(nextPage)
+  }, [pageNum, nextPage]);
   
   return (
     <body>
