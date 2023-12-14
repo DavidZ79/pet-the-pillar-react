@@ -350,7 +350,7 @@ export default function ShelterPage() {
                </div>
                
                <div className={styles['blog-container']}>
-                  <Link to='/shelter_blog'>
+                  <Link to={`/shelter_blog/${id}`}>
                      <p className={styles.blog}>Head over to our Blog Page!</p>
                   </Link>
                </div>
