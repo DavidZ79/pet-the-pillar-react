@@ -2,6 +2,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
 import PetCard from '../components/PetCard';
+import ReviewCard from '../components/ReviewCard';
 
 import 'bulma/css/bulma.min.css';
 import styles from '../pagecss/shelter.module.css';
@@ -18,7 +19,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, Suspense } from "react";
 
 
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
 
 export default function ShelterPage() {
    const { id } = useParams();
@@ -29,11 +30,12 @@ export default function ShelterPage() {
    const [availablePageNumber, setAvailablePageNumber] = useState(1);
    const [adoptedPageNumber, setAdoptedPageNumber] = useState(1);
    const [starRating, setStarRating] = useState(0);
+   const [rootReviewList, setRootReviewList] = useState([]);
 
 
    async function fetchShelterDetails () {
       try {
-        const response = await fetch(`${URL}account/shelter/${id}/`, {
+        const response = await fetch(`${API_URL}account/shelter/${id}/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -65,12 +67,49 @@ export default function ShelterPage() {
       }
     };
 
+    async function initReviewData() {
+      console.log("BBBBBBBBBBBBBBBBBB")
+      if (rootReviewList.length === 0) {
+        const tempData = await fetchRootReviews();
+        setRootReviewList(tempData); // Update the state with fetched details
+      }
+    }
+
+    const fetchRootReviews = async (url = null) => {
+      try {
+        const response = await fetch(url ?? `${API_URL}comment/review/${id}/list/0/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch review details');
+        }
+  
+        const responseData = await response.json();
+      //   console.log(responseData)
+        const tempData = {
+          "next": responseData.next,
+          "count": responseData.count,
+          "previous": responseData.previous,
+          "results": responseData.results
+       }
+        console.log(responseData)
+        return tempData.results;
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+
     async function fetchPetList (status, url = "") {
       const data = shelterDetail ?? await fetchShelterDetails();
       try {
          var realURL = ""
          if (url === "") {
-            realURL = `${URL}pet/list/?shelter=${data.username}&status=${status}&page=1`
+            realURL = `${API_URL}pet/list/?shelter=${data.username}&status=${status}&page=1`
          } else {
             realURL = url
          }
@@ -86,8 +125,8 @@ export default function ShelterPage() {
          }
    
          const responseData = await response.json();
-         console.log(responseData)
-         console.log("GOT ", realURL)
+         // console.log(responseData)
+         // console.log("GOT ", realURL)
 
          if (status === "Available") {
             setAvailablePets(responseData)
@@ -103,7 +142,7 @@ export default function ShelterPage() {
    };
 
    async function fetchRating() {
-      const url = `${URL}comment/rating/${id}/`;
+      const url = `${API_URL}comment/rating/${id}/`;
       try {
          const response = await fetch(url, {
             method: 'GET',
@@ -127,7 +166,7 @@ export default function ShelterPage() {
    }
 
    async function updateRating(rating) {
-      const url = `${URL}comment/rating/${id}/`;
+      const url = `${API_URL}comment/rating/${id}/`;
       if (rating === 0) {
          try {
             const response = await fetch(url, {
@@ -182,6 +221,33 @@ export default function ShelterPage() {
          }
       }
    }
+   const [textareaValue, setTextareaValue] = useState('');
+
+   const handleTextareaChange = (event) => {
+      setTextareaValue(event.target.value);
+    };
+
+   const handleSubmit = async (event) => {
+      event.preventDefault();
+  
+      // Here you can use textareaValue in your POST request
+      console.log('Submitting:', textareaValue);
+  
+      // Example POST request
+      const response = await fetch(`http://127.0.0.1:8000/api/comment/review/${id}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          // Additional headers if needed
+        },
+        body: JSON.stringify({ content: textareaValue, user: 1 }),
+      });
+      const data = await response.json();
+      console.log(data);
+      const tempData = await fetchRootReviews();
+      setRootReviewList(tempData);
+    };
 
    function Stars({rating, update = false}) {
       const roundedRating = Math.floor(rating);
@@ -198,6 +264,7 @@ export default function ShelterPage() {
       fetchShelterDetails();
       fetchPetList("Available");
       fetchPetList("Adopted");
+      initReviewData();
       fetchRating();
       
       setAvailablePageNumber(1)
@@ -385,77 +452,23 @@ export default function ShelterPage() {
                   <div><Stars rating={starRating} update={true}></Stars></div>
                   </div>
 
-                  <textarea></textarea>
+                  <form className={`${styles['form']}`} onSubmit={handleSubmit}>
+      <textarea
+        value={textareaValue}
+        onChange={handleTextareaChange}
+      ></textarea>
 
-                  <button type="submit" className={`${styles['is-secondary']} ${styles.button}`}>Submit Review</button>
-               </div>
+      <button type="submit" className={`${styles['is-secondary']} ${styles.button} ${styles.secret3}`}>
+        Submit Review
+      </button>
+    </form>
 
                {/* https://bulma.io/documentation/layout/media-object/ */}
-               <article className={styles['media-box']}>
-                  <figure className='media-left'>
-                     <p className='image is-64x64'>
-                        <img className='is-rounded' src={rat}/>
-                     </p>
-                  </figure>
+</div>
 
-                  <div className='media-content'>
-                     <div className='content'>
-                        <p className={styles['br-text']}>
-                           <span className={styles['review-name']}>Barbara Middleton</span>
-                           <br/>
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
-                           <br/>
-                           <small><time>11:09 PM - 1 Jan 2016</time></small>
-                        </p>
-                     </div>
-
-                     <article className='media'>
-                        <figure className='media-left'>
-                           <p className='image is-48x48'>
-                              <img className="is-rounded" src={cat}/>
-                           </p>
-                        </figure>
-                        
-                        <div className='media-content'>
-                           <div className='content'>
-                              <p className={styles['br-text']}>
-                                 <span className={`${styles['review-name']} ${styles['shelter-post']}`}>Salt Saint Moody</span>
-                                 <br/>
-                                 Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
-                                 <br/>
-                                 <small><time>11:29 PM - 1 Jan 2016</time></small>
-                              </p>
-                           </div>
-
-                        </div>
-                     </article>
-
-                     <article className='media'>
-                        <figure className='media-left'>
-                           <p className='image is-48x48'>
-                              <img className='is-rounded' src={pfp}/>
-                           </p>
-                        </figure>
-
-                        <div class="media-content">
-                           <div class="content">
-                              <p className={styles['br-text']}>
-                                 <span className={styles['review-name']}>Kayli Eunice </span>
-                                 <br/>
-                                 Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas varius felis sit amet magna vestibulum euismod malesuada cursus libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus lacinia non nisl id feugiat.
-                                 <br/>
-                                 <small><time>11:39 PM - 1 Jan 2016</time></small>
-                              </p>
-                           </div>
-                        </div>
-                     </article>
-
-                  </div>
-                  
-
-
-
-               </article>
+               {rootReviewList && rootReviewList.map((appResult, index) => (
+                <ReviewCard key={appResult.id} props={appResult} />
+              ))}
 
             </div>
 
