@@ -178,12 +178,21 @@ export default function Header() {
                 </Link>
 
                 {localStorage.getItem("isShelter") === "true" ? (
+                  <>
                   <Link
                     to={`/shelter/${localStorage.getItem("userId")}`}
                     className={`navbar-item shelter`}
                   >
                     Shelter Profile
                   </Link>
+                  <Link
+                    to={`/blog_managing/${localStorage.getItem("userId")}`}
+                    className={`navbar-item shelter`}
+                  >
+                    Shelter Blog
+                  </Link>
+                  </>
+                  
                 ) : (
                   <Link
                     to={`/seeker/${localStorage.getItem("userId")}`}
