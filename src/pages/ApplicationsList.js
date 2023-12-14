@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 
 import PetCard from '../components/PetCard';
 
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
 
 const styles = {...styles1,...styles2,...styles3};
 
@@ -21,8 +21,9 @@ export default function SearchPage() {
   const [pageNum, setPageNum] = useState(1);
   // const [disableLoading, setDisableLoading] = useState(true)
 
-  const fetchPetList = async (url = null) => {
+  const fetchAppList = async (url = null) => {
     console.log(nextPage)
+    console.log(url)
     console.log(pageNum)
     if (pageNum !== 1 && nextPage === null) {
       console.log("WHY")
@@ -30,7 +31,7 @@ export default function SearchPage() {
     }
     try {
       const params = new URLSearchParams(window.location.search)
-      const response = await fetch(url , {
+      const response = await fetch(url ?? `${API_URL}pet/list/?page=${pageNum}&species=${params.get('species') ?? ''}` , {
         method: 'GET',
         // headers: {
         //   'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -61,7 +62,7 @@ export default function SearchPage() {
 
   async function loadNext() {
     if (pageNum !== -1) {   
-      const tempData = await fetchPetList(nextPage);
+      const tempData = await fetchAppList(nextPage);
       setPetList((oldPetList) => [...oldPetList, ...tempData])
       setPageNum(preNum => preNum + 1)
       // setDisableLoading(true);c
@@ -70,7 +71,8 @@ export default function SearchPage() {
 
   async function initData() {
     if (petList.length === 0) {
-      const tempData = await fetchPetList();
+      console.log("AAAAAAAAAAAAAAAAAAA")
+      const tempData = await fetchAppList();
       setPageNum(pageNum + 1);
       setPetList(tempData); // Update the state with fetched details
     }
@@ -79,20 +81,21 @@ export default function SearchPage() {
   async function handleSearch(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    let url = `${URL}pet/list/?page=1`;
+    let url = `${API_URL}pet/list/?page=1`;
     const tempPage = await setPageNum(1);
     setNextPage("initial");
     formData.forEach((param, key) => {
       url += param !== '' ? `&${key}=${param}` : '';
     })
     console.log(url);
-    const tempData = await fetchPetList(url);
+    const tempData = await fetchAppList(url);
     setPetList(tempData);
     console.log(tempData)
     console.log("FINISH SETTING SEARCH DATA")
   }
 
   useEffect(() => {
+    console.log("INIT DATA")
     initData();
   }, []);
   
