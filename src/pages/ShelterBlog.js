@@ -74,7 +74,7 @@ export default function ShelterBlog() {
  
    useEffect(() => {
      initData();
-   });
+   }, []);
 
    return (
       <body>
@@ -83,7 +83,7 @@ export default function ShelterBlog() {
          <div className={styles.main}>
          <Card className={styles["background-box"]}>
         <div className="blog">
-          {posts.map((post, index) => (
+        {Array.isArray(posts) && posts.map((post, index) => (
             <BlogPost key={index} title={post.title} content={post.content} num_likes={post.num_likes} shelter={post.shelter} />
           ))}
         </div>
