@@ -158,11 +158,10 @@ export default function Header() {
 
               <div className="navbar-dropdown">
                 <Link
-                  to="/seeker_dashboard_page"
-                  className={`navbar-item seeker ${isShelter ? "hide" : ""}`}
-                >
-                  Dashboard
-                </Link>
+                  to="/applications_list"
+                  className={`navbar-item`}
+                >Applications </Link>
+
                 <Link
                   to="/shelter_dashboard"
                   className={`navbar-item shelter ${isShelter ? "" : "hide"}`}

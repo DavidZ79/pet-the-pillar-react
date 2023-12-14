@@ -2,6 +2,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Card from "../components/Card";
 import Chat from "../components/Chat";
+import { Link } from "react-router-dom";
 
 import styles from '../pagecss/petapplication.module.css'
 import { useForm } from "react-hook-form";
@@ -36,6 +37,7 @@ export default function PetApplicationPage() {
 
     const [petDetails, setPetDetails] = useState(null);
     const [appDetails, setAppDetails] = useState(null);
+    const [shelterDetails, setShelterDetails] = useState(null);
     useEffect(() => {
       const fetchPetDetails = async (petId) => {
          try {
@@ -54,7 +56,9 @@ export default function PetApplicationPage() {
            const tempData = {
              "photo": responseData.photos[0]['image'],
              "name": responseData.name,
+             "shelter": responseData.shelter,
            }
+           fetchShelterDetails(tempData.shelter);
            setPetDetails(tempData); // Update the state with fetched details
          } catch (error) {
            console.error('Error fetching pet details:', error);
@@ -79,7 +83,7 @@ export default function PetApplicationPage() {
           const tempData = {
             "pet": responseData.pet,
             "status": responseData.status,
-            "reason": responseData.reason
+            "reason": responseData.reason,
           }
           setAppDetails(tempData); // Update the state with fetched details
           fetchPetDetails(tempData.pet);
@@ -89,9 +93,32 @@ export default function PetApplicationPage() {
           // navigate("/fallback");
         }
       };
-    
+
       fetchAppDetails();
     }, [id]);
+    const fetchShelterDetails = async (id) => {
+      try {
+        const response = await fetch(`${API_URL}account/shelter/${id}/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch shelter details');
+        }
+  
+        const responseData = await response.json();
+        const tempData = {
+          "username": responseData.username,
+        }
+        setShelterDetails(tempData); // Update the state with fetched details
+      } catch (error) {
+        console.error('Error fetching pet details:', error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
 
     const handleWithdraw = async () => {
       const formData = new FormData();
@@ -189,6 +216,13 @@ export default function PetApplicationPage() {
                 value={petDetails ? appDetails.status : ""}
                 disabled
               />
+              </div>
+
+              <div className={styles["wrapper"]}>
+              <p>Shelter: </p>
+              <Link to={`/shelter/${petDetails ? petDetails.shelter : ""}`}>
+              <p className={styles["fake-input"]}>{shelterDetails ? shelterDetails.username : ""}</p>
+              </Link>
               </div>
 
               <div className={styles["wrapper"]}>

@@ -9,6 +9,10 @@
   min-height: calc(100vh - var(--header-height) - var(--footer-height) - 32px);
 }
 
+.no-top {
+  margin-top: 0 !important;
+}
+
 .background-box {
   background-color: var(--primary);
   width: 746px;

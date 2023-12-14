@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import Notification from "../components/Notification";
+var API_URL = process.env.REACT_APP_API_URL;
 
 function NotificationPage() {
   const { id } = useParams();
@@ -16,7 +17,7 @@ function NotificationPage() {
     const fetchNotiList = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/notification/list/`,
+          API_URL + `notification/list/`,
           {
             method: "GET",
             headers: {

@@ -16,7 +16,7 @@ var BASE_URL = API_URL.slice(0, -5);
 
 export default function UpdateShelterPage() {
   const schema = yup.object().shape({
-    photo: yup.mixed().required("Please enter a profile picture"),
+    picture: yup.mixed().required("Please enter a profile picture"),
     username: yup.string().required("Please enter a name"),
     email: yup.string().email().required("Email is required"),
     phoneNumber: yup.number().typeError("Please enter your phone number"),
@@ -32,15 +32,14 @@ export default function UpdateShelterPage() {
   useEffect(() => {
     // check if user is not logged in
     if (
-      localStorage.getItem("isShelter") !== "true" &&
-      localStorage.getItem("userId") === 0
+      localStorage.getItem("isShelter") !== "true"
     ) {
       navigate("/fallback");
     }
 
     const fetchShelterDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem(
+        const response = await fetch(API_URL + `account/shelter/${localStorage.getItem(
           "userId"
         )}/`, {
           method: "GET",
@@ -50,7 +49,7 @@ export default function UpdateShelterPage() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch pet details");
+          throw new Error("Failed to fetch sheter details");
         }
 
         const responseData = await response.json();
@@ -60,7 +59,7 @@ export default function UpdateShelterPage() {
           email: responseData.email,
           phoneNumber: responseData.phoneNumber,
           location: responseData.location,
-          photo: responseData.picture[0] !== "h" ? responseData.picture[0] : null,
+          picture: responseData.picture ?? null,
           missionStatement: responseData.missionStatement,
           totalRating: responseData.totalRating,
           numberOfRatings: responseData.numberOfRatings,
@@ -107,13 +106,13 @@ export default function UpdateShelterPage() {
     formData.append("missionStatement", missionStatement);
     if (selectedImage) {
       formData.append(
-        "photos",
+        "picture",
         document.querySelector('input[type="file"]').files[0]
       );
     }
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem(
+      const response = await fetch(API_URL + `account/shelter/${localStorage.getItem(
         "userId"
       )}/update/`, {
         method: "PATCH",
@@ -147,7 +146,7 @@ export default function UpdateShelterPage() {
   };
 
   const handleDelete = async () => {
-    await fetch(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem(
+    await fetch(API_URL + `account/shelter/${localStorage.getItem(
       "userId"
     )}/`, {
       method: "DELETE",
@@ -155,6 +154,9 @@ export default function UpdateShelterPage() {
         Authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     });
+    localStorage.setItem("accessToken", "");
+    localStorage.setItem("isShelter", false);
+    localStorage.setItem("userId", 0);
     navigate("/login");
   };
 
@@ -173,11 +175,7 @@ export default function UpdateShelterPage() {
               <img
                 src={
                   selectedImage ||
-                  (shelterDetails
-                    ? shelterDetails.photo
-                      ? BASE_URL + shelterDetails.photo["image"]
-                      : pfp
-                    : pfp)
+                  (shelterDetails ? shelterDetails.picture ?? pfp : pfp)
                 }
                 alt="pfp pic"
                 className={styles.pfp}

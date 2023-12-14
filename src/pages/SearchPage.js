@@ -141,60 +141,6 @@ export default function SearchPage() {
             </div>
 
             <div className={`search-bottom ${styles['search-bottom']}`}>
-              {/* breed filter */}
-                <div className={`filter`}>
-                <div className={`label`}>Breed</div>
-                <div className={`control`}>
-                  <div className={`select`}>
-                    <select name='breed'>
-                      <option value=''>All</option>
-                      <option>Labrador</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* min age filter */}
-              <div className={`filter`}>
-                <div className={`label`}>Min Age</div>
-                <div className={`control`}>
-                  <div className={`select`}>
-                    <select name='min_age'>
-                      <option>0</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>10</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* max age filter */}
-              <div className={`filter`}>
-                <div className={`label`}> Max Age</div>
-                <div className={`control`}>
-                  <div className={`select`}>
-                    <select name='max_age' defaultValue='99'>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>20</option>
-                      <option>99</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
 
               {/* gender filter */}
               <div className={`filter`}>
@@ -237,19 +183,6 @@ export default function SearchPage() {
                       <option value='2'>Medium</option>
                       <option value='3'>Large</option>
                       <option value='4'>X-Large</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* color filter */}
-              <div className={`filter`}>
-                <div className={`label`}>Color</div>
-                <div className={`control`}>
-                  <div className={`select`}>
-                    <select name='color'>
-                      <option value=''>All</option>
-                      <option>Black</option>
                     </select>
                   </div>
                 </div>

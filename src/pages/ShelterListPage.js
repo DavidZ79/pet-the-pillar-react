@@ -7,8 +7,11 @@ import styles1 from "../css/main_style.css";
 import styles2 from "../css/pet_listing.css"
 import styles3 from '../pagecss/searchpage.module.css'
 
+
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
+var API_URL = process.env.REACT_APP_API_URL;
 const styles = {...styles1,...styles2,...styles3,...styles4};
 export default function ShelterListPage() {
   const { id } = useParams();
@@ -17,7 +20,7 @@ export default function ShelterListPage() {
   const [nextPage, setNextPage] = useState("initial");
   const fetchShelterList = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/account/all/shelter/?page=${pageNum}`, {
+      const response = await fetch(API_URL = `account/all/shelter/?page=${pageNum}`, {
         method: 'GET',
         headers: {
         },

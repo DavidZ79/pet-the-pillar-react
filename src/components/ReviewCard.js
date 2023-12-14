@@ -158,7 +158,7 @@ export default function ReviewCard({ props }) {
     console.log('Submitting:', textareaValue);
 
     // Example POST request
-    const response = await fetch(`http://127.0.0.1:8000/api/comment/review/${reviewDetails.shelter}/`, {
+    const response = await fetch(API_URL + `comment/review/${reviewDetails.shelter}/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
