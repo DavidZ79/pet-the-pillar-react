@@ -94,7 +94,7 @@ function ChatComponent() {
             className={styles["input_bar"]}
             onChange={(e) => setNewMessage(e.target.value)}
           />
-          <button onClick={handleSendMessage}>Send</button>
+          <button className={`${styles['button']}`}onClick={handleSendMessage}>Send</button>
       </div>
     </div>
   );

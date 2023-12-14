@@ -18,7 +18,7 @@
   max-height: calc(100% - 30px);
 }
 
-button {
+.button {
   height: 30px;
   width: 50px;
   background-color: white;
