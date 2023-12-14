@@ -13,7 +13,7 @@ function ChatComponent() {
     if (newMessage.trim() === "") return;
   
     try {
-      const response = await fetch(`${API_URL}comment/chat/3/`, {
+      const response = await fetch(`${API_URL}comment/chat/${id}/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ function ChatComponent() {
   const { id } = useParams();
   useEffect(() => {
     refreshMessages();
-  });
+  }, []);
 
   return (
     <div className={styles["main"]}>

@@ -46,7 +46,7 @@ function NotificationPage() {
     };
 
     fetchNotiList();
-  }, [id]);
+  });
 
   return (
     <>

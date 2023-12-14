@@ -168,8 +168,11 @@ export default function ShelterPage() {
    }
 
    async function updateRating(rating) {
+      console.log(JSON.stringify({'rating': rating,
+            'user': 1,
+         }));
       const url = `${API_URL}comment/rating/${id}/`;
-      if (rating === 0) {
+      if (starRating === 0) {
          try {
             const response = await fetch(url, {
                method: 'POST',
@@ -179,6 +182,7 @@ export default function ShelterPage() {
                },
                body: JSON.stringify({
                   'rating': rating,
+                  'user': 1,
                }),
             });
 
@@ -194,6 +198,9 @@ export default function ShelterPage() {
             return responseData
          } catch (error) {
             console.error('Error creating rating details:', error)
+            console.log(JSON.stringify({'rating': rating,
+            'user': 1,
+         }));
          }
       } else {
             try {

@@ -3,13 +3,19 @@ import x from "./x.png";
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // var URL = process.env.REACT_APP_API_URL;
 
 function Notification({props}) {
-    function del() {
+    async function del() {
         console.log("delete");
-        // document.querySelector(".notification").remove();
+        await fetch(`http://127.0.0.1:8000/api/notification/${props.id}/`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        });
     }
 
   const { id } = useParams();
@@ -19,7 +25,7 @@ function Notification({props}) {
   useEffect(() => {
     const fetchNotification = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/notification/{props.id}/`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/notification/${props.id}/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -70,8 +76,24 @@ function Notification({props}) {
           {/* text */}
           <div class="text_container">
             {/* <h2>{props.user}</h2> */}
+            <Link to={props.forward}>
             <p class="notif_content">
               {props.content}
+            </p>
+            </Link>
+          </div>
+
+          <div class="text_container">
+            {/* <h2>{props.user}</h2> */}
+            <p class="notif_content">
+              {new Date(props.timestamp).toLocaleString()}
+            </p>
+          </div>
+
+          <div class="text_container">
+            {/* <h2>{props.user}</h2> */}
+            <p class="notif_content">
+              {props.status}
             </p>
           </div>
 
