@@ -111,10 +111,14 @@ function App() {
       path: "/pet_application/:id",
       element: <PetApplicationPage />,
     },
+    {
+      path: "*",
+      element: <FallBack />,
+    }
   ]);
 
   return (
-      <RouterProvider router={router} fallbackElement={<FallBack />} />
+      <RouterProvider router={router} />
   );
 }
 

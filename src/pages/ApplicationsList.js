@@ -6,6 +6,7 @@ import styles2 from "../css/pet_listing.css"
 import styles3 from '../pagecss/searchpage.module.css'
 import { useState, useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
 
 // import cat from "../assets/cat.png";
 
@@ -94,7 +95,15 @@ export default function SearchPage() {
     console.log("FINISH SETTING SEARCH DATA")
   }
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+
+    // check if user is not logged in
+    if (localStorage.getItem("isShelter") !== "true" && localStorage.getItem("userId") == 0) {
+      navigate("/fallback");
+    }
+
     console.log("INIT DATA")
     initData();
   }, []);

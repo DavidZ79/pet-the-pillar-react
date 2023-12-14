@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import ShelterPetCard from "../components/ShelterPetCard";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import styles from "./shelter_dashboard_page.module.css";
@@ -16,7 +16,18 @@ export default function ShelterDashboardPage() {
 
   const [petList, setPetList] = useState(null);
 
+  const navigate = useNavigate();
+
+
   useEffect(() => {
+    // check if the user is a seeker
+    console.log("newdab");
+    console.log(localStorage.getItem("isShelter") !== "true");
+    console.log(localStorage.getItem("userId") === 0);
+    if (localStorage.getItem("isShelter") !== "true") {
+      navigate("/fallback");
+    }
+
     const fetchPetList = async () => {
       try {
         const response = await fetch(API_URL + `pet/list/`, {

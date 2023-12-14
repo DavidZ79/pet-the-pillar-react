@@ -15,33 +15,36 @@ function NotificationPage() {
   useEffect(() => {
     const fetchNotiList = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/notification/list/`, {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-          },
-        });
-  
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/notification/list/`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
+          }
+        );
+
         if (!response.ok) {
-          throw new Error('Failed to fetch pet details');
+          throw new Error("Failed to fetch pet details");
         }
-  
+
         const responseData = await response.json();
         // console.log(responseData)
         const tempData = {
-          "count": responseData.count,
-          "next": responseData.next,
-          "previous": responseData.previous,
-          "results": responseData.results
-        }
+          count: responseData.count,
+          next: responseData.next,
+          previous: responseData.previous,
+          results: responseData.results,
+        };
         console.log(tempData);
         setNotiList(tempData); // Update the state with fetched details
       } catch (error) {
-        console.error('Error fetching pet details:', error);
+        console.error("Error fetching pet details:", error);
         // Handle error, e.g., redirect to an error page
       }
     };
-  
+
     fetchNotiList();
   }, [id]);
 
@@ -59,10 +62,21 @@ function NotificationPage() {
               lively last month!"
           /> */}
 
-          {notiList && notiList.results && notiList.results.map((notiResults, index) => (
-                <Notification props={notiResults} key={notiResults.id}/>
-              ))}
+          {/* {notiList &&
+            notiList.results &&
+            notiList.results.map((notiResults, index) => (
+              <Notification props={notiResults} key={notiResults.id} />
+            ))} */}
 
+          <div class="notification_container">
+            {notiList && notiList.results.length > 0 ? (
+              notiList.results.map((notiResults, index) => (
+                <Notification props={notiResults} key={notiResults.id} />
+              ))
+            ) : (
+              <p>No notifications available.</p>
+            )}
+          </div>
         </div>
       </div>
       <Footer />

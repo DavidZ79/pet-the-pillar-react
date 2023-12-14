@@ -91,7 +91,6 @@ form {
   margin-right: 10px;
 }
 .login-box input[type="file"] {
-  height: 28px;
   width: 280px;
   border-radius: 2px;
 }

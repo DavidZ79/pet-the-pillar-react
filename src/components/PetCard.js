@@ -90,7 +90,7 @@ export default function PetCard({props}) {
   }, []);
 
    return (
-      <div className='tile is-3 is-parent'>
+      <div>
       <div className='tile is-child'>
         <div className={`is-hoverable ${styles.card}`}>
           <div className={`card-image card ${styles.cardImage}`}>
