@@ -239,12 +239,12 @@ textarea {
   flex-wrap: wrap;
   margin: auto;
   padding: 0;
-  justify-content: center;
+  /* justify-content: center; */
   margin-bottom: 20px;
 }
 
 .write-review textarea {
-  margin: auto;
+  /* margin: auto; */
   resize: none;
   border-radius: 5px;
   max-width: 360px;
@@ -253,7 +253,7 @@ textarea {
 }
 
 .write-review button{
-  width: 120px;
+  width: 140px;
   height: 40px;
   font-size: 16px;
   font-weight: 400;
