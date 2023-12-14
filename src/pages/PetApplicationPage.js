@@ -86,6 +86,7 @@ export default function PetApplicationPage() {
         } catch (error) {
           console.error('Error fetching pet details:', error);
           // Handle error, e.g., redirect to an error page
+          navigate("/fallback");
         }
       };
     

@@ -101,11 +101,9 @@ export default function SearchPage() {
   useEffect(() => {
 
     // check if user is not logged in
-    if (localStorage.getItem("isShelter") !== "true" && localStorage.getItem("userId") === 0) {
+    if (localStorage.getItem("userId") == 0) {
       navigate("/fallback");
     }
-
-    console.log("INIT DATA")
     initData();
   }, []);
 

@@ -11,6 +11,7 @@ import shelterpic from "./shelter_dashboard_images/shelter_management_front.jpg"
 var API_URL = process.env.REACT_APP_API_URL;
 
 export default function ShelterDashboardPage() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [nextPage, setNextPage] = useState("initial");
   const [pageNum, setPageNum] = useState(1);
@@ -55,8 +56,6 @@ export default function ShelterDashboardPage() {
       setPetList(tempData); // Update the state with fetched details
     }
   }
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("isShelter") !== "true") {

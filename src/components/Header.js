@@ -109,6 +109,11 @@ const handleLogout = () => {
               <button className="button is-secondary">Search</button>
             </Link>
           </p>
+          <p className="navbar-search-button left">
+            <Link to={`/shelter_list`}>
+              <button className="button is-secondary">Shelters</button>
+            </Link>
+          </p>
         </div>
 
         <div className="navbar-end">
