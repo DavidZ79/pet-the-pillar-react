@@ -21,6 +21,9 @@ export default function ShelterDashboardPage() {
 
   useEffect(() => {
     // check if the user is a seeker
+    console.log("newdab");
+    console.log(localStorage.getItem("isShelter") !== "true");
+    console.log(localStorage.getItem("userId") === 0);
     if (localStorage.getItem("isShelter") !== "true") {
       navigate("/fallback");
     }

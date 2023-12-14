@@ -43,8 +43,8 @@ export default function UpdateShelterPage() {
   useEffect(() => {
     // check if user is not logged in
     if (
-      (localStorage.getItem("isShelter") === "false") &
-      (localStorage.getItem("userId") == 0)
+      (localStorage.getItem("isShelter") !== "true") &&
+      (localStorage.getItem("userId") === 0)
     ) {
       navigate("/fallback");
     }
@@ -87,7 +87,7 @@ export default function UpdateShelterPage() {
 
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    navigate("/shelter_management");
+    navigate("/shelter_dashboard");
     console.log(data);
   };
 
@@ -156,7 +156,7 @@ export default function UpdateShelterPage() {
             </div>
 
             <div className={styles["submit-container"]}>
-              <Link to="/shelter_management">
+              <Link to="/shelter_dashboard">
                 <input
                   type="submit"
                   className={styles["submit-btn"]}
