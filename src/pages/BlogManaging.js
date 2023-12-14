@@ -19,7 +19,6 @@ export default function SampleBlog() {
 
   const fetchPosts = async () => {
     try {
-      const params = new URLSearchParams(window.location.search)
       const response = await fetch(`${API_URL}blog/list/${id}`, {
         method: 'GET',
       });
