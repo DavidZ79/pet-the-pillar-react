@@ -21,6 +21,12 @@ export default function SearchPage() {
   const [nextPage, setNextPage] = useState("initial");
   const [pageNum, setPageNum] = useState(1);
   // const [disableLoading, setDisableLoading] = useState(true)
+  const [species, setSpecies] = useState('');
+
+  const handleInputChange = (event) => {
+    setSpecies(event.target.value);
+  };
+  
 
   const fetchPetList = async (url = null) => {
     console.log(nextPage)
@@ -53,6 +59,7 @@ export default function SearchPage() {
       setNextPage(tempData.next);
       // console.log(pageNum);
       // setDisableLoading(false);
+
       return tempData.results;
     } catch (error) {
       console.error('Error fetching pet details:', error);
@@ -96,7 +103,7 @@ export default function SearchPage() {
   useEffect(() => {
     initData();
   }, []);
-  
+
   return (
     <body>
       <Header/>
@@ -127,8 +134,14 @@ export default function SearchPage() {
               {/* search bar */}
               <div className={`search-bar ${styles['search-bar']}`}>
                 <p className={`${styles['search-bar-input']} control search-bar-input`}>
-                  <input name="species" className={`${styles.input} input`} input="text" placeholder='Search an animal' value={new URLSearchParams(window.location.search).get('species' ?? '')}/>
-                </p>
+                <input
+      name="species"
+      className={`${styles.input} input`}
+      type="text" // Changed 'input' to 'type'
+      placeholder='Search an animal'
+      value={species}
+      onChange={handleInputChange}
+    />                </p>
 
                 <p className={`control`}>
                   <button type='submit' className={`button is-secondary ${styles['is-secondary']}`}>

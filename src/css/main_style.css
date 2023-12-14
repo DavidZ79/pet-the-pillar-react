@@ -321,7 +321,9 @@
      }
  }
  
- 
+ .load-more {
+  width: 100px !important;
+ }
  .main{
      position: relative;
      margin: 16px;

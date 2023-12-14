@@ -4,7 +4,6 @@ import Footer from '../components/Footer';
 import styles1 from "../css/main_style.css";
 import styles2 from "../css/pet_listing.css"
 import styles3 from '../pagecss/searchpage.module.css'
-import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 
@@ -31,7 +30,7 @@ export default function SearchPage() {
     }
     try {
       const params = new URLSearchParams(window.location.search)
-      const response = await fetch(url ?? `${URL}pet/list/?page=${pageNum}&species=${params.get('species') ?? ''}`, {
+      const response = await fetch(url , {
         method: 'GET',
         // headers: {
         //   'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -122,21 +121,12 @@ export default function SearchPage() {
                 </div>
               </div>
 
-              {/* search bar */}
-              <div className={`search-bar ${styles['search-bar']}`}>
-                <p className={`control`}>
-                  <button type='submit' className={`button is-secondary ${styles['is-secondary']}`}>
-                    Search
-                  </button>
-                </p>
-              </div>
-            </div>
+              <div className={`sort-container ${styles['sort-container']}`}>
+                <div className={`label sort-label ${styles['sort-label']}`}>
+                  Status:
+                </div>
 
-            <div className={`search-bottom ${styles['search-bottom']}`}>
-
-              {/* status filter */}
               <div className={`filter`}>
-                <div className={`label`}>Status</div>
                 <div className={`control`}>
                   <div className={`select`}>
                     <select name='status'>
@@ -149,7 +139,16 @@ export default function SearchPage() {
                   </div>
                 </div>
               </div>
+              </div>
 
+              {/* search bar */}
+              <div className={`search-bar ${styles['search-bar']}`}>
+                <p className={`control`}>
+                  <button type='submit' className={`button is-secondary ${styles['is-secondary']}`}>
+                    Search
+                  </button>
+                </p>
+              </div>
             </div>
           </div>
         </form>

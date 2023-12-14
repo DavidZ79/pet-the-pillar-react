@@ -4,7 +4,7 @@ import styles2 from "../css/pet_listing.css"
 import styles3 from '../pagecss/searchpage.module.css'
 
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import cat from "../assets/cat.png";
 
 var API_URL = process.env.REACT_APP_API_URL;
@@ -17,7 +17,7 @@ export default function PetCard({props}) {
   const [petDetails, setPetDetails] = useState(null);
   const [shelterName, setShelterName] = useState(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchPetDetails = async () => {
       try {
         const response = await fetch(`${API_URL}pet/${props.id}/`, {
@@ -87,7 +87,7 @@ export default function PetCard({props}) {
     };
   
     fetchPetDetails();
-  });
+  }, []);
 
    return (
       <div className='tile is-3 is-parent'>

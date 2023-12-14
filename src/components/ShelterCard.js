@@ -1,6 +1,4 @@
 import Button from "./Button";
-import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 import styles from "../css/ShelterCard.module.css";
 
