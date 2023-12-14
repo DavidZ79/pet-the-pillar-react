@@ -92,6 +92,10 @@
      line-height: normal;
  }
 
+ .left {
+  margin-left: 20px !important;
+ }
+
  .secret2 {
   justify-content: space-around;
 }

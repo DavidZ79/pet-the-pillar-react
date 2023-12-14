@@ -83,7 +83,7 @@ export default function PetUpdatePage() {
         };
 
         // check if the user is the correct shelter
-        if (tempData.shelter !== localStorage.getItem("userId")) {
+        if (tempData.shelter != localStorage.getItem("userId")) {
           navigate("/fallback");
         }
 
