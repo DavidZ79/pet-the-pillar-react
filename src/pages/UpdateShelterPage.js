@@ -25,52 +25,6 @@ export default function UpdateShelterPage() {
   });
 
   const navigate = useNavigate();
-  const onSubmit = async (data) => {
-    const {
-      username,
-      email,
-      location,
-      phoneNumber,
-      missionStatement,
-    } = data;
-    const formData = new FormData();
-    formData.append("username", username);
-    formData.append("email", email);
-    formData.append("location", location);
-    formData.append("phoneNumber", phoneNumber);
-    formData.append("missionStatement", missionStatement);
-    if (selectedImage) {
-      formData.append(
-        "photos",
-        document.querySelector('input[type="file"]').files[0]
-      );
-    }
-
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem(
-        "userId"
-      )}/`, {
-        method: "PATCH",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-        },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        console.log(formData);
-        throw new Error(response);
-      }
-
-      const responseData = await response.json();
-      console.log(responseData);
-
-      navigate("/shelter_dashboard");
-    } catch (error) {
-      console.error("second demon:", error.message);
-    }
-  };
-
   const { id } = useParams(); // id of pet in this shelter
 
   const [shelterDetails, setShelterDetails] = useState(null);
@@ -137,6 +91,52 @@ export default function UpdateShelterPage() {
     }
   }, [shelterDetails, reset]);
 
+  const onSubmit = async (data) => {
+    const {
+      username,
+      email,
+      location,
+      phoneNumber,
+      missionStatement,
+    } = data;
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("location", location);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("missionStatement", missionStatement);
+    if (selectedImage) {
+      formData.append(
+        "photos",
+        document.querySelector('input[type="file"]').files[0]
+      );
+    }
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem(
+        "userId"
+      )}/update/`, {
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        console.log(formData);
+        throw new Error(response);
+      }
+
+      const responseData = await response.json();
+      console.log(responseData);
+
+      navigate("/shelter_dashboard");
+    } catch (error) {
+      console.error("second demon:", error.message);
+    }
+  };
+
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (e) => {
@@ -155,7 +155,7 @@ export default function UpdateShelterPage() {
         Authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     });
-    navigate("/shelter_dashboard");
+    navigate("/login");
   };
 
   return (
