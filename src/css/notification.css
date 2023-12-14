@@ -58,7 +58,7 @@
 }
 
 .text_container h2 {
-  font-size: 24px;
+  font-size: 25px;
 }
 .text_container p {
   max-width: 450px;
@@ -66,12 +66,27 @@
   height: 50px;
   text-overflow: ellipsis;
   overflow-y: auto;
+  font-weight: bold;
 }
 
 /* icons */
 
+/* :root {
+  --dark-text: black;
+  --light-text: white;
+
+  --primary: #97c3e9;
+  --secondary: #6892e5;
+  --secondary-lighter: #73a3ff;
+  --dark-blue: #081d40;
+  --lighter-dark-blue: #243662;
+
+  --header-height: 72px;
+  --footer-height: 36px;
+} */
+
 .notification-bell-div {
-  fill: aliceblue;
+  fill: #97c3e9;
   height: 60px;
   width: 60px;
   display: flex;
@@ -111,13 +126,13 @@
 
 @keyframes bell-pulse {
   0% {
-    fill: var(--light-text);
-  }
-  50% {
     fill: var(--primary);
   }
+  50% {
+    fill: var(aliceblue);
+  }
   100% {
-    fill: var(--light-text);
+    fill: var(--primary);
   }
 }
 

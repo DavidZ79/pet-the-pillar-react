@@ -121,7 +121,7 @@ form {
 
 
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 390px) {
   .main {
     flex-direction: column;
   }
@@ -132,5 +132,8 @@ form {
   }
   .chat-card {
     margin-top: 24px;
+  }
+  .background-box {
+    width: 365px;
   }
 }

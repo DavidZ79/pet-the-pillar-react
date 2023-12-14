@@ -46,21 +46,23 @@ export default function NewPost({ addPost }) {
     <form onSubmit={handleSubmit} className={styles["create-post-form"]}>
       <h2>Add a new post</h2>
       <div>
-        <label>Title</label>
+        <label className={styles.title}>Title:</label>
         <input
           type="text"
           value={title}
+          placeholder='Please write your blog title here'
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
-      <div>
-        <label>Content</label>
+      <div className={styles['content-container']}>
+        <label className={styles.content}>Content:</label>
         <textarea
           value={content}
+          placeholder='Please write your blog content here'
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
       </div>
-      <button type="submit">New Post</button>
+      <button type="submit">Create New Post</button>
     </form>
   );
 }
