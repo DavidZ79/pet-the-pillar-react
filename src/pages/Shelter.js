@@ -56,7 +56,8 @@ export default function ShelterPage() {
           "location": responseData.location,
           "missionStatement": responseData.missionStatement,
           "totalRating": responseData.totalRating,
-          "numberOfRating": responseData.numberOfRating
+          "numberOfRating": responseData.numberOfRating,
+          "picture": responseData.picture,
        }
         setShelterDetails(tempData); // Update the state with fetched details
       //   console.log(responseData)
@@ -242,7 +243,7 @@ export default function ShelterPage() {
       console.log('Submitting:', textareaValue);
   
       // Example POST request
-      const response = await fetch(`http://127.0.0.1:8000/api/comment/review/${id}/`, {
+      const response = await fetch(API_URL + `comment/review/${id}/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -288,7 +289,7 @@ export default function ShelterPage() {
          <div className={styles.main}>
             <Card className={styles['background-box']}>
                <div className={styles['pfp-container']}>
-                  <img src={pfp} alt='shelter pic' className={styles.pfp}/>
+                  <img src={shelterDetail ? shelterDetail.picture : pfp} alt='shelter pic' className={styles.pfp}/>
                </div>
 
                <p className={styles['shelter-name']}>

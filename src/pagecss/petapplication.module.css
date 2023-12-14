@@ -87,6 +87,21 @@ form {
   font-family: "Poppins", sans-serif;
   flex-wrap: wrap;
 }
+.fake-input {
+  background-color: white;
+  width: 150px;
+  color: black;
+  text-decoration: underline;
+  /* width: 50%; */
+  height: 58px;
+  border-radius: 20px;
+  border-width: 2px;
+
+  font-size: 20px;
+  font-weight: 550;
+  font-family: "Poppins", sans-serif;
+  flex-wrap: wrap;
+}
 .login-box label {
   font-size: 18px;
   font-weight: 550;

@@ -4,57 +4,68 @@ import x from "./x.png";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+var API_URL = process.env.REACT_APP_API_URL;
 
 // var URL = process.env.REACT_APP_API_URL;
 
 function Notification({props}) {
+    const [notification, setNotification] = useState(null);
+    const [isVisible, setIsVisible] = useState(true); // Visibility state
+
     async function del() {
         console.log("delete");
-        await fetch(`http://127.0.0.1:8000/api/notification/${props.id}/`, {
+        const response = await fetch(API_URL + `notification/${props.id}/`, {
           method: 'DELETE',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
           },
         });
+
+        if (response.ok) {
+          setIsVisible(false); // Hide notification on successful delete
+        } 
     }
 
   const { id } = useParams();
 
-  const [notification, setNotification] = useState(null);
-
-  useEffect(() => {
-    const fetchNotification = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/api/notification/${props.id}/`, {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-          },
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to fetch pet details');
-        }
-  
-        const responseData = await response.json();
-        // console.log(responseData)
-        const tempData = {
-          "id": responseData.id,
-          "user": responseData.user,
-          "status": responseData.status,
-          "forward": responseData.forward,
-          "content": responseData.content,
-          "timestamp": responseData.timestamp
-        }
-        setNotification(tempData); // Update the state with fetched details
-      } catch (error) {
-        console.error('Error fetching pet details:', error);
-        // Handle error, e.g., redirect to an error page
-      }
-    };
-  
+  async function handleNotificationClick() {
     fetchNotification();
-  }, [id]);
+  }
+
+  const fetchNotification = async () => {
+    try {
+      const response = await fetch(API_URL + `notification/${props.id}/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch pet details');
+      }
+
+      const responseData = await response.json();
+      // console.log(responseData)
+      const tempData = {
+        "id": responseData.id,
+        "user": responseData.user,
+        "status": responseData.status,
+        "forward": responseData.forward,
+        "content": responseData.content,
+        "timestamp": responseData.timestamp
+      }
+      setNotification(tempData); // Update the state with fetched details
+    } catch (error) {
+      console.error('Error fetching pet details:', error);
+      // Handle error, e.g., redirect to an error page
+    }
+  };
+
+  if (!isVisible) {
+    return null; // Don't render the component if it's not visible
+  }
+
 
     return (
         <div class="notification">
@@ -76,7 +87,7 @@ function Notification({props}) {
           {/* text */}
           <div class="text_container">
             {/* <h2>{props.user}</h2> */}
-            <Link to={props.forward}>
+            <Link to={props.forward} onClick={handleNotificationClick}>
             <p class="notif_content">
               {props.content}
             </p>

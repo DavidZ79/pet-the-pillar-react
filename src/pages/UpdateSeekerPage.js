@@ -16,31 +16,32 @@ var BASE_URL = API_URL.slice(0, -5);
 
 export default function UpdateSeekerPage() {
   const schema = yup.object().shape({
-    photo: yup.mixed().required("Please enter a profile picture"),
+    picture: yup.mixed().required("Please enter a profile picture"),
     username: yup.string().required("Please enter a name"),
     email: yup.string().email().required("Email is required"),
     phoneNumber: yup.number().typeError("Please enter your phone number"),
     location: yup.string().required("Please enter location"),
-    performance: yup.string().required("Preference is required"),
+    preference: yup.string().required("Please enter preference"),
   });
-  
-  const navigate = useNavigate();
-  const { id } = useParams(); // id of pet in this shelter
 
-  const [shelterDetails, setShelterDetails] = useState(null);
+  const navigate = useNavigate();
+  const { id } = useParams(); 
+
+  const [seekerDetails, setSeekerDetails] = useState(null);
 
   useEffect(() => {
     // check if user is not logged in
     if (
-      localStorage.getItem("isShelter") !== "true" &&
-      localStorage.getItem("userId") === 0
+      localStorage.getItem("isShelter") === "true" || localStorage.getItem("userId") == 0
     ) {
       navigate("/fallback");
+    } else {
+      console.log("User is logged in");
     }
 
-    const fetchShelterDetails = async () => {
+    const fetchSeekerDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/account/seeker/${localStorage.getItem(
+        const response = await fetch(API_URL + `account/seeker/${localStorage.getItem(
           "userId"
         )}/`, {
           method: "GET",
@@ -50,7 +51,7 @@ export default function UpdateSeekerPage() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch pet details");
+          throw new Error("Failed to fetch sheter details");
         }
 
         const responseData = await response.json();
@@ -60,18 +61,18 @@ export default function UpdateSeekerPage() {
           email: responseData.email,
           phoneNumber: responseData.phoneNumber,
           location: responseData.location,
-          photo: responseData.picture[0] !== "h" ? responseData.picture[0] : null,
+          picture: responseData.picture ?? null,
           preference: responseData.preference,
         };
 
-        setShelterDetails(tempData); // Update the state with fetched details
+        setSeekerDetails(tempData); // Update the state with fetched details
       } catch (error) {
-        console.error("Error fetching shelter details:", error);
+        console.error("Error fetching seeker details:", error);
         // Handle error, e.g., redirect to an error page
       }
     };
 
-    fetchShelterDetails();
+    fetchSeekerDetails();
   }, [id]);
 
   const {
@@ -84,10 +85,10 @@ export default function UpdateSeekerPage() {
   });
 
   useEffect(() => {
-    if (shelterDetails) {
-      reset(shelterDetails);
+    if (seekerDetails) {
+      reset(seekerDetails);
     }
-  }, [shelterDetails, reset]);
+  }, [seekerDetails, reset]);
 
   const onSubmit = async (data) => {
     const {
@@ -95,23 +96,21 @@ export default function UpdateSeekerPage() {
       email,
       location,
       phoneNumber,
-      preference,
     } = data;
     const formData = new FormData();
     formData.append("username", username);
     formData.append("email", email);
     formData.append("location", location);
     formData.append("phoneNumber", phoneNumber);
-    formData.append("preference", preference);
     if (selectedImage) {
       formData.append(
-        "photos",
+        "picture",
         document.querySelector('input[type="file"]').files[0]
       );
     }
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/account/seeker/${localStorage.getItem(
+      const response = await fetch(API_URL + `account/seeker/${localStorage.getItem(
         "userId"
       )}/update/`, {
         method: "PATCH",
@@ -145,7 +144,7 @@ export default function UpdateSeekerPage() {
   };
 
   const handleDelete = async () => {
-    await fetch(`http://127.0.0.1:8000/api/account/seeker/${localStorage.getItem(
+    await fetch(API_URL + `account/seeker/${localStorage.getItem(
       "userId"
     )}/`, {
       method: "DELETE",
@@ -153,6 +152,9 @@ export default function UpdateSeekerPage() {
         Authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     });
+    localStorage.setItem("accessToken", "");
+    localStorage.setItem("isShelter", false);
+    localStorage.setItem("userId", 0);
     navigate("/login");
   };
 
@@ -163,7 +165,7 @@ export default function UpdateSeekerPage() {
       <div className={styles.main}>
         <Card className={styles["background-box"]}>
           <p className={styles["signup-text"]}>
-            {shelterDetails ? shelterDetails.username : ""} Update
+            {seekerDetails ? seekerDetails.username : ""} Update
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -171,11 +173,7 @@ export default function UpdateSeekerPage() {
               <img
                 src={
                   selectedImage ||
-                  (shelterDetails
-                    ? shelterDetails.photo
-                      ? BASE_URL + shelterDetails.photo["image"]
-                      : pfp
-                    : pfp)
+                  (seekerDetails ? seekerDetails.picture ?? pfp : pfp)
                 }
                 alt="pfp pic"
                 className={styles.pfp}
@@ -201,17 +199,6 @@ export default function UpdateSeekerPage() {
               </div>
 
               <div className={styles["wrapper"]}>
-                <p className={styles["box_header"]}>Location: </p>
-                <input
-                  type="text"
-                  placeholder="location*"
-                  {...register("location")}
-                  required
-                />
-                <p>{errors.location?.message}</p>
-              </div>
-
-              <div className={styles["wrapper"]}>
                 <p className={styles["box_header"]}>Email: </p>
                 <input
                   type="text"
@@ -233,13 +220,27 @@ export default function UpdateSeekerPage() {
                 <p>{errors.phoneNumber?.message}</p>
               </div>
 
-              <p className={styles["box_header"]}>Preference: </p>
-              <textarea
-                placeholder="Preference*"
-                {...register("preference")}
-                required
-              />
-              <p>{errors.preference?.message}</p>
+              <div className={styles["wrapper"]}>
+                <p className={styles["box_header"]}>Location: </p>
+                <input
+                  type="text"
+                  placeholder="location*"
+                  {...register("location")}
+                  required
+                />
+                <p>{errors.location?.message}</p>
+              </div>
+
+              <div className={styles["wrapper"]}>
+                <p className={styles["box_header"]}>Preference: </p>
+                <input
+                  type="text"
+                  placeholder="preference*"
+                  {...register("preference")}
+                  required
+                />
+              </div>
+
             </div>
 
             <div className={styles["wrapper2"]}>

@@ -7,17 +7,21 @@ import styles1 from "../css/main_style.css";
 import styles2 from "../css/pet_listing.css"
 import styles3 from '../pagecss/searchpage.module.css'
 
+
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
+var API_URL = process.env.REACT_APP_API_URL;
 const styles = {...styles1,...styles2,...styles3,...styles4};
 export default function ShelterListPage() {
+  
   const { id } = useParams();
   const [shelterList, setShelterList] = useState([]);
   const [pageNum, setPageNum] = useState(1);
   const [nextPage, setNextPage] = useState("initial");
   const fetchShelterList = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/account/all/shelter/?page=${pageNum}`, {
+      const response = await fetch(API_URL + `account/all/shelter/?page=${pageNum}`, {
         method: 'GET',
         headers: {
         },
@@ -36,6 +40,7 @@ export default function ShelterListPage() {
         "results": responseData.results
       }
       setNextPage(tempData.next);
+      console.log(tempData.results);
       return tempData.results;
     } catch (error) {
       console.error('Error fetching pet details:', error);
@@ -48,6 +53,8 @@ export default function ShelterListPage() {
     if (shelterList.length === 0) {
       console.log("init2");
       const tempData = await fetchShelterList();
+      console.log(tempData);
+      console.log(pageNum);
       setPageNum(pageNum + 1);
       setShelterList(tempData); // Update the state with fetched details
     }
