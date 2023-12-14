@@ -32,7 +32,10 @@ export default function SeekerPage() {
         console.log(response);
 
         // check if user is not logged in
-        if (localStorage.getItem("isShelter") === "true" || localStorage.getItem("userId") == 0) {
+        if (
+          localStorage.getItem("isShelter") === "true" ||
+          localStorage.getItem("userId") == 0
+        ) {
           navigate("/fallback");
         }
 
@@ -81,20 +84,24 @@ export default function SeekerPage() {
           /> */}
         </div>
 
-        <div className={styles.field}>Username</div>
-        <div className={styles.content}>{seekerDetails.username}</div>
+        {seekerDetails && (
+          <>
+            <div className={styles.field}>Username</div>
+            <div className={styles.content}>{seekerDetails.username}</div>
 
-        <div className={styles.field}>Email</div>
-        <div className={styles.content}>{seekerDetails.email}</div>
+            <div className={styles.field}>Email</div>
+            <div className={styles.content}>{seekerDetails.email}</div>
 
-        <div className={styles.field}>Phone Number</div>
-        <div className={styles.content}>{seekerDetails.phoneNumber}</div>
+            <div className={styles.field}>Phone Number</div>
+            <div className={styles.content}>{seekerDetails.phoneNumber}</div>
 
-        <div className={styles.field}>Preference</div>
-        <div className={styles.content}>{seekerDetails.preference}</div>
+            <div className={styles.field}>Preference</div>
+            <div className={styles.content}>{seekerDetails.preference}</div>
 
-        <div className={styles.field}>Location</div>
-        <div className={styles.content}>{seekerDetails.location}</div>
+            <div className={styles.field}>Location</div>
+            <div className={styles.content}>{seekerDetails.location}</div>
+          </>
+        )}
 
         <Button onClick={goBack}>Go Back</Button>
       </div>
