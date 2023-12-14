@@ -7,6 +7,7 @@ export default function NewPost({ addPost }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [num_likes, setNum_likes] = useState('');
+  const [shelter, setShelter] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,6 +39,7 @@ export default function NewPost({ addPost }) {
     setTitle('');
     setContent('');
     setNum_likes('');
+    setShelter('');
   };
 
   return (

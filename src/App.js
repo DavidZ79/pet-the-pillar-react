@@ -98,7 +98,7 @@ function App() {
       element: <Shelter />,
     },
     {
-      path: "/shelter_blog",
+      path: "/shelter_blog/:id",
       element: <ShelterBlog />,
     },
     {
