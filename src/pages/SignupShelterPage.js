@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -42,6 +42,14 @@ export default function SignupShelterPage() {
   });
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    // check if user is already logged in
+    if (localStorage.getItem("isShelter") === "true" || !(localStorage.getItem("userId") == 0)) {
+      navigate("/fallback");
+    }
+  }, []);
+
   const onSubmit = async (data) => {
     const { shelterName, email, phone, password, location, missionStatement} = data;
     const formData = new FormData();
