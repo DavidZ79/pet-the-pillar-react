@@ -38,7 +38,7 @@ export default function LandingPage() {
                 by our side to keep us company.
               </h4>
               <Link to="/signup_before">
-                <Button className="signup-btn">Sign Up</Button>
+                <Button className="btn">Sign Up</Button>
               </Link>
             </div>
             <div class="card">
@@ -48,7 +48,7 @@ export default function LandingPage() {
                 from the community for love and support!
               </h4>
               <Link to="/shelter_list">
-                <Button className="shelter-list-btn">Shelter List</Button>
+                <Button className="btn">Shelter List</Button>
               </Link>
             </div>
           </div>
