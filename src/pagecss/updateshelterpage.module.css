@@ -166,6 +166,17 @@
    padding: 10px;
    border-radius: 15px;
  }
+
+ .wrapper {
+  margin-top: 20px;
+}
+.box_header {
+  color: white !important;
+}
+.wrapper2 {
+  display: inline-flex;
+  justify-content: space-around;
+}
  
  @media only screen and (max-width: 664px) {
    .login-box {

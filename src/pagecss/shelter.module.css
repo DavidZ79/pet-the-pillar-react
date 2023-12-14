@@ -434,6 +434,18 @@ p a:hover {
   max-height: 100%;
 }
 
+.is-vertical {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /* make responsive */
 @media only screen and (max-width: 800px) {
   .form {
