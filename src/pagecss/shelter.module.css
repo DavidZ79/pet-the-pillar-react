@@ -135,6 +135,11 @@ textarea {
   color: black !important;
 }
 
+.mission {
+  color: black;
+  margin-left: 10px;
+}
+
 .mission-text {
   background: aliceblue;
   font-size: 20px;
