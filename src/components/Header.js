@@ -1,19 +1,18 @@
 import "../css/main_style.css";
 
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import default_picture from "../assets/profile.png";
 var API_URL = process.env.REACT_APP_API_URL;
 
 // https://bulma.io/documentation/components/navbar/
 export default function Header() {
-
   const [isActive, setActive] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isShelter, setIsShelter] = useState(false);
-  
-  const [searchBarValue, setSearchBarValue] = useState('');
+
+  const [searchBarValue, setSearchBarValue] = useState("");
 
   const handleToggle = () => {
     setActive(!isActive);
@@ -21,56 +20,61 @@ export default function Header() {
   const [accountDetails, setAccountDetails] = useState(null);
 
   React.useEffect(() => {
-    if (!localStorage.getItem('accessToken')) {
+    if (!localStorage.getItem("accessToken")) {
       setIsLoggedIn(false);
     } else {
       const fetchAccountDetails = async () => {
         try {
-          var type = 'seeker';
-          if (localStorage.getItem("isShelter") === 'true') {
-            type = 'shelter';
+          var type = "seeker";
+          if (localStorage.getItem("isShelter") === "true") {
+            type = "shelter";
           }
 
-          const response = await fetch(`${API_URL}account/${type}/${localStorage.getItem("userId")}/`, {
-            method: 'GET',
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-            },
-          });
-    
+          const response = await fetch(
+            `${API_URL}account/${type}/${localStorage.getItem("userId")}/`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+              },
+            }
+          );
+
           if (!response.ok) {
-            throw new Error('Failed to fetch account details');
+            throw new Error("Failed to fetch account details");
           }
-    
+
           const responseData = await response.json();
           const tempData = {
-            "picture": responseData.picture,
-          }
+            picture: responseData.picture,
+          };
           setAccountDetails(tempData); // Update the state with fetched details
         } catch (error) {
-          console.error('Error fetching account details:', error);
-          console.log(`${API_URL}account/${type}/${localStorage.getItem('userId')}/`)
+          console.error("Error fetching account details:", error);
+          console.log(
+            `${API_URL}account/${type}/${localStorage.getItem("userId")}/`
+          );
         }
       };
-    
+
       fetchAccountDetails();
       setIsLoggedIn(true);
     }
-    setIsShelter(localStorage.getItem('isShelter') === 'true');
+    setIsShelter(localStorage.getItem("isShelter") === "true");
     // return () => {
     //     console.log('MyComponent onUnmount');
     // };
-}, []);
+  }, []);
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const handleLogout = () => {
-  localStorage.setItem('accessToken', ''); 
-  localStorage.setItem('isShelter', false);
-  localStorage.setItem('userId', 0);
-  setIsLoggedIn(false);
-  navigate('/'); 
-};
+  const handleLogout = () => {
+    localStorage.setItem("accessToken", "");
+    localStorage.setItem("isShelter", false);
+    localStorage.setItem("userId", 0);
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -92,7 +96,10 @@ const handleLogout = () => {
         </a>
       </div>
 
-      <div id="navbar-side" className={`navbar-menu ${isActive ? "is-active" : ""}`}>
+      <div
+        id="navbar-side"
+        className={`navbar-menu ${isActive ? "is-active" : ""}`}
+      >
         <div className="navbar-search-bar">
           <p className="navbar-search-bar-input">
             <input
@@ -101,8 +108,8 @@ const handleLogout = () => {
               type="text"
               placeholder="Search an animal"
               value={searchBarValue}
-              onChange={e => setSearchBarValue(e.target.value)}
-              />
+              onChange={(e) => setSearchBarValue(e.target.value)}
+            />
           </p>
           <p className="navbar-search-button">
             <Link to={`/search?species=${searchBarValue}`}>
@@ -138,22 +145,31 @@ const handleLogout = () => {
               <div className="navbar-profile profile">
                 <img
                   className="navbar-profile-image"
-                  src={accountDetails ? (accountDetails.picture ? accountDetails.picture : default_picture) : default_picture}
+                  src={
+                    accountDetails
+                      ? accountDetails.picture
+                        ? accountDetails.picture
+                        : default_picture
+                      : default_picture
+                  }
                   alt="profile pic"
                 />
               </div>
 
               <div className="navbar-dropdown">
-                <Link to="/seeker_dashboard_page" className={`navbar-item seeker ${isShelter ? "hide" : ""}`}>
+                <Link
+                  to="/seeker_dashboard_page"
+                  className={`navbar-item seeker ${isShelter ? "hide" : ""}`}
+                >
                   Dashboard
                 </Link>
-
-                <Link to="/shelter_dashboard" className={`navbar-item shelter ${isShelter ? "" : "hide"}`}>
+                <Link
+                  to="/shelter_dashboard"
+                  className={`navbar-item shelter ${isShelter ? "" : "hide"}`}
+                >
                   Dashboard
                 </Link>
-
                 <hr className="navbar-divider" />
-
                 <Link
                   to="/update_seeker"
                   className={`navbar-item seeker ${isShelter ? "hide" : ""}`}
@@ -161,12 +177,21 @@ const handleLogout = () => {
                   Settings
                 </Link>
 
-                <Link
-                  to={`/shelter/${localStorage.getItem("userId")}`}
-                  className={`navbar-item shelter ${isShelter ? "" : "hide"}`}
-                >
-                  Profile
-                </Link>
+                {localStorage.getItem("isShelter") === "true" ? (
+                  <Link
+                    to={`/shelter/${localStorage.getItem("userId")}`}
+                    className={`navbar-item shelter`}
+                  >
+                    Shelter Profile
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/seeker/${localStorage.getItem("userId")}`}
+                    className={`navbar-item seeker`}
+                  >
+                    Seeker Profile
+                  </Link>
+                )}
 
                 <Link
                   to="/update_shelter"
@@ -174,7 +199,6 @@ const handleLogout = () => {
                 >
                   Settings
                 </Link>
-
                 <Link to="/" className="navbar-item" onClick={handleLogout}>
                   Log Out
                 </Link>

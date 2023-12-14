@@ -18,6 +18,7 @@ import PetCreatePage from "./pages/PetCreatePage";
 import PetDetailPage from "./pages/PetDetailPage";
 import PetUpdatePage from "./pages/PetUpdatePage";
 import Shelter from "./pages/Shelter";
+import Seeker from "./pages/Seeker";
 import ShelterBlog from "./pages/ShelterBlog";
 import ApplicationList from "./pages/ApplicationsList";
 import SampleBlog from "./pages/SampleBlog";
@@ -86,6 +87,10 @@ function App() {
     {
       path: "/pet_update/:id",
       element: <PetUpdatePage />,
+    },
+    {
+      path: "/seeker/:id",
+      element: <Seeker />,
     },
     {
       path: "/shelter/:id",
