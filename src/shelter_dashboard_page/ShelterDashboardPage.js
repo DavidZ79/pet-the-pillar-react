@@ -27,36 +27,9 @@ export default function ShelterDashboardPage() {
         },
       });
 
-<<<<<<< HEAD
       if (!response.ok) {
         throw new Error("Failed to fetch pet details");
       }
-=======
-  const navigate = useNavigate();
-
-
-  useEffect(() => {
-    // check if the user is a seeker
-    console.log("newdab");
-    console.log(localStorage.getItem("isShelter") !== "true");
-    console.log(localStorage.getItem("userId") === 0);
-    if (localStorage.getItem("isShelter") !== "true") {
-      navigate("/fallback");
-    }
-
-    const fetchPetList = async () => {
-      try {
-        const response = await fetch(API_URL + `pet/list/`, {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch pet details");
-        }
->>>>>>> aa3c4275f80b2f0f2bc06a46dda2f18748b486a6
 
       const responseData = await response.json();
       // console.log(responseData)
