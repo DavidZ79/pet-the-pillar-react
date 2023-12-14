@@ -115,6 +115,8 @@ export default function PetUpdatePage() {
 
   const navigate = useNavigate();
   const onSubmit = async (data) => {
+    console.log(data);
+    console.log("data");
     const {
       name,
       breed,
