@@ -4,6 +4,8 @@ import Card from "../components/Card";
 
 import styles from "../pagecss/updateseekerpage.module.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,8 +26,8 @@ export default function UpdateSeekerPage() {
       .string()
       .oneOf([yup.ref("password"), null], "Passwords Don't Match")
       .required("Passwords don't match"),
-      preference: yup.string().required("Please select your preference"),
-      location: yup.string().required("Please enter your location"),
+    preference: yup.string().required("Please select your preference"),
+    location: yup.string().required("Please enter your location"),
   });
 
   const {
@@ -36,9 +38,20 @@ export default function UpdateSeekerPage() {
     resolver: yupResolver(schema),
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // check if user is not logged in
+    if (
+      (localStorage.getItem("isShelter") === "false") &&
+      (localStorage.getItem("userId") == 0)
+    ) {
+      navigate("/fallback");
+    }
+  }, []);
+
   const onSubmit = (data) => {
-   navigate("/pet_application");
+    navigate("/pet_application");
     console.log(data);
   };
 
@@ -46,66 +59,78 @@ export default function UpdateSeekerPage() {
     <body>
       <Header />
 
-         <div className={styles.main}>
-            <Card className={styles['background-box']}>
-               <p className={styles['signup-text']}>Seeker Account Update</p>
+      <div className={styles.main}>
+        <Card className={styles["background-box"]}>
+          <p className={styles["signup-text"]}>Seeker Account Update</p>
 
-               <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className={styles['pfp-container']}>
-                     <img src={pfp} alt="pfp pic" className={styles.pfp}/>
-                  </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles["pfp-container"]}>
+              <img src={pfp} alt="pfp pic" className={styles.pfp} />
+            </div>
 
-                  <div className={styles.pfpsection}>
-                     <h6>Profile Picture:</h6>
-                     <input type='file' accept=".jpg,.jpeg,.png"/>
-                  </div>
+            <div className={styles.pfpsection}>
+              <h6>Profile Picture:</h6>
+              <input type="file" accept=".jpg,.jpeg,.png" />
+            </div>
 
-                  <div className={styles['login-box']}> 
-                     <input type="text" placeholder="First Name*" {...register("firstName")}/>
-                     <input type="text" placeholder="Last Name*" {...register("lastName")} />
-                  </div>
+            <div className={styles["login-box"]}>
+              <input
+                type="text"
+                placeholder="First Name*"
+                {...register("firstName")}
+              />
+              <input
+                type="text"
+                placeholder="Last Name*"
+                {...register("lastName")}
+              />
+            </div>
 
-                  <div className={styles['login-box']}> 
-                     <input type="text" placeholder="Email*" {...register("email")} />
-                     <input
-                        type="number"
-                        placeholder="Phone Number*"
-                        {...register("phone")}
-                     />
-                  </div>
+            <div className={styles["login-box"]}>
+              <input type="text" placeholder="Email*" {...register("email")} />
+              <input
+                type="number"
+                placeholder="Phone Number*"
+                {...register("phone")}
+              />
+            </div>
 
-                  <div className={styles['login-box']}> 
-                     <input
-                        type="password"
-                        placeholder="Password*"
-                        {...register("password")}
-                     />
-                     <input
-                        type="password"
-                        placeholder="Confirm Password*"
-                        {...register("confirmPassword")}
-                     />
-                  </div>
+            <div className={styles["login-box"]}>
+              <input
+                type="password"
+                placeholder="Password*"
+                {...register("password")}
+              />
+              <input
+                type="password"
+                placeholder="Confirm Password*"
+                {...register("confirmPassword")}
+              />
+            </div>
 
-                  <div className={styles['login-box']}> 
-                     <input
-                        type="text"
-                        placeholder="Location*"
-                        {...register("location")}
-                     />
-                     <input
-                        type="text"
-                        placeholder="Preference*"
-                        {...register("preference")}
-                     />
-                  </div>
+            <div className={styles["login-box"]}>
+              <input
+                type="text"
+                placeholder="Location*"
+                {...register("location")}
+              />
+              <input
+                type="text"
+                placeholder="Preference*"
+                {...register("preference")}
+              />
+            </div>
 
-                  <div className={styles['submit-container']}>
-                        <input type="submit" className={styles['submit-btn']} value="Update"/>
-                  </div>
-               </form>
-            </Card>
-         </div>
+            <div className={styles["submit-container"]}>
+              <input
+                type="submit"
+                className={styles["submit-btn"]}
+                value="Update"
+              />
+            </div>
+          </form>
+        </Card>
+      </div>
 
       <Footer />
     </body>
