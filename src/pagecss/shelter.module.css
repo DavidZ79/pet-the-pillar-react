@@ -51,6 +51,10 @@
   flex-wrap: wrap;
 }
 
+.form {
+  flex-direction: row;
+}
+
 .rating-number {
   padding: 0px 10px;
 }
@@ -123,13 +127,12 @@
   color: black;
 }
 
-.mission {
-  font-size: 30px;
-  font-weight: 400;
-  text-decoration: underline;
-  margin-top: 20px;
-  margin-left: 10px;
-  color: black;
+textarea {
+  font-weight: 400 !important;
+  margin-top: 20px !important;
+  margin-left: 10px !important;
+  margin-bottom: 20px !important;
+  color: black !important;
 }
 
 .mission-text {
@@ -191,6 +194,10 @@
   /* margin-bottom: 20px; */
 }
 
+.secret3 {
+  margin-bottom: 10px;
+}
+
 .adopted {
   font-size: 30px;
   font-weight: 700;
@@ -204,6 +211,7 @@
   /* margin-bottom: 20px; */
   flex-direction: column !important;
   align-items: center !important;
+  width: 100%;
 }
 
 .review {
@@ -281,6 +289,7 @@
   text-align: inherit;
   padding: 16px;
   border-radius: 10px;
+  width: 100%;
 }
 
 .shelter-post {
@@ -400,6 +409,22 @@ p a:hover {
   border-radius: 50%;
   overflow: hidden;
 }
+.mission-box textarea {
+  background-color: white;
+  width: 664px;
+  /* width: 91%; */
+  height: 170px;
+  border-radius: 20px;
+  border-width: 2px;
+
+  font-size: 20px;
+  font-weight: 550;
+  font-family: "Poppins", sans-serif;
+  resize: none;
+  padding: 7px;
+
+  
+}
 
 .navbar-profile:hover {
   outline: solid var(--secondary) 3px;
@@ -407,4 +432,32 @@ p a:hover {
 
 .navbar-item img {
   max-height: 100%;
+}
+
+.is-vertical {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* make responsive */
+@media only screen and (max-width: 800px) {
+  .form {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  textarea {
+    width: 80% !important;
+    margin-top: 0 !important;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+  }
 }

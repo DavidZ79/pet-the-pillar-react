@@ -154,6 +154,7 @@ export default function PetUpdatePage() {
     }
 
     try {
+      
       const response = await fetch(API_URL + "pet/" + id + "/", {
         method: "PATCH",
         headers: {
@@ -161,6 +162,8 @@ export default function PetUpdatePage() {
         },
         body: formData,
       });
+      console.log("mello");
+      console.log(response);
 
       if (!response.ok) {
         console.log(formData);
