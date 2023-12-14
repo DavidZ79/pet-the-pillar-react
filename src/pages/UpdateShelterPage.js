@@ -1,123 +1,44 @@
-import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Card from "../components/Card";
 
-import styles from "../pagecss/updateshelterpage.module.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
-
-
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import pfp from "../assets/profile.png";
 
+import styles from "../pagecss/petupdatepage.module.css";
+
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 var API_URL = process.env.REACT_APP_API_URL;
 var BASE_URL = API_URL.slice(0, -5);
 
 export default function UpdateShelterPage() {
   const schema = yup.object().shape({
-    shelterName: yup.string().required("Shelter name is required"),
-    location: yup.string().required("location is required"),
+    photo: yup.mixed().required("Please enter a profile picture"),
+    username: yup.string().required("Please enter a name"),
     email: yup.string().email().required("Email is required"),
-    phone: yup.number().typeError("Please enter your phone number"),
-    // age: yup.number().positive().integer().min(18).required(),
-    password: yup.string().required("Please enter your password"),
-    profilePic: yup.mixed().notRequired(),
+    phoneNumber: yup.number().typeError("Please enter your phone number"),
+    location: yup.string().required("Please enter location"),
     missionStatement: yup.string().required("Mission Statement is required"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords Don't Match")
-      .required("Passwords don't match"),
   });
-
-  const [userDetails, setUserDetails] = useState([]);
-  const { id } = useParams(); // id of pet in this shelter
-
-  useEffect(() => {
-    // check if user is not logged in
-    if (
-      (localStorage.getItem("isShelter") !== "true") &&
-      (localStorage.getItem("userId") === 0)
-    ) {
-      navigate("/fallback");
-    }
-
-    const fetchUserDetails = async () => {
-      try {
-        const response = await fetch(
-          `http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem("userId")}/`,
-          {
-            method: "GET",
-            headers: {},
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch account details");
-        }
-
-        const responseData = await response.json();
-        // console.log(responseData)
-        const tempData = {
-          id: responseData.id,
-          username: responseData.username,
-          email: responseData.email,
-          phoneNumber: responseData.phoneNumber,
-          location: responseData.location,
-          photo: responseData.picture[0] !== "h" ? responseData.picture[0] : null,
-          missionStatement: responseData.missionStatement,
-          totalRating: responseData.totalRating,
-          numberOfRatings: responseData.numberOfRatings,
-        };
-        console.log(tempData)
-        console.log(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem("userId")}/`)
-        setUserDetails(tempData); // Update the state with fetched details
-      } catch (error) {
-        console.error("Error fetching account details:", error);
-        // Handle error, e.g., redirect to an error page
-      }
-    };
-
-    fetchUserDetails();
-  }, [id]);
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  useEffect(() => {
-    if (userDetails) {
-      reset(userDetails);
-    }
-  }, [userDetails, reset]);
 
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     const {
       username,
       email,
-      phoneNumber,
       location,
+      phoneNumber,
       missionStatement,
-      totalRating,
-      numberOfRatings,
-      photo, 
     } = data;
     const formData = new FormData();
-    formData.append("name", username);
+    formData.append("username", username);
     formData.append("email", email);
-    formData.append("phoneNumber", phoneNumber);
     formData.append("location", location);
+    formData.append("phoneNumber", phoneNumber);
     formData.append("missionStatement", missionStatement);
-    formData.append("totalRating", totalRating);
-    formData.append("numberOfRatings", numberOfRatings);
-    formData.append("photo", photo);
     if (selectedImage) {
       formData.append(
         "photos",
@@ -126,7 +47,9 @@ export default function UpdateShelterPage() {
     }
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${userDetails.id}/update/`, {
+      const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem(
+        "userId"
+      )}/`, {
         method: "PATCH",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -148,6 +71,72 @@ export default function UpdateShelterPage() {
     }
   };
 
+  const { id } = useParams(); // id of pet in this shelter
+
+  const [shelterDetails, setShelterDetails] = useState(null);
+
+  useEffect(() => {
+    // check if user is not logged in
+    if (
+      localStorage.getItem("isShelter") !== "true" &&
+      localStorage.getItem("userId") === 0
+    ) {
+      navigate("/fallback");
+    }
+
+    const fetchShelterDetails = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem(
+          "userId"
+        )}/`, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch pet details");
+        }
+
+        const responseData = await response.json();
+        const tempData = {
+          id: responseData.id,
+          username: responseData.username,
+          email: responseData.email,
+          phoneNumber: responseData.phoneNumber,
+          location: responseData.location,
+          photo: responseData.picture[0] !== "h" ? responseData.picture[0] : null,
+          missionStatement: responseData.missionStatement,
+          totalRating: responseData.totalRating,
+          numberOfRatings: responseData.numberOfRatings,
+        };
+
+        setShelterDetails(tempData); // Update the state with fetched details
+      } catch (error) {
+        console.error("Error fetching shelter details:", error);
+        // Handle error, e.g., redirect to an error page
+      }
+    };
+
+    fetchShelterDetails();
+  }, [id]);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  useEffect(() => {
+    if (shelterDetails) {
+      reset(shelterDetails);
+    }
+  }, [shelterDetails, reset]);
+
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (e) => {
@@ -158,7 +147,9 @@ export default function UpdateShelterPage() {
   };
 
   const handleDelete = async () => {
-    await fetch(`http://127.0.0.1:8000/api/account/shelter/${userDetails.id}/`, {
+    await fetch(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem(
+      "userId"
+    )}/`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -168,95 +159,119 @@ export default function UpdateShelterPage() {
   };
 
   return (
-    <body>
+    <>
       <Header />
 
       <div className={styles.main}>
         <Card className={styles["background-box"]}>
-          <h1 className={styles["signup-text"]}> {userDetails.username} Update</h1>
+          <p className={styles["signup-text"]}>
+            {shelterDetails ? shelterDetails.username : ""} Update
+          </p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles["pfp-container"]}>
-              <img src={
+              <img
+                src={
                   selectedImage ||
-                  (userDetails ? (userDetails.photo ? BASE_URL + userDetails.photo["image"] : pfp) : pfp)
-                } 
-                alt="pfp pic" className={styles.pfp} />
-            </div>
-
-            <div className={styles.pfpsection}>
-              <h6>Profile Picture:</h6>
-              <input type="file" accept=".jpg,.jpeg,.png" onChange={handleImageChange}/>
-            </div>
-
-            <div className={styles["login-box"]}>
-              <input
-                type="text"
-                placeholder="New Shelter name"
-                {...register("username")}
-              />
-              <input
-                type="text"
-                placeholder="New Location"
-                {...register("location")}
+                  (shelterDetails
+                    ? shelterDetails.photo
+                      ? BASE_URL + shelterDetails.photo["image"]
+                      : pfp
+                    : pfp)
+                }
+                alt="pfp pic"
+                className={styles.pfp}
               />
             </div>
 
             <div className={styles["login-box"]}>
               <input
-                type="text"
-                placeholder="New Email"
-                {...register("email")}
+                type="file"
+                accept=".jpg,.jpeg,.png"
+                onChange={handleImageChange}
               />
-              <input
-                type="number"
-                placeholder="New Phone Number"
-                {...register("phoneNumber")}
-              />
-            </div>
 
-            {/* <div className={styles["login-box"]}>
-              <input
-                type="password"
-                placeholder="New Password"
-                {...register("password")}
-              />
-              <input
-                type="password"
-                placeholder="Confirm New Password"
-                {...register("confirmPassword")}
-              />
-            </div> */}
+              <div className={styles["wrapper"]}>
+                <p className={styles["box_header"]}>Name: </p>
+                <input
+                  type="text"
+                  placeholder="Name*"
+                  {...register("username")}
+                  required
+                />
+                <p>{errors.username?.message}</p>
+              </div>
 
-            <div className={styles["mission-box"]}>
+              <div className={styles["wrapper"]}>
+                <p className={styles["box_header"]}>Location: </p>
+                <input
+                  type="text"
+                  placeholder="location*"
+                  {...register("location")}
+                  required
+                />
+                <p>{errors.location?.message}</p>
+              </div>
+
+              <div className={styles["wrapper"]}>
+                <p className={styles["box_header"]}>Email: </p>
+                <input
+                  type="text"
+                  placeholder="Email*"
+                  {...register("email")}
+                  required
+                />
+                <p>{errors.email?.message}</p>
+              </div>
+
+              <div className={styles["wrapper"]}>
+                <p className={styles["box_header"]}>Phone Number: </p>
+                <input
+                  type="text"
+                  placeholder="Phone Number*"
+                  {...register("phoneNumber")}
+                  required
+                />
+                <p>{errors.phoneNumber?.message}</p>
+              </div>
+
+              <p className={styles["box_header"]}>Mission Statement: </p>
               <textarea
-                placeholder="New Mission Statement"
+                placeholder="Mission Statement*"
                 {...register("missionStatement")}
+                required
               />
+              <p>{errors.missionStatement?.message}</p>
             </div>
 
-            <div className={styles["submit-container"]}>
-              <Link to="/shelter_dashboard">
+            <div className={styles["wrapper2"]}>
+              <div className={styles["submit-container"]}>
                 <input
                   type="submit"
                   className={styles["submit-btn"]}
                   value="Update"
                 />
-              </Link>
-            </div>
+              </div>
 
-            <div className={styles["submit-container"]}>
+              <div className={styles["submit-container"]}>
                 <input
                   className={styles["submit-btn"]}
                   value="Delete"
                   onClick={handleDelete}
                 />
               </div>
+            </div>
+
+            <div className={styles["top-margin"]}>
+              <div className={styles["info-container"]}>
+                <p>* Required</p>
+              </div>
+            </div>
           </form>
         </Card>
       </div>
 
       <Footer />
-    </body>
+    </>
   );
 }

@@ -83,7 +83,7 @@ export default function PetUpdatePage() {
         };
 
         // check if the user is the correct shelter
-        if (tempData.shelter !== localStorage.getItem("userId")) {
+        if (tempData.shelter != localStorage.getItem("userId")) {
           navigate("/fallback");
         }
 
@@ -200,7 +200,7 @@ export default function PetUpdatePage() {
       <div className={styles.main}>
         <Card className={styles["background-box"]}>
           <p className={styles["signup-text"]}>
-            {petDetails ? petDetails.name : ""} Details
+            {petDetails ? petDetails.name : ""} Update
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
