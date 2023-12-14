@@ -134,6 +134,7 @@
 
 .mission-text {
   background: aliceblue;
+  font-size: 20px;
   max-width: 480px;
   width: calc(100% - 20px);
   height: 200px;
@@ -214,9 +215,10 @@
 
 .write-review {
   border-radius: 10px !important;
-  max-width: 550px !important;
+  max-width: 750px !important;
   width: 100% !important;
-  height: 90px !important;
+  min-height: 90px !important;
+  height: fit-content !important;
   background-color: var(--primary) !important;
 
   display: inline-flex;
@@ -236,16 +238,26 @@
   width: 60%;
   height: 70px;
 }
-.write-review button {
+
+.write-review button{
   width: 120px;
   height: 40px;
   font-size: 16px;
   font-weight: 400;
   /* margin-top: 10px; */
   /* margin-left: 20px; */
-  margin: auto;
+  margin: auto 8px;
   border-radius: 5px;
   border-width: 0;
+}
+
+.your-rating {
+  margin: auto;
+  font-weight: 700;
+}
+
+.control {
+  margin:auto;
 }
 
 .review-name {
