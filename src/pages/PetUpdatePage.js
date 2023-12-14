@@ -202,7 +202,7 @@ export default function PetUpdatePage() {
       <div className={styles.main}>
         <Card className={styles["background-box"]}>
           <p className={styles["signup-text"]}>
-            {petDetails ? petDetails.name : ""} Details
+            {petDetails ? petDetails.name : ""} Update
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)}>

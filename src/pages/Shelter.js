@@ -66,11 +66,11 @@ export default function ShelterPage() {
     };
 
     async function fetchPetList (status, url = "") {
-      const data = shelterDetail ?? await fetchShelterDetails();
+      const data = shelterDetail ?? (await fetchShelterDetails());
       try {
          var realURL = ""
          if (url === "") {
-            realURL = `${URL}pet/list/?shelter=${data.username}&status=${status}&page=1`
+            realURL = `${URL}pet/list/?shelter_username=${data.username}&status=${status}&page=1`
          } else {
             realURL = url
          }
