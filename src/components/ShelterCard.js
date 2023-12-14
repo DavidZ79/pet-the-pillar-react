@@ -3,7 +3,7 @@ import Button from "./Button";
 import styles from "../css/ShelterCard.module.css";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import default_picture from "../assets/profile.png";
 var API_URL = process.env.REACT_APP_API_URL;
 var BASE_URL = API_URL.slice(0, -5);
 
@@ -28,6 +28,7 @@ export default function ShelterCard({props}) {
         }
 
         const responseData = await response.json();
+        console.log(responseData);
         // console.log(responseData)
         const tempData = {
           "id": responseData.id,
@@ -35,7 +36,7 @@ export default function ShelterCard({props}) {
           "email": responseData.email,
           "phoneNumber": responseData.phoneNumber,
           "location": responseData.location,
-          "picture": responseData.picture[0]['image'],
+          "picture": responseData.picture ?? default_picture,
           "missionStatement": responseData.missionStatement,
           "totalRating": responseData.totalRating,
           "numberOfRating": responseData.numberOfRating
