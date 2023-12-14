@@ -225,7 +225,7 @@ export default function ShelterBlog() {
                      ></textarea>
 
                      <button type="submit" className={`${styles['is-secondary']} ${styles.button} ${styles.secret3}`}>
-                     Submit Review
+                     Submit Discussion
                      </button>
                   </form>
 

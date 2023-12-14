@@ -200,7 +200,7 @@ export default function ReviewCard({ props }) {
                 <ReviewCard key={appResult.id} props={appResult} />
               ))}
 
-<form className={`${styles['form']}`} onSubmit={handleSubmit}>
+<form className={`${styles['form']} ${styles['write-review']}`} onSubmit={handleSubmit}>
       <textarea
         value={textareaValue}
         onChange={handleTextareaChange}
