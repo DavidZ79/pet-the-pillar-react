@@ -104,8 +104,6 @@ export default function SearchPage() {
     if (localStorage.getItem("userId") == 0) {
       navigate("/fallback");
     }
-
-    console.log("INIT DATA")
     initData();
   }, []);
 

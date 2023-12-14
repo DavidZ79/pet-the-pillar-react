@@ -17,13 +17,13 @@ var BASE_URL = API_URL.slice(0, -5);
 
 export default function UpdateShelterPage() {
   const schema = yup.object().shape({
-    shelterName: yup.string().required("Shelter name is required"),
+    username: yup.string().required("Shelter name is required"),
     location: yup.string().required("location is required"),
     email: yup.string().email().required("Email is required"),
-    phone: yup.number().typeError("Please enter your phone number"),
+    phoneNumber: yup.number().typeError("Please enter your phone number"),
     // age: yup.number().positive().integer().min(18).required(),
     password: yup.string().required("Please enter your password"),
-    profilePic: yup.mixed().notRequired(),
+    picture: yup.mixed().notRequired(),
     missionStatement: yup.string().required("Mission Statement is required"),
     confirmPassword: yup
       .string()
@@ -65,13 +65,12 @@ export default function UpdateShelterPage() {
           email: responseData.email,
           phoneNumber: responseData.phoneNumber,
           location: responseData.location,
-          photo: responseData.picture[0] !== "h" ? responseData.picture[0] : null,
+          picture: responseData.picture,
           missionStatement: responseData.missionStatement,
           totalRating: responseData.totalRating,
           numberOfRatings: responseData.numberOfRatings,
         };
-        console.log(tempData)
-        console.log(`http://127.0.0.1:8000/api/account/shelter/${localStorage.getItem("userId")}/`)
+        // console.log(tempData)
         setUserDetails(tempData); // Update the state with fetched details
       } catch (error) {
         console.error("Error fetching account details:", error);
@@ -107,8 +106,10 @@ export default function UpdateShelterPage() {
       missionStatement,
       totalRating,
       numberOfRatings,
-      photo, 
+      picture, 
     } = data;
+    console.log(data)
+    console.log("submitted");
     const formData = new FormData();
     formData.append("name", username);
     formData.append("email", email);
@@ -117,13 +118,7 @@ export default function UpdateShelterPage() {
     formData.append("missionStatement", missionStatement);
     formData.append("totalRating", totalRating);
     formData.append("numberOfRatings", numberOfRatings);
-    formData.append("photo", photo);
-    if (selectedImage) {
-      formData.append(
-        "photos",
-        document.querySelector('input[type="file"]').files[0]
-      );
-    }
+    formData.append("picture", picture);
 
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/account/shelter/${userDetails.id}/update/`, {
@@ -142,7 +137,7 @@ export default function UpdateShelterPage() {
       const responseData = await response.json();
       console.log(responseData);
 
-      navigate("/shelter_dashboard");
+      // navigate("/shelter_dashboard");
     } catch (error) {
       console.error("second demon:", error.message);
     }
@@ -179,7 +174,7 @@ export default function UpdateShelterPage() {
             <div className={styles["pfp-container"]}>
               <img src={
                   selectedImage ||
-                  (userDetails ? (userDetails.photo ? BASE_URL + userDetails.photo["image"] : pfp) : pfp)
+                  (userDetails ? userDetails.picture : pfp)
                 } 
                 alt="pfp pic" className={styles.pfp} />
             </div>
@@ -236,14 +231,12 @@ export default function UpdateShelterPage() {
             </div>
 
             <div className={styles["submit-container"]}>
-              <Link to="/shelter_dashboard">
                 <input
-                  type="submit"
                   className={styles["submit-btn"]}
+                  type="submit"
                   value="Update"
                 />
-              </Link>
-            </div>
+              </div>
 
             <div className={styles["submit-container"]}>
                 <input
