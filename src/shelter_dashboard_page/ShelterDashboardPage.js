@@ -58,7 +58,7 @@ export default function ShelterDashboardPage() {
   }
 
   useEffect(() => {
-    if (localStorage.getItem("isShelter") !== "true") { 
+    if (localStorage.getItem("isShelter") !== "true") {
       navigate("/fallback");
     }
     initData();
