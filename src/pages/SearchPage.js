@@ -21,16 +21,10 @@ export default function SearchPage() {
   const [nextPage, setNextPage] = useState("initial");
   const [pageNum, setPageNum] = useState(1);
   // const [disableLoading, setDisableLoading] = useState(true)
-  const [species, setSpecies] = useState('');
-
-  const handleInputChange = (event) => {
-    setSpecies(event.target.value);
-  };
-  
 
   const fetchPetList = async (url = null) => {
-    console.log(nextPage)
-    console.log(pageNum)
+    // console.log(nextPage)
+    // console.log(pageNum)
     if (pageNum !== 1 && nextPage === null) {
       console.log("WHY")
       return [];
@@ -49,7 +43,7 @@ export default function SearchPage() {
       }
 
       const responseData = await response.json();
-      console.log(responseData);
+      // console.log(responseData);
       const tempData = {
         "count": responseData.count,
         "next": responseData.next,
@@ -96,8 +90,8 @@ export default function SearchPage() {
     console.log(url);
     const tempData = await fetchPetList(url);
     setPetList(tempData);
-    console.log(tempData)
-    console.log("FINISH SETTING SEARCH DATA")
+    // console.log(tempData)
+    // console.log("FINISH SETTING SEARCH DATA")
   }
 
   useEffect(() => {
@@ -117,7 +111,7 @@ export default function SearchPage() {
                   Sort by:
                 </div>
 
-                {/* control??? */}
+                {/* sorting */}
                 <div className={`control`}>
                   <div className={`select`}>
                     <select name='ordering' form='search_form'>
@@ -134,14 +128,8 @@ export default function SearchPage() {
               {/* search bar */}
               <div className={`search-bar ${styles['search-bar']}`}>
                 <p className={`${styles['search-bar-input']} control search-bar-input`}>
-                <input
-      name="species"
-      className={`${styles.input} input`}
-      type="text" // Changed 'input' to 'type'
-      placeholder='Search an animal'
-      value={species}
-      onChange={handleInputChange}
-    />                </p>
+                  <input name="species" className={`${styles.input} input`} input="text" placeholder='Search an animal' defaultValue={new URLSearchParams(window.location.search).get('species' ?? '')}/>
+                </p>
 
                 <p className={`control`}>
                   <button type='submit' className={`button is-secondary ${styles['is-secondary']}`}>
@@ -188,8 +176,7 @@ export default function SearchPage() {
                 <div className={`label`}> Max Age</div>
                 <div className={`control`}>
                   <div className={`select`}>
-                    <select name='max_age'>
-                      <option>99</option>
+                    <select name='max_age' defaultValue='99'>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -201,6 +188,7 @@ export default function SearchPage() {
                       <option>9</option>
                       <option>10</option>
                       <option>20</option>
+                      <option>99</option>
                     </select>
                   </div>
                 </div>
