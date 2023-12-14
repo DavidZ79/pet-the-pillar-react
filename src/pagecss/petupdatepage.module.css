@@ -101,7 +101,7 @@
    background-color: white;
    border-radius: 20px;
    border-width: 2px;
- 
+   text-align: center;
    font-size: 20px;
    font-weight: 550;
    margin-top: 15px;
@@ -162,6 +162,10 @@
 }
 .box_header {
   color: white !important;
+}
+.wrapper2 {
+  display: inline-flex;
+  justify-content: space-around;
 }
  
  @media screen and (max-width: 629px) {

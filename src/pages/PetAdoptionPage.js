@@ -3,14 +3,16 @@ import Card from "../components/Card";
 import Header from "../components/Header";
 
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import styles from "../pagecss/petadoptionpage.module.css";
-var URL = process.env.REACT_APP_API_URL;
+var API_URL = process.env.REACT_APP_API_URL;
 
 export default function PetAdoption() {
+  const [adoptError, setAdoptError] = useState(null);
   const schema = yup.object().shape({
     reasonOfAdopt: yup.string().required("Reason for adoption is required*"),
   });
@@ -31,7 +33,7 @@ export default function PetAdoption() {
       pet: parseInt(id),
     };
     try {
-      const response = await fetch(URL + 'application/', {
+      const response = await fetch(API_URL + 'application/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,11 +47,11 @@ export default function PetAdoption() {
       }
   
       const responseData = await response.json();
-      console.log(responseData);
-      navigate("/shelter_dashboard"); 
+      navigate("/pet_application/" + responseData.id); 
     } catch (error) {
       console.log(requestData)
       console.error('second demon:', error.message);
+      setAdoptError('Already applied for this pet!');
     }
   };
 
@@ -70,6 +72,12 @@ export default function PetAdoption() {
               />
               <p>{errors.reasonOfAdopt?.message}</p>
             </div>
+
+            {adoptError && (
+                <div className={styles['login-error']}>
+                  {adoptError}
+                </div>
+              )}
 
             <div className={styles['submit-container']}>
               <input

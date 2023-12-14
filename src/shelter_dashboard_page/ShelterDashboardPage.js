@@ -1,7 +1,6 @@
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Header from "../components/Header";
-import PetCard from "../components/PetCard";
 import ShelterPetCard from "../components/ShelterPetCard";
 
 import { Link, useParams } from "react-router-dom";
@@ -9,18 +8,18 @@ import { useState, useEffect } from "react";
 
 import styles from "./shelter_dashboard_page.module.css";
 import shelterpic from "./shelter_dashboard_images/shelter_management_front.jpg";
+var API_URL = process.env.REACT_APP_API_URL;
 
 export default function ShelterDashboardPage() {
   const { id } = useParams();
   const shelterID = localStorage.getItem("userId"); 
-  console.log(shelterID)
 
   const [petList, setPetList] = useState(null);
 
   useEffect(() => {
     const fetchPetList = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/pet/list/`, {
+        const response = await fetch(API_URL + `pet/list/`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -39,7 +38,6 @@ export default function ShelterDashboardPage() {
           "previous": responseData.previous,
           "results": responseData.results
         }
-        console.log(tempData);
         setPetList(tempData); // Update the state with fetched details
       } catch (error) {
         console.error("Error fetching pet details:", error);
@@ -57,7 +55,7 @@ export default function ShelterDashboardPage() {
         <div>
           <img
             src={shelterpic}
-            alt="Shelter Image"
+            alt="Shelter Pic"
             className={styles.shelter_img_front}
           />
         </div>

@@ -84,6 +84,11 @@
   background-color: aliceblue !important;
 }
 
+.cardImage {
+  max-width: min(30vw, 30vh);
+  max-height: min(30vw, 30vh);
+ }
+
 .card, .title, .subtitle{
   background-color: var(--primary) ;
   color: var(--light-text) ;
@@ -98,7 +103,7 @@
 }
 
 .load-more {
-  width:100% !important;
+  width:100px !important;
 }
 
 div p a{
@@ -149,4 +154,11 @@ p a:hover{
   transition: background-color 250ms linear;
   color: var(--secondary-lighter);
   background-color: white;
+}
+
+@media screen and (max-width: 629px) {
+  .cardImage {
+    max-width: min(50vw, 50vh);
+    max-height: min(50vw, 50vh);
+   }
 }

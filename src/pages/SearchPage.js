@@ -53,6 +53,7 @@ export default function SearchPage() {
       setNextPage(tempData.next);
       // console.log(pageNum);
       // setDisableLoading(false);
+
       return tempData.results;
     } catch (error) {
       console.error('Error fetching pet details:', error);
@@ -96,7 +97,7 @@ export default function SearchPage() {
   useEffect(() => {
     initData();
   }, []);
-  
+
   return (
     <body>
       <Header/>

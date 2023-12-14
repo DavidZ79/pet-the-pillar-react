@@ -49,17 +49,16 @@ export default function LoginPage() {
       }
   
       const responseData = await response.json();
-      if (localStorage.getItem('isShelter')) {
-        navigate('/shelter_dashboard');
-      }
-      else {
-        navigate('/search');
-      }
-      setLoginError(null);
-      console.log(responseData);
       localStorage.setItem('accessToken', responseData.access_token);
       localStorage.setItem('userId', responseData.user_id);
       localStorage.setItem('isShelter', responseData.is_shelter);
+      if (responseData.is_shelter) {
+        navigate('/');
+      }
+      else {
+        navigate('/');
+      }
+      setLoginError(null);
 
     } catch (error) {
       console.error('second demon:', error.message);

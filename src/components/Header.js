@@ -30,7 +30,6 @@ export default function Header() {
           if (localStorage.getItem("isShelter") === 'true') {
             type = 'shelter';
           }
-          console.log(localStorage.getItem("userId"));
 
           const response = await fetch(`${API_URL}account/${type}/${localStorage.getItem("userId")}/`, {
             method: 'GET',
@@ -141,11 +140,11 @@ const handleLogout = () => {
 
               <div className="navbar-dropdown">
                 <Link to="/seeker_dashboard_page" className={`navbar-item seeker ${isShelter ? "hide" : ""}`}>
-                  Dashboard (seeker)
+                  Dashboard
                 </Link>
 
                 <Link to="/shelter_dashboard" className={`navbar-item shelter ${isShelter ? "" : "hide"}`}>
-                  Dashboard (shelter)
+                  Dashboard
                 </Link>
 
                 <hr className="navbar-divider" />
@@ -154,14 +153,21 @@ const handleLogout = () => {
                   to="/update_seeker"
                   className={`navbar-item seeker ${isShelter ? "hide" : ""}`}
                 >
-                  Settings (seeker)
+                  Settings
+                </Link>
+
+                <Link
+                  to={`/shelter/${localStorage.getItem("userId")}`}
+                  className={`navbar-item shelter ${isShelter ? "" : "hide"}`}
+                >
+                  Profile
                 </Link>
 
                 <Link
                   to="/update_shelter"
                   className={`navbar-item shelter ${isShelter ? "" : "hide"}`}
                 >
-                  Settings (shelter)
+                  Settings
                 </Link>
 
                 <Link to="/" className="navbar-item" onClick={handleLogout}>

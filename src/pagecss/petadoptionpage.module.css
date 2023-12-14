@@ -22,6 +22,14 @@
   margin-right: 8px;
 }
 
+.login-error {
+  color: red;
+  align-items: center;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
 form {
   display: flex;
   flex-direction: column;

@@ -270,6 +270,10 @@
          max-width: 400px;
          margin: 0 16px;
      }
+
+     .navbar-burger {
+      margin-left: 35vw !important;
+  }
  
      .navbar-search-bar-input {
          width: 100%;
@@ -317,7 +321,9 @@
      }
  }
  
- 
+ .load-more {
+  width: 100px !important;
+ }
  .main{
      position: relative;
      margin: 16px;
@@ -326,6 +332,10 @@
  
  .pagination-link.is-current {
     background-color: var(--secondary) !important;
+ }
+
+ .secret {
+  width: 100px !important;
  }
  
  input,

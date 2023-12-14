@@ -21,9 +21,6 @@ export default function LandingPage() {
             <div class="LHSbanner">
               <h1 id="find">Find a Friend Today!</h1>
               <h2 id="browse">Browse Pets in your area</h2>
-              <Link to="/signup_before">
-                <Button className="signup-btn">Sign Up</Button>
-              </Link>
             </div>
           </div>
           <div class="RHScontainer">
@@ -38,8 +35,11 @@ export default function LandingPage() {
               <h2>Meet a pet</h2>
               <h4>
                 A pet can change your life! Sometimes, all we need is a friend
-                by our side.
+                by our side to keep us company.
               </h4>
+              <Link to="/signup_before">
+                <Button className="btn">Sign Up</Button>
+              </Link>
             </div>
             <div class="card">
               <h2>Lend a hand</h2>
@@ -47,6 +47,9 @@ export default function LandingPage() {
                 Many pet shelters are reaching capacity, and require assistance
                 from the community for love and support!
               </h4>
+              <Link to="/shelter_list">
+                <Button className="btn">Shelter List</Button>
+              </Link>
             </div>
           </div>
         </div>

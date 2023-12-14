@@ -10,10 +10,9 @@ import styles from "../pagecss/petdetailpage.module.css";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import pfp from "../assets/farloom.png";
 
-var URL = process.env.REACT_APP_API_URL;
-var BASE_URL = URL.slice(0, -5);
+var API_URL = process.env.REACT_APP_API_URL;
+var BASE_URL = API_URL.slice(0, -5);
 
 export default function PetDetailPage() {
   const schema = yup.object().shape({
@@ -40,7 +39,7 @@ export default function PetDetailPage() {
   useEffect(() => {
     const fetchPetDetails = async () => {
       try {
-        const response = await fetch(`${URL}pet/${id}/`, {
+        const response = await fetch(`${API_URL}pet/${id}/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -85,7 +84,6 @@ export default function PetDetailPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -98,12 +96,23 @@ export default function PetDetailPage() {
     //form logic here
   };
 
+  const handleAdopt = async () => {
+    navigate(`/pet_adoption/${id}`);    
+  }
+
   return (
     <>
       <Header />
 
       <div className={styles.main}>
         <Card className={styles["background-box"]}>
+        <div className={`${styles["submit-container"]} ${localStorage.getItem("isShelter") === "true" ? "hide" : ''}`}>
+              <input
+                className={styles["submit-btn"]}
+                value="Adopt"
+                onClick={handleAdopt}
+              />
+            </div>
           <p className={styles["signup-text"]}>{petDetails ? petDetails.name : ""} Details</p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -196,12 +205,15 @@ export default function PetDetailPage() {
 
             
               <div className={styles["mission-box"]}>
-              <p className={styles["box_header"]}>Location: </p>
+              
+              <div className={styles["wrapper"]}>
+              <p className={styles["box_header"]}>Description: </p>
               <textarea
                 value={petDetails ? petDetails.description : ""}
                 {...register("description")}
                 disabled
               />
+              </div>
             
 
               <div className={styles["wrapper"]}>

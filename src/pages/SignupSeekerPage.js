@@ -69,8 +69,6 @@ function SignupSeekerPage() {
   
       const responseData = await response.json();
       console.log(responseData);
-      localStorage.setItem('isShelter', false);
-      localStorage.setItem('userId', responseData.id);
       
       //login stuff, sry this is incredibly unclean
       const requestData2 = {
@@ -90,17 +88,11 @@ function SignupSeekerPage() {
       }
   
       const responseData2 = await response2.json();
-      if (responseData2.isShelter) {
-        navigate('/shelter_dashboard');
-      }
-      else {
-        navigate('/search');
-      }
-      console.log(responseData2);
-      setSignupError(null);
       localStorage.setItem('accessToken', responseData2.access_token);
-
-      navigate("/shelter_dashboard"); 
+      localStorage.setItem('isShelter', false);
+      localStorage.setItem('userId', responseData.id);
+      navigate('/');
+      setSignupError(null);
     } catch (error) {
       console.error('second demon:', error.message);
       setSignupError('Invalid email or username. Please try again.');
