@@ -45,7 +45,7 @@ export default function ReviewCard({ props }) {
         const match = tempData.user.match(regex);
         fetchUser(match ? match[0] : null);
       } catch (error) {
-        console.error("Error fetching pet details:", error);
+        // console.error("Error fetching pet details:", error);
         // Handle error, e.g., redirect to an error page
       }
     };
@@ -114,7 +114,7 @@ export default function ReviewCard({ props }) {
 
   const fetchRootReviews = async () => {
     try {
-      console.log(`${API_URL}comment/review/${reviewDetails.shelter}/list/${props.id}/`)
+      // console.log(`${API_URL}comment/review/${reviewDetails.shelter}/list/${props.id}/`)
       const response = await fetch(`${API_URL}comment/review/${reviewDetails.shelter}/list/${props.id}/`, {
         method: 'GET',
         headers: {
@@ -143,8 +143,6 @@ export default function ReviewCard({ props }) {
   };
 
   async function initReviewData() {
-    console.log("AAAAAAAAAAAAAAAAAAAAAA");
-    console.log(rootReviewList);
     const tempData = await fetchRootReviews();
     setRootReviewList(tempData); // Update the state with fetched details
   }

@@ -59,16 +59,15 @@ export default function ShelterPage() {
           "numberOfRating": responseData.numberOfRating
        }
         setShelterDetails(tempData); // Update the state with fetched details
-        console.log(responseData)
+      //   console.log(responseData)
         return responseData
       } catch (error) {
-        console.error('Error fetching pet details:', error);
+      //   console.error('Error fetching pet details:', error);
         // Handle error, e.g., redirect to an error page
       }
     };
 
     async function initReviewData() {
-      console.log("BBBBBBBBBBBBBBBBBB")
       if (rootReviewList.length === 0) {
         const tempData = await fetchRootReviews();
         setRootReviewList(tempData); // Update the state with fetched details
@@ -96,10 +95,10 @@ export default function ShelterPage() {
           "previous": responseData.previous,
           "results": responseData.results
        }
-        console.log(responseData)
+      //   console.log(responseData)
         return tempData.results;
       } catch (error) {
-        console.error('Error fetching pet details:', error);
+      //   console.error('Error fetching pet details:', error);
         // Handle error, e.g., redirect to an error page
       }
     };
@@ -109,9 +108,11 @@ export default function ShelterPage() {
       try {
          var realURL = ""
          if (url === "") {
-            realURL = `${URL}pet/list/?shelter_username=${data.username}&status=${status}&page=1`
+            realURL = `${API_URL}pet/list/?shelter_username=${data.username}&status=${status}&page=1`
+            console.log("URL:", realURL)
          } else {
             realURL = url
+            console.log("URL2:", realURL)
          }
          const response = await fetch(realURL, {
            method: 'GET',
@@ -125,7 +126,8 @@ export default function ShelterPage() {
          }
    
          const responseData = await response.json();
-         // console.log(responseData)
+         console.log("AAAAAAAAAAAAAAAA")
+         console.log(responseData)
          // console.log("GOT ", realURL)
 
          if (status === "Available") {
@@ -136,7 +138,7 @@ export default function ShelterPage() {
          }
          
        } catch (error) {
-         console.error('Error fetching pet details:', error);
+         // console.error('Error fetching pet details:', error);
          // Handle error, e.g., redirect to an error page
        }
    };
@@ -263,6 +265,7 @@ export default function ShelterPage() {
    useEffect(() => {
       fetchShelterDetails();
       fetchPetList("Available");
+      console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
       fetchPetList("Adopted");
       initReviewData();
       fetchRating();
