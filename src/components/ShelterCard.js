@@ -58,7 +58,7 @@ export default function ShelterCard({props}) {
             <h2>{shelterDetail.username}</h2>
             <img src={shelterDetail.picture} alt="Shelter" />
             <Link to={`/shelter/${shelterDetail ? shelterDetail.id : ""}`}>
-              <Button className={styles['shelter-btn']} >View Shelter</Button>
+              <button className={styles['shelter-btn']} >View Shelter</button>
             </Link>
         </div>
     </>

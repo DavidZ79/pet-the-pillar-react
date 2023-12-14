@@ -8,7 +8,7 @@
 .card {
   background-color: var(--primary) !important;
   color: var(--light-text) !important;
-  width: 400px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
