@@ -63,7 +63,7 @@ export default function SampleBlog() {
       <Card className={styles["background-box"]}>
         <div className="blog">
           {posts.map((post, index) => (
-            <BlogPost key={index} title={post.title} content={post.content} num_likes={post.num_likes} />
+            <BlogPost key={index} title={post.title} content={post.content} num_likes={post.num_likes} shelter={post.shelter} />
           ))}
         </div>
       </Card>
