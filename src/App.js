@@ -22,6 +22,7 @@ import Seeker from "./pages/Seeker";
 import ShelterBlog from "./pages/ShelterBlog";
 import ApplicationList from "./pages/ApplicationsList";
 import SampleBlog from "./pages/SampleBlog";
+import BlogManaging from "./pages/BlogManaging";
 import PetApplicationPage from "./pages/PetApplicationPage";
 
 
@@ -107,6 +108,10 @@ function App() {
     {
       path: "/sample_blog",
       element: <SampleBlog />,
+    },
+    {
+      path: "/blog_managing/:id",
+      element: <BlogManaging />,
     },
     {
       path: "/shelter_list",

@@ -22,7 +22,8 @@ export default function SampleBlog() {
     <body className={styles["body"]}>
       <Header />
 
-      {/* blog posts */}
+      <div className={styles["main"]}>
+      
       <Card className={styles["background-box"]}>
         <div className="blog">
           {posts.map((post, index) => (
@@ -35,7 +36,7 @@ export default function SampleBlog() {
       <Card className={styles["background-box"]}>
         <NewPost addPost={addPost} />
       </Card>
-
+      </div>
       <Footer />
     </body>
   );
