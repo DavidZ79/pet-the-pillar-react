@@ -6,26 +6,82 @@
   align-items: center;
 }
 
+.create-post-form h2 {
+  margin-top: 15px;
+  font-size: 30px;
+  margin-bottom: 30px;
+  text-decoration: underline;
+  color: black;
+}
+
 .create-post-form label {
   display: block;
-  margin-bottom: 5px;
+}
+
+.content-container {
+  display: block;
+  margin: 0;
+}
+
+.title {
+  font-size: 24px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.content {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .create-post-form input {
-  width: 300px;
-  padding: 8px;
+  width: 450px;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  height: 40px;
+  font-size: 18px;
+  background-color: aliceblue;
 }
 
 .create-post-form textarea {
-  width: 300px;
-  padding: 8px;
+  width: 450px;
+  margin: 0 !important; 
+  background-color: aliceblue;
+  border-radius: 15px;
 }
 
 .create-post-form button {
-  padding: 10px 15px;
+  margin-top: 20px;
+  padding: 17px 21px;
   background-color: #081D40;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 11px;
   cursor: pointer;
+  font-size: 18px;
+}
+@media screen and (max-width: 390px) {
+  .create-post-form input {
+    width: 300px;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+
+  .content-container{
+    margin: 0;
+    padding: 0;
+    margin-right: 0px;
+
+  }
+
+  .content-container textarea {
+    width: 400px;
+  }
+
+  .create-post-form textarea {
+    width: 300px;
+  }
 }

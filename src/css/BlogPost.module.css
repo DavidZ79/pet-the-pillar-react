@@ -3,20 +3,46 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 25px;
+  margin-bottom: 40px;
+  width: 100%;
 }
 
 .blog-text {
   width: 400px;
   overflow-wrap: break-word;
   overflow-y: hidden;
+  margin-bottom: 10px;
 }
 
 .blog-inner {
+  display: flex;
+  flex-direction: column;
   background-color: aliceblue;
   text-align: center;
+  border-radius: 13px;
+  width: 80%;
 }
-.blog-inner p, h2{
+
+.blog-inner h2 {
+  font-size: 30px;
+  margin-bottom: 10px;
+  text-decoration: underline;
   color: black;
 }
+
+.blog-inner p{
+  display: flex;
+  color: black;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+@media screen and (max-width: 390px) {
+  .blog-text {
+    width: 200px;
+  }
+}
+
