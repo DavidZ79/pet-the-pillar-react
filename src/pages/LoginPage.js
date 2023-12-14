@@ -52,11 +52,11 @@ export default function LoginPage() {
       localStorage.setItem('accessToken', responseData.access_token);
       localStorage.setItem('userId', responseData.user_id);
       localStorage.setItem('isShelter', responseData.is_shelter);
-      if (localStorage.getItem('isShelter')) {
-        navigate('/shelter_dashboard');
+      if (responseData.is_shelter) {
+        navigate('/');
       }
       else {
-        navigate('/search');
+        navigate('/');
       }
       setLoginError(null);
 

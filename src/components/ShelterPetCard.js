@@ -3,10 +3,9 @@ import styles1 from "../css/main_style.css";
 import styles2 from "../css/pet_listing.css"
 import styles3 from '../pagecss/searchpage.module.css'
 
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import cat from "../assets/cat.png";
-import Button from "./Button";
 
 var API_URL = process.env.REACT_APP_API_URL;
 var BASE_URL = API_URL.slice(0, -5);
@@ -14,7 +13,6 @@ var BASE_URL = API_URL.slice(0, -5);
 const styles = {...styles1,...styles2,...styles3};
 
 export default function ShelterPetCard({props}) {
-  const { id } = useParams();
 
   const [petDetails, setPetDetails] = useState(null);
   const [shelterName, setShelterName] = useState(null);
@@ -89,16 +87,16 @@ export default function ShelterPetCard({props}) {
     };
 
     fetchPetDetails();
-  }, []);
+  });
 
    return (
       <div className='tile is-3 is-parent'>
       <div className='tile is-child'>
         <div className={`is-hoverable ${styles.card}`}>
-          <div className='card-image'>
+          <div className={`card-image ${styles.cardImage}`}>
             <Link to={`/pet_detail/${props.id}`}>
-              <figure className='image is-4by4'>
-                <img src={petDetails ? BASE_URL + petDetails.photo : cat} alt="Placeholder image"/>
+              <figure className={`image is-4by4 ${styles.cardImage}`}>
+                <img src={petDetails ? BASE_URL + petDetails.photo : cat} alt="Placeholder pic"/>
               </figure>
             </Link>
           </div>
@@ -132,7 +130,7 @@ export default function ShelterPetCard({props}) {
 
               <div>
                 <Link to={`/pet_update/${props.id}`}>
-                  <button className="button is-secondary"> Update</button>
+                  <button className="button is-secondary secret"> Update</button>
                 </Link>
               </div>
             </div>

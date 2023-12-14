@@ -93,7 +93,7 @@ export default function SignupShelterPage() {
         navigate('/shelter_dashboard');
       }
       else {
-        navigate('/search');
+        navigate('/');
       }
       console.log(responseData2);
       setSignupError(null);

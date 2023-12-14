@@ -1,7 +1,6 @@
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Header from "../components/Header";
-import PetCard from "../components/PetCard";
 import ShelterPetCard from "../components/ShelterPetCard";
 
 import { Link, useParams } from "react-router-dom";
@@ -56,7 +55,7 @@ export default function ShelterDashboardPage() {
         <div>
           <img
             src={shelterpic}
-            alt="Shelter Image"
+            alt="Shelter Pic"
             className={styles.shelter_img_front}
           />
         </div>
