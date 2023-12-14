@@ -70,7 +70,7 @@ export default function ShelterPage() {
       try {
          var realURL = ""
          if (url === "") {
-            realURL = `${URL}pet/list/?shelter=${data.id}&status=${status}&page=1`
+            realURL = `${URL}pet/list/?shelter_username=${data.username}&status=${status}&page=1`
          } else {
             realURL = url
          }
