@@ -13,6 +13,7 @@ function BlogPost({ title, content, num_likes, shelter }) {
         <p className={styles["blog-text"]}>{content}</p>
         <p className={styles["blog-text"]}>{num_likes}</p>
       </div>
+      <button type="submit" className={styles["submit-btn"]}>Like</button>
     </div>
 
 

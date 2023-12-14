@@ -11,6 +11,16 @@
     --header-height: 72px;
     --footer-height: 36px;
   }
+
+  .help {
+    display: flex;
+    flex-direction: row !important;
+  }
+
+  .help2 {
+    margin-bottom: auto;
+    margin-top: 70px;
+  }
   
   .main {
     display: flex;
@@ -457,6 +467,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+    }
+
+    .help {
+      flex-direction: column !important;
     }
   
     textarea {

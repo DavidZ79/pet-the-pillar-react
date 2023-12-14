@@ -74,32 +74,34 @@ export default function ShelterBlog() {
  
    useEffect(() => {
      initData();
-   }, []);
+   });
 
    return (
       <body>
          <Header/>
 
-         <div className={styles.main}>
-         <Card className={styles["background-box"]}>
-        <div className="blog">
-        {Array.isArray(posts) && posts.map((post, index) => (
-            <BlogPost key={index} title={post.title} content={post.content} num_likes={post.num_likes} shelter={post.shelter} />
-          ))}
-        </div>
-      </Card>
-         </div>
-         <div>
-            <p>
-          <button className={`button is-secondary load-more ${nextPage === null ? 'hide': ''}`} onClick={loadNext}>Load Next</button>
-            </p>
-          </div>
-          <div>
+         <div className={`${styles.main} ${styles.help}`}>
+
+          <div className={`${styles.help2}`}>
             <p>
           <button className={`button is-secondary load-more ${previousPage === null ? 'hide': ''}`} onClick={loadPrevious}>Load Previous</button>
             </p>
           </div>
-
+          
+         <Card className={styles["background-box"]}>
+        <div className="blog">
+        {posts.map((post, index) => (
+            <BlogPost key={index} title={post.title} content={post.content} num_likes={post.num_likes} shelter={post.shelter} />
+          ))}
+        </div>
+      </Card>
+      <div className={`${styles.help2}`}>
+            <p>
+          <button className={`button is-secondary load-more ${nextPage === null ? 'hide': ''}`} onClick={loadNext}>Load Next</button>
+            </p>
+          </div>
+         </div>
+         
          <Footer/>
       </body>
    );

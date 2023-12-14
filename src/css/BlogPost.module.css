@@ -8,6 +8,19 @@
   width: 100%;
 }
 
+button{
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 400;
+  /* margin-top: 10px; */
+  /* margin-left: 20px; */
+  margin: auto 8px;
+  border-radius: 5px;
+  border-width: 0;
+  margin-top: 20px;
+}
+
 .blog-text {
   width: 400px;
   overflow-wrap: break-word;
