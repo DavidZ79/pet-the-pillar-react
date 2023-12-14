@@ -12,41 +12,62 @@ var API_URL = process.env.REACT_APP_API_URL;
 
 export default function ShelterDashboardPage() {
   const { id } = useParams();
+  const [nextPage, setNextPage] = useState("initial");
+  const [pageNum, setPageNum] = useState(1);
   const shelterID = localStorage.getItem("userId"); 
 
-  const [petList, setPetList] = useState(null);
+  const [petList, setPetList] = useState([]);
+  const fetchPetList = async (url = null) => {
+    try {
+      console.log(API_URL + `pet/all/?page=${pageNum}`)
+      const response = await fetch(url ?? API_URL + `pet/all/?page=${pageNum}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch pet details");
+      }
+
+      const responseData = await response.json();
+      // console.log(responseData)
+      const tempData = {
+        "count": responseData.count,
+        "next": responseData.next,
+        "previous": responseData.previous,
+        "results": responseData.results
+      }
+      setNextPage(tempData.next);
+      return tempData.results;
+    } catch (error) {
+      console.error("Error fetching pet details:", error);
+      // Handle error, e.g., redirect to an error page
+    }
+  };
+  async function initData() {
+    console.log("hi")
+    if (petList.length === 0) {
+      console.log("hoya")
+      const tempData = await fetchPetList();
+      setPageNum(pageNum + 1);
+      setPetList(tempData); // Update the state with fetched details
+    }
+  }
 
   useEffect(() => {
-    const fetchPetList = async () => {
-      try {
-        const response = await fetch(API_URL + `pet/list/`, {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch pet details");
-        }
-
-        const responseData = await response.json();
-        // console.log(responseData)
-        const tempData = {
-          "count": responseData.count,
-          "next": responseData.next,
-          "previous": responseData.previous,
-          "results": responseData.results
-        }
-        setPetList(tempData); // Update the state with fetched details
-      } catch (error) {
-        console.error("Error fetching pet details:", error);
-        // Handle error, e.g., redirect to an error page
-      }
-    };
-
-    fetchPetList();
+    initData();
   }, [id]);
+
+  async function loadNext() {
+    if (pageNum !== -1) {   
+      const tempData = await fetchPetList(nextPage);
+      setPetList((oldPetList) => [...oldPetList, ...tempData])
+      setPageNum(preNum => preNum + 1)
+      // setDisableLoading(true);c
+    }
+  }
 
   return (
     <>
@@ -72,14 +93,24 @@ export default function ShelterDashboardPage() {
           </div>
         </div>
 
-        {/* pets in this shelter */}
-        <div className={styles["pet_card_array"]}>
-          {petList &&
-            petList.results &&
-            petList.results.map((petResult, index) => (
-              petResult.shelter === parseInt(shelterID) &&
-              <ShelterPetCard key={petResult.id} props={petResult} />
-            ))}
+        {/* pet list */}
+        <div className={`tile is-ancestor pet-list`}>
+          <div className='tile is-vertical is-12'>
+            <div className='tile is-12' style={{ flexWrap: 'wrap' }}> {/* Added inline style for flex wrap */}
+              {/* pet 1 */}
+
+                  {petList && petList.map((petResult, index) => (
+                <ShelterPetCard key={petResult.id} props={petResult} />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className={`search-top ${styles['search-top']}`}>
+          <div>
+            <p>
+          <button className={`button is-secondary load-more ${(petList ? petList.length === 0 : false) || nextPage === null ? 'hide': ''}`} onClick={loadNext}>Load More</button>
+            </p>
+          </div>
         </div>
       </div>
       <Footer />

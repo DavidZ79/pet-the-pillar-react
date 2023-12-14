@@ -87,7 +87,7 @@ export default function ShelterPetCard({props}) {
     };
 
     fetchPetDetails();
-  });
+  }, []);
 
    return (
       <div className='tile is-3 is-parent'>

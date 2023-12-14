@@ -9,37 +9,37 @@ import { useState, useEffect } from "react";
 
 // import cat from "../assets/cat.png";
 
-import PetCard from '../components/PetCard';
+import AppCard from '../components/AppCard';
 
 var API_URL = process.env.REACT_APP_API_URL;
 
 const styles = {...styles1,...styles2,...styles3};
 
 export default function SearchPage() {
-  const [petList, setPetList] = useState([]);
+  const [appList, setAppList] = useState([]);
   const [nextPage, setNextPage] = useState("initial");
   const [pageNum, setPageNum] = useState(1);
   // const [disableLoading, setDisableLoading] = useState(true)
 
   const fetchAppList = async (url = null) => {
-    console.log(nextPage)
-    console.log(url)
-    console.log(pageNum)
     if (pageNum !== 1 && nextPage === null) {
       console.log("WHY")
+      console.log(pageNum)
+      console.log(url)
       return [];
     }
     try {
       const params = new URLSearchParams(window.location.search)
-      const response = await fetch(url ?? `${API_URL}pet/list/?page=${pageNum}&species=${params.get('species') ?? ''}` , {
+      console.log(`${API_URL}application/list/?page=${pageNum} ?? ''}`)
+      const response = await fetch(url ?? `${API_URL}application/list/?page=${pageNum}` , {
         method: 'GET',
-        // headers: {
-        //   'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-        // },
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        },
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch pet details');
+        throw new Error('Failed to fetch app details');
       }
 
       const responseData = await response.json();
@@ -55,7 +55,7 @@ export default function SearchPage() {
       // setDisableLoading(false);
       return tempData.results;
     } catch (error) {
-      console.error('Error fetching pet details:', error);
+      console.error('Error fetching app details:', error);
       // Handle error, e.g., redirect to an error page
     }
   };
@@ -63,39 +63,44 @@ export default function SearchPage() {
   async function loadNext() {
     if (pageNum !== -1) {   
       const tempData = await fetchAppList(nextPage);
-      setPetList((oldPetList) => [...oldPetList, ...tempData])
+      setAppList((oldAppList) => [...oldAppList, ...tempData])
       setPageNum(preNum => preNum + 1)
       // setDisableLoading(true);c
     }
   }
 
   async function initData() {
-    if (petList.length === 0) {
-      console.log("AAAAAAAAAAAAAAAAAAA")
+    if (appList.length === 0) {
       const tempData = await fetchAppList();
       setPageNum(pageNum + 1);
-      setPetList(tempData); // Update the state with fetched details
+      setAppList(tempData); // Update the state with fetched details
     }
   }
 
   async function handleSearch(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    let url = `${API_URL}pet/list/?page=1`;
-    const tempPage = await setPageNum(1);
+    let url = `${API_URL}application/list/?page=1`;
+  
+    // Set pageNum and nextPage. These updates will be reflected in the next render.
+    setPageNum(1);
     setNextPage("initial");
+  
+    // Construct the URL with parameters from formData
     formData.forEach((param, key) => {
       url += param !== '' ? `&${key}=${param}` : '';
     })
     console.log(url);
+  
+    // Fetch the application list
     const tempData = await fetchAppList(url);
-    setPetList(tempData);
-    console.log(tempData)
-    console.log("FINISH SETTING SEARCH DATA")
+    setAppList(tempData);
+  
+    console.log("FINISH SETTING SEARCH DATA");
   }
 
+
   useEffect(() => {
-    console.log("INIT DATA")
     initData();
   }, []);
   
@@ -104,7 +109,7 @@ export default function SearchPage() {
       <Header/>
 
       <div className={`${styles.main}`}>
-        <form id='search_form' onSubmit={handleSearch}>
+        <form id='search_form' className='search-form' onSubmit={handleSearch}>
           <div className={`form search-container ${styles['search-container']}`}>
             <div className={`search-top ${styles['search-top']}`}> 
               <div className={`sort-container ${styles['sort-container']}`}>
@@ -133,7 +138,7 @@ export default function SearchPage() {
                 <div className={`control`}>
                   <div className={`select`}>
                     <select name='status'>
-                      <option>All</option>
+                      <option></option>
                       <option>Accepted</option>
                       <option>Pending</option>
                       <option>Denied</option>
@@ -156,14 +161,14 @@ export default function SearchPage() {
           </div>
         </form>
 
-        {/* pet list */}
-        <div className={`tile is-ancestor pet-list`}>
+        {/* app list */}
+        <div className={`tile is-ancestor app-list`}>
           <div className='tile is-vertical is-12'>
             <div className='tile is-12' style={{ flexWrap: 'wrap' }}> {/* Added inline style for flex wrap */}
-              {/* pet 1 */}
+              {/* app 1 */}
 
-                  {petList && petList.map((petResult, index) => (
-                <PetCard key={petResult.id} props={petResult} />
+                  {appList && appList.map((appResult, index) => (
+                <AppCard key={appResult.id} props={appResult} />
               ))}
             </div>
           </div>
@@ -171,7 +176,7 @@ export default function SearchPage() {
         <div className={`search-top ${styles['search-top']}`}>
           <div>
             <p>
-          <button className={`button is-secondary load-more ${petList.length === 0 || nextPage === null ? 'hide': ''}`} onClick={loadNext}>Load More</button>
+          <button className={`button is-secondary load-more ${appList.length === 0 || nextPage === null ? 'hide': ''}`} onClick={loadNext}>Load More</button>
             </p>
           </div>
         </div>

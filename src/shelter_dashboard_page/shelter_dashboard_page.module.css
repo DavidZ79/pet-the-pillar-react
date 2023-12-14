@@ -21,6 +21,7 @@
   justify-content: center;
   background-color: #97c3e9;
   width: 100%;
+  margin-bottom: 15px;
 }
 .cards {
   display: flex;

@@ -71,7 +71,9 @@ export default function SearchPage() {
   }
 
   async function initData() {
+    console.log("hi")
     if (petList.length === 0) {
+      console.log("hoya")
       const tempData = await fetchPetList();
       setPageNum(pageNum + 1);
       setPetList(tempData); // Update the state with fetched details

@@ -87,6 +87,7 @@
 .cardImage {
   max-width: min(30vw, 30vh);
   max-height: min(30vw, 30vh);
+  overflow: hidden;
  }
 
 .card, .title, .subtitle{
@@ -160,5 +161,9 @@ p a:hover{
   .cardImage {
     max-width: min(50vw, 50vh);
     max-height: min(50vw, 50vh);
+   }
+
+   .search-form {
+      width: 100%;
    }
 }
