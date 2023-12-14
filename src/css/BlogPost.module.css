@@ -3,10 +3,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .blog-text {
   width: 400px;
   overflow-wrap: break-word;
   overflow-y: hidden;
+}
+
+.blog-inner {
+  background-color: aliceblue;
+  text-align: center;
+}
+.blog-inner p, h2{
+  color: black;
 }
