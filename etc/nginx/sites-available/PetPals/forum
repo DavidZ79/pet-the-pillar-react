@@ -1,0 +1,8 @@
+server {
+    listen 80;
+    server_name mysite.com www.mysite.com
+    root C:\Users\david\DISC_DOCUMENTS\GITHUB REPOS\pet-the-pillar-react\build;
+    location / {
+    try_files $uri /index.html;
+    }
+}
