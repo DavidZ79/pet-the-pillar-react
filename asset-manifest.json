@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/pet-the-pillar-react/static/css/main.833044e2.css",
-    "main.js": "/pet-the-pillar-react/static/js/main.878ff07b.js",
+    "main.css": "/pet-the-pillar-react/static/css/main.c165ac41.css",
+    "main.js": "/pet-the-pillar-react/static/js/main.968b49c4.js",
     "static/js/787.400e6072.chunk.js": "/pet-the-pillar-react/static/js/787.400e6072.chunk.js",
     "static/media/shelter_management_front.jpg": "/pet-the-pillar-react/static/media/shelter_management_front.e2388ec30ad71ef7942a.jpg",
     "static/media/red-cloth-dog.jpg": "/pet-the-pillar-react/static/media/red-cloth-dog.7cd4cbaf5f75374e17b4.jpg",
@@ -9,14 +9,15 @@
     "static/media/banner_pic.png": "/pet-the-pillar-react/static/media/banner_pic.9784297a36d24cf07fc9.png",
     "static/media/cat.png": "/pet-the-pillar-react/static/media/cat.3b3775e68b29600aa2fb.png",
     "static/media/MouldyCheeseRegular-WyMWG.ttf": "/pet-the-pillar-react/static/media/MouldyCheeseRegular-WyMWG.41dbb44e92be1835c64c.ttf",
+    "static/media/TheCourier.png": "/pet-the-pillar-react/static/media/TheCourier.0f44fc0285ff8b0adeb7.png",
     "static/media/profile.png": "/pet-the-pillar-react/static/media/profile.2fda6558cd58b877e14f.png",
     "index.html": "/pet-the-pillar-react/index.html",
-    "main.833044e2.css.map": "/pet-the-pillar-react/static/css/main.833044e2.css.map",
-    "main.878ff07b.js.map": "/pet-the-pillar-react/static/js/main.878ff07b.js.map",
+    "main.c165ac41.css.map": "/pet-the-pillar-react/static/css/main.c165ac41.css.map",
+    "main.968b49c4.js.map": "/pet-the-pillar-react/static/js/main.968b49c4.js.map",
     "787.400e6072.chunk.js.map": "/pet-the-pillar-react/static/js/787.400e6072.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.833044e2.css",
-    "static/js/main.878ff07b.js"
+    "static/css/main.c165ac41.css",
+    "static/js/main.968b49c4.js"
   ]
 }
