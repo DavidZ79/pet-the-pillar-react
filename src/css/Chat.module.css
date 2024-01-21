@@ -26,6 +26,7 @@
   border-width: 2px;
   text-align: center;
   font-weight: 550;
+  margin-top: 0;
 }
 input {
   background-color: white;

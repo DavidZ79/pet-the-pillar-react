@@ -162,6 +162,9 @@
 .box_header {
   color: white !important;
 }
+.no-top {
+  margin-top: 0 !important;
+}
 .wrapper2 {
   display: inline-flex;
   justify-content: space-around;

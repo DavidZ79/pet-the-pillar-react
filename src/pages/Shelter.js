@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 
 
 var API_URL = process.env.REACT_APP_API_URL;
@@ -31,7 +31,7 @@ export default function ShelterPage() {
    const [adoptedPageNumber, setAdoptedPageNumber] = useState(1);
    const [starRating, setStarRating] = useState(0);
    const [rootReviewList, setRootReviewList] = useState([]);
-
+   const [textareaValue, setTextareaValue] = useState('');
 
    async function fetchShelterDetails () {
       try {
@@ -56,7 +56,8 @@ export default function ShelterPage() {
           "location": responseData.location,
           "missionStatement": responseData.missionStatement,
           "totalRating": responseData.totalRating,
-          "numberOfRating": responseData.numberOfRating
+          "numberOfRating": responseData.numberOfRating,
+          "picture": responseData.picture,
        }
         setShelterDetails(tempData); // Update the state with fetched details
       //   console.log(responseData)
@@ -230,7 +231,6 @@ export default function ShelterPage() {
          }
       }
    }
-   const [textareaValue, setTextareaValue] = useState('');
 
    const handleTextareaChange = (event) => {
       setTextareaValue(event.target.value);
@@ -243,7 +243,7 @@ export default function ShelterPage() {
       console.log('Submitting:', textareaValue);
   
       // Example POST request
-      const response = await fetch(`http://127.0.0.1:8000/api/comment/review/${id}/`, {
+      const response = await fetch(API_URL + `comment/review/${id}/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ export default function ShelterPage() {
          <div className={styles.main}>
             <Card className={styles['background-box']}>
                <div className={styles['pfp-container']}>
-                  <img src={pfp} alt='shelter pic' className={styles.pfp}/>
+                  <img src={shelterDetail ? shelterDetail.picture : pfp} alt='shelter pic' className={styles.pfp}/>
                </div>
 
                <p className={styles['shelter-name']}>
@@ -463,18 +463,18 @@ export default function ShelterPage() {
                   </div>
 
                   <form className={`${styles['form']}`} onSubmit={handleSubmit}>
-      <textarea
-        value={textareaValue}
-        onChange={handleTextareaChange}
-      ></textarea>
+                     <textarea
+                     value={textareaValue}
+                     onChange={handleTextareaChange}
+                     ></textarea>
 
-      <button type="submit" className={`${styles['is-secondary']} ${styles.button} ${styles.secret3}`}>
-        Submit Review
-      </button>
-    </form>
+                     <button type="submit" className={`${styles['is-secondary']} ${styles.button} ${styles.secret3}`}>
+                     Submit Review
+                     </button>
+                  </form>
 
                {/* https://bulma.io/documentation/layout/media-object/ */}
-</div>
+               </div>
 
                {rootReviewList && rootReviewList.map((appResult, index) => (
                 <ReviewCard key={appResult.id} props={appResult} />

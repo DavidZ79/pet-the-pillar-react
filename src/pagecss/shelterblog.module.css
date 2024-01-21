@@ -11,16 +11,6 @@
     --header-height: 72px;
     --footer-height: 36px;
   }
-
-  .help {
-    display: flex;
-    flex-direction: row !important;
-  }
-
-  .help2 {
-    margin-bottom: auto;
-    margin-top: 70px;
-  }
   
   .main {
     display: flex;
@@ -34,6 +24,15 @@
     min-height: calc(100vh - var(--header-height) - var(--footer-height) - 32px);
   }
   
+  .blog-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
   .background-box {
     background-color: var(--primary);
     color: var(--dark-text);
@@ -56,9 +55,20 @@
     font-size: 20px;
     /* transform: scale(2); */
     display: flex;
-    width: fit-content;
+    width: 100%;
+    padding: 10px 30px;
     align-items: center;
     flex-wrap: wrap;
+    /* background-color: var(--secondary); */
+    border-radius: 5px;
+    justify-content: space-evenly;
+  }
+
+.likes-text{
+  color: var(--light-text);
+}
+  .liked {
+    color: red;
   }
   
   .form {
@@ -249,12 +259,12 @@
     flex-wrap: wrap;
     margin: auto;
     padding: 0;
-    justify-content: center;
+    /* justify-content: center; */
     margin-bottom: 20px;
   }
   
   .write-review textarea {
-    margin: auto;
+    /* margin: auto; */
     resize: none;
     border-radius: 5px;
     max-width: 360px;
